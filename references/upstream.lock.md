@@ -7,10 +7,8 @@ Observed sources used by this migration.
 - Repository: `https://github.com/tech-leads-club/agent-skills.git`
 - Observed commit: `d41f62b` (`d41f62b chore(release): publish`)
 - Catalog path: `packages/skills-catalog/skills/`
-- Local checkout at migration time may be ahead of the lock; copied
-  skill content was taken from the local tree and provenance records
-  the concrete source path. The lock pin remains `d41f62b` as the
-  audited upstream reference from the migration plan.
+- Not copied. Skills from this catalog are third-party and are excluded
+  from this collection.
 
 ## Local skill folders
 
