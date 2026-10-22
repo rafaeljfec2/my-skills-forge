@@ -1,0 +1,5 @@
+_migrate.py
+_validate.py
+__pycache__/
+*.pyc
+.DS_Store
