@@ -64,8 +64,8 @@ Trail for each skill copied into this forge. Sources were not modified.
 - Directory compare evidence: (not required / single source)
 ## `performance-observability-expert`
 
-- Domain: `devops`
-- Forge path: `skills/devops/performance-observability-expert`
+- Domain: `engineering`
+- Forge path: `skills/engineering/performance-observability-expert`
 - Source path: `/mnt/c/Users/rafae/.cursor/skills/performance-observability-expert`
 - Upstream: (local / none recorded)
 - Author found: unknown
