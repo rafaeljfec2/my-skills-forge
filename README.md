@@ -1,16 +1,17 @@
 # my-skills-forge
 
-Central working collection of reusable agent skills maintained in this
-repository.
+Local source of truth for agent skills on this machine. Each harness
+keeps a real skills directory whose per-skill entries are symlinks into
+this checkout. Editing a skill means editing it here.
 
 ## Maintainer vs provenance
 
 This repository has a **maintainer** (the owner of the forge). That role
 covers curation, naming, domain layout, and validation of the collection.
 
-Maintainer responsibility is **not** the same as authorship of every
-artifact. Each skill keeps its own provenance: source path, upstream
-reference, authorship notice, and license evidence when available.
+Maintainer responsibility is separate from authorship of every artifact.
+Each skill keeps its own provenance: source path, upstream reference,
+authorship notice, and license evidence when available.
 
 See:
 
@@ -18,6 +19,7 @@ See:
 - [PROVENANCE.md](PROVENANCE.md) — trail for every copied skill
 - [CATALOG.md](CATALOG.md) — inventory with status `ready`, `pending-review`, or `held`
 - [references/upstream.lock.md](references/upstream.lock.md) — locked upstream sources
+- [references/install-map.md](references/install-map.md) — retired harness names and the forge skills that replace them
 
 ## Layout
 
@@ -31,9 +33,41 @@ Domains: `engineering`, `architecture`, `quality`, `security`,
 Folder name and frontmatter `name` are the same kebab-case English
 identifier.
 
+## Consumers
+
+| Harness | Directory | Link |
+|---|---|---|
+| Cursor | `~/.cursor/skills` (currently `/mnt/c/Users/rafae/.cursor/skills`) | per-skill symlink |
+| Claude Code | `~/.claude/skills` | per-skill symlink |
+| Codex | `~/.codex/skills` | per-skill symlink, beside `.system` |
+| Shared | `~/.agents/skills` | per-skill symlink, beside the ai-memory routing skills |
+
+`scripts/link_skills.py` creates those symlinks for every skill under
+`skills/`. Both `ready` and `pending-review` skills are installed. The
+script leaves an existing real directory in place and reports that name
+instead of replacing it. It also leaves harness-owned entries untouched:
+`.system`, the ai-memory routing skills, and `air-finance-sentinel`.
+
+Cursor entries are Windows directory symlinks. Their target is the
+`\\wsl.localhost\...` path of this checkout, so Windows and WSL read the
+same files. Linux harnesses use a direct symlink to the skill directory
+in this repository.
+
+```bash
+python3 scripts/link_skills.py --dry-run
+python3 scripts/link_skills.py
+```
+
+## Projects
+
+The linker updates the harness directories above. A project that contains
+its own `.cursor/skills/<name>` or `.claude/skills/<name>` still uses
+that local copy. Portable skills are the ones linked from the harness.
+Catalog rows with status `held` stay in the project or harness that owns
+them.
+
 ## Status values
 
 - `ready` — copied and usable under the recorded license/provenance
-- `pending-review` — present but needs license or merge review
-- `held` — cataloged and **not** copied in this migration (portability,
-  coupling, secrets, or generated-artifact reasons — not merely "external")
+- `pending-review` — present and linked for local use; license or merge review is still open
+- `held` — cataloged and absent from `skills/` (portability, coupling, secrets, or generated-artifact reasons)
