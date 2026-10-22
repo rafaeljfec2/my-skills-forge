@@ -14,7 +14,7 @@ The skill automatically adapts to:
 
 - **Project size**: Small (< 1 week), Medium (1-4 weeks), Large (> 1 month)
 - **Project type**: Integration, Feature, Refactor, Infrastructure, Payment, Auth, Data migration
-- **User's language**: Automatically generates the TDD in the same language as your request (for example, English or Spanish)
+- **Language**: Writes the TDD in English
 
 ## How to Use
 
@@ -22,16 +22,8 @@ The skill automatically adapts to:
 
 Simply ask the AI agent to create a TDD:
 
-**English:**
-
 ```
 Create a TDD for Stripe payment integration
-```
-
-**Spanish:**
-
-```
-Crea un TDD para integración con Stripe
 ```
 
 ### Interactive Workflow
@@ -216,23 +208,13 @@ Create a TDD for Stripe integration. We need PCI DSS compliance, webhook
 signature validation, and encrypted storage of payment method tokens.
 ```
 
-### 5. Use Your Language
+### 5. Write in English
 
-The skill automatically detects your language. Just write naturally:
+Ask in English. The skill writes the TDD in English.
 
-- **English**: "Create a TDD for..."
-- **Spanish**: "Crea un TDD para..."
-
-## Language Support
-
-The skill supports multiple languages:
-
-| Language   | Example Trigger                           |
-| ---------- | ----------------------------------------- |
-| English    | "Create a TDD for Stripe integration"     |
-| Spanish    | "Crea un TDD para integración con Stripe" |
-
-All section headers and content are automatically translated to match your language.
+```
+Create a TDD for Stripe integration
+```
 
 ## Integration with Other Skills
 

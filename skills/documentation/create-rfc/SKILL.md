@@ -283,7 +283,7 @@ Would you like me to add anything else?
 - **Honest options are critical** — a one-sided RFC undermines trust and produces bad decisions
 - **"Do nothing" is always an option** — helps assess whether change is truly worth it
 - **Outcome section is filled after the fact** — leave as placeholder during drafting
-- **Language adaptation** — always write in the user's language
+- **Language** — write the RFC in English
 - **Respect user's context** — if the user provides rich context, use it; don't ask for what's already given
 - **Be concise in options** — focus on the decision factors, not implementation details
 - **RFCs age** — date everything; decisions made without context become confusing later
@@ -297,9 +297,3 @@ Would you like me to add anything else?
 - "Create a request for comments on our on-call rotation policy"
 - "Draft an RFC comparing self-hosted vs managed Kafka"
 - "I need to get approval to adopt a new design system"
-
-### Spanish
-
-- "Escribe un RFC para migrar nuestra infraestructura a la nube"
-- "Necesito un RFC para proponer un cambio en el proceso de deploy"
-- "Crea un Request for Comments sobre la adopción de un nuevo framework"

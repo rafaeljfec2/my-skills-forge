@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Audit documentation gaps — extract `[INFERIDO ...]` and `[TBD ...]` markers
+Audit documentation gaps — extract `[INFERRED ...]` and `[TBD ...]` markers
 from canonical `docs/` tree to produce an actionable backlog.
 
 Reuses the same audited prefixes/files as `audit_budget.py`, so legacy and
@@ -37,7 +37,7 @@ from audit_budget import (  # noqa: E402
     IGNORED_DIRS,
 )
 
-MARKER_RE = re.compile(r"\[(INFERIDO|TBD)\b([^\]]*)\]")
+MARKER_RE = re.compile(r"\[(INFERRED|TBD)\b([^\]]*)\]")
 
 CATEGORIES = ("architecture", "module", "feature", "decision", "runbook")
 CATEGORY_LABELS: dict[str, str] = {
@@ -154,7 +154,7 @@ def collect_gaps(root: Path, only: tuple[str, ...] | None = None) -> list[Gap]:
 
 def format_text(gaps: list[Gap]) -> str:
     if not gaps:
-        return "No [INFERIDO]/[TBD] markers found.\n"
+        return "No [INFERRED]/[TBD] markers found.\n"
     lines: list[str] = []
     by_file: dict[str, list[Gap]] = {}
     for gap in gaps:
@@ -162,7 +162,7 @@ def format_text(gaps: list[Gap]) -> str:
     counts = _summary_counts(gaps)
     lines.append(
         f"Docs gaps: {counts['total']} total "
-        f"(INFERIDO={counts['inferido']}  TBD={counts['tbd']}) "
+        f"(INFERRED={counts['inferred']}  TBD={counts['tbd']}) "
         f"across {len(by_file)} file(s)"
     )
     for file_path in sorted(by_file):
@@ -194,13 +194,13 @@ def format_json(gaps: list[Gap]) -> str:
 def format_md(gaps: list[Gap]) -> str:
     counts = _summary_counts(gaps)
     if not gaps:
-        return "# Docs gaps\n\nNo `[INFERIDO]`/`[TBD]` markers found.\n"
+        return "# Docs gaps\n\nNo `[INFERRED]`/`[TBD]` markers found.\n"
     lines: list[str] = []
     lines.append("# Docs gaps backlog")
     lines.append("")
     lines.append(
         f"**{counts['total']}** marker(s) "
-        f"(`INFERIDO={counts['inferido']}`, `TBD={counts['tbd']}`)."
+        f"(`INFERRED={counts['inferred']}`, `TBD={counts['tbd']}`)."
     )
     by_cat: dict[str, list[Gap]] = {}
     for gap in gaps:
@@ -220,14 +220,14 @@ def format_md(gaps: list[Gap]) -> str:
 
 
 def _summary_counts(gaps: list[Gap]) -> dict[str, int]:
-    inferido = sum(1 for g in gaps if g.kind == "INFERIDO")
+    inferred = sum(1 for g in gaps if g.kind == "INFERRED")
     tbd = sum(1 for g in gaps if g.kind == "TBD")
-    return {"total": len(gaps), "inferido": inferido, "tbd": tbd}
+    return {"total": len(gaps), "inferred": inferred, "tbd": tbd}
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="List [INFERIDO]/[TBD] markers across canonical docs/ tree."
+        description="List [INFERRED]/[TBD] markers across canonical docs/ tree."
     )
     parser.add_argument("--root", default=".", help="Repo root (default: current dir).")
     parser.add_argument(

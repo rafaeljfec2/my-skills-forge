@@ -519,7 +519,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `CC-BY-4.0`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: Example Prompts section replaced with FlowDeploy English/Spanish titled blocks
+- Delta applied: Example prompts are English
 - Directory compare evidence: files_a=2 files_b=2; only_a=[]; only_b=[]; differ=['README.md', 'SKILL.md']; SKILL.md a=55b6de1eabee b=0f67079e38b8
 
 ## `create-rfc`
@@ -532,7 +532,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `CC-BY-4.0`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: Example Prompts section replaced with FlowDeploy English/Spanish titled blocks
+- Delta applied: Example prompts are English
 - Directory compare evidence: files_a=3 files_b=3; only_a=[]; only_b=[]; differ=['README.md', 'SKILL.md', 'references/section-templates.md']; SKILL.md a=2d6b36b00e20 b=2c30abc95585
 
 ## `create-technical-design-doc`
@@ -922,7 +922,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: buscar-vagas-ti
 - Status: `ready`
-- Delta applied: Removed embedded professional profile; asks session or ai-memory; folder+name=job-search
+- Delta applied: Removed embedded professional profile; asks the current session; folder+name=job-search
 - Directory compare evidence: (not required / single source)
 
 ## `lead-enrichment`

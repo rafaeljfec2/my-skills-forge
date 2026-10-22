@@ -40,13 +40,13 @@ identifier.
 | Cursor | `~/.cursor/skills` (currently `/mnt/c/Users/rafae/.cursor/skills`) | per-skill symlink |
 | Claude Code | `~/.claude/skills` | per-skill symlink |
 | Codex | `~/.codex/skills` | per-skill symlink, beside `.system` |
-| Shared | `~/.agents/skills` | per-skill symlink, beside the ai-memory routing skills |
+| Shared | `~/.agents/skills` | per-skill symlink |
 
 `scripts/link_skills.py` creates those symlinks for every skill under
 `skills/`. Both `ready` and `pending-review` skills are installed. The
 script leaves an existing real directory in place and reports that name
 instead of replacing it. It also leaves harness-owned entries untouched:
-`.system`, the ai-memory routing skills, and `air-finance-sentinel`.
+`.system` and `air-finance-sentinel`.
 
 Cursor entries are Windows directory symlinks. Their target is the
 `\\wsl.localhost\...` path of this checkout, so Windows and WSL read the

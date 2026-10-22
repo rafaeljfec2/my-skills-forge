@@ -20,7 +20,7 @@ root-level docs (e.g. `docs/lgpd-cpf-migration.md`) are intentionally excluded
 from auditing — templates are stubs, legacy folders are scheduled to be
 migrated into the canonical structure.
 
-Token approximation: bytes / 3.5 (conservative for PT-BR + EN technical markdown).
+Token approximation: bytes / 3.5 (conservative for technical markdown).
 
 Exit codes:
   0 : every file within budget (and within strict thresholds when --strict is set)

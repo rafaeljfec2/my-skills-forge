@@ -76,8 +76,8 @@ Format: `AB#<US_NUMBER> <concise description of what was done>`
 
 Examples:
 
-- `AB#1060986 Adicionar campos TECNOS (Exigibilidade ISS e Código de Serviço Nacional)`
-- `AB#1056408 Implementar termos de uso do Domínio Rewards`
+- `AB#1060986 Add TECNOS fields (ISS taxability and national service code)`
+- `AB#1056408 Implement Rewards domain terms of use`
 
 The `AB#<number>` prefix auto-links to Azure DevOps work items.
 
@@ -87,16 +87,16 @@ Use the repository's template sections. Map content as follows:
 
 | Template Section            | Content                                                                                                                                                                                       |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Descrição**               | First line: `**US**: [AB#<NUMBER>](<ADO_URL>)` with the link. Then 1-2 sentences about what was done and why. Use `azure_devops_work_item` MCP tool to get URL from `_links.html.href`        |
-| **O que a PR faz**          | Bullet list of changes grouped by feature/area                                                                                                                                                |
-| **Evidências de Teste**     | **Mandatory.** Screenshots from step 2. Upload via draft release workaround (see `references/evidence-and-config.md`) and embed as markdown images                                            |
-| **Observações ao revisor**  | Technical notes: dependencies, env config, breaking changes, data flow nuances                                                                                                                |
+| **Description**             | First line: `**US**: [AB#<NUMBER>](<ADO_URL>)` with the link. Then 1-2 sentences about what was done and why. Use `azure_devops_work_item` MCP tool to get URL from `_links.html.href`        |
+| **What this PR does**       | Bullet list of changes grouped by feature/area                                                                                                                                                |
+| **Test evidence**           | **Mandatory.** Screenshots from step 2. Upload via draft release workaround (see `references/evidence-and-config.md`) and embed as markdown images                                            |
+| **Notes for the reviewer**  | Technical notes: dependencies, env config, breaking changes, data flow nuances                                                                                                                |
 | **Code Review Checklist**   | Mark items as `[x]` for applicable, `[ ]` with `(N/A)` for non-applicable                                                                                                                     |
 
 For PRs touching 5+ files, add a summary table:
 
 ```markdown
-| Arquivo             | Descrição                  |
+| File                | Description                |
 | ------------------- | -------------------------- |
 | `ComponentName.tsx` | Brief description of change |
 | `hookName.ts`       | Brief description of change |

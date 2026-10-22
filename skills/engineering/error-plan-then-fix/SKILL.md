@@ -16,41 +16,41 @@ Read and follow this skill when the user message **includes or references** any 
 - Pasted terminal or editor output with `error`, `FAILED`, `✖`, stack traces
 - Paths like `git-error-*`, `husky`, `lint-staged`, pre-commit failures
 - CI/job logs, `eslint`, `tsc`, `vitest`, `jest`, build failures
-- Explicit asks: “corrigir este erro”, “fix this”, “why did this fail”
+- Explicit asks: "fix this error", "fix this", "why did this fail"
 
 If the user is in **Ask / read-only** mode, run **only** the planning phase and do not edit files or run mutating commands.
 
-## Phase 1 — Modo planejador (obrigatório)
+## Phase 1 — Planning mode (required)
 
 Before changing code or running fixes:
 
-1. **Extrair sinais**: ferramenta (ESLint, Git, Turbo, etc.), ficheiros e linhas citados, código de saída.
-2. **Hipóteses**: listar 2–4 causas plausíveis, ordenadas por probabilidade.
-3. **Plano em fases**: passos concretos (ex.: confirmar ficheiro no disco vs stage → ajustar config → corrigir regra → validar com lint/teste).
+1. **Extract signals**: tool (ESLint, Git, Turbo, and so on), cited files and lines, exit code.
+2. **Hypotheses**: list 2–4 plausible causes, ordered by probability.
+3. **Phased plan**: concrete steps (for example: confirm the file on disk versus the index, adjust config, fix the rule, validate with lint or a test).
 
-Se faltar contexto crítico (repo errado, comando desconhecido, erro truncado), fazer **1–3 perguntas** objetivas e só depois fechar o plano.
+If critical context is missing (wrong repo, unknown command, truncated error), ask **1–3** direct questions and only then close the plan.
 
-Se a UI estiver em **Plan mode**, usar a ferramenta de plano do Cursor; caso contrário, apresentar o plano em markdown claro (título, causas, fases, ficheiros tocados).
+If the UI is in **Plan mode**, use Cursor's plan tool. Otherwise, present the plan in clear markdown (title, causes, phases, files touched).
 
-**Não** saltar para implementação sem este bloco, exceto se o erro for trivial e o plano for uma única linha explícita (ex.: “typo óbvio na linha X”).
+**Do not** jump to implementation without this block, unless the error is trivial and the plan is one explicit line (for example: "obvious typo on line X").
 
-## Phase 2 — Resolver
+## Phase 2 — Resolve
 
-After the plan (e após aprovação do plano, se o produto exigir confirmação explícita):
+After the plan (and after plan approval, when the product requires explicit confirmation):
 
-1. Investigar com ferramentas (ler ficheiros, grep, comandos de verificação).
-2. Aplicar a **correção mínima** necessária; alinhar com convenções do repo.
-3. Validar: lint/test/build adequado ao tipo de erro; não assumir sucesso sem correr o que fizer sentido.
-4. Resumir em PT-BR: o que falhou, o que mudou, e como validar.
+1. Investigate with tools (read files, grep, verification commands).
+2. Apply the **smallest fix** that is required, and follow the repo conventions.
+3. Validate with the lint, test, or build that matches the error. Do not assume success without running the check that applies.
+4. Summarize what failed, what changed, and how to validate.
 
-## Restrições
+## Constraints
 
-- Não editar `.env` com segredos sem autorização explícita do utilizador.
-- Não executar comandos destrutivos ou `git push` sem confirmação quando as regras do utilizador o exigirem.
-- Código e identificadores em inglês; resposta ao utilizador em **português (PT-BR)** salvo pedido em contrário.
+- Do not edit `.env` secrets without explicit user authorization.
+- Do not run destructive commands or `git push` without confirmation when the user's rules require it.
+- Write code and identifiers in English. Respond to the user in Brazilian Portuguese unless they ask otherwise.
 
-## Anti-padrões
+## Anti-patterns
 
-- Corrigir às cegas sem plano quando o log for longo ou ambíguo.
-- Mudar comportamento de produto ou refatorar fora do âmbito do erro sem justificar.
-- Ignorar que **Git stage** pode diferir do working tree (lint-staged falha no índice).
+- Fixing blindly, without a plan, when the log is long or ambiguous.
+- Changing product behavior or refactoring outside the error's scope without a reason.
+- Ignoring that the **Git index** can differ from the working tree (lint-staged fails on the index).

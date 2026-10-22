@@ -1,23 +1,24 @@
 ---
 name: job-search
-description: Search technology jobs and relevant recruiters using the professional profile provided in the session or ai-memory. Use when the user wants job opportunities, recruiters, or both.
+description: Search technology jobs and relevant recruiters using the professional profile provided in the session. Use when the user wants job opportunities, recruiters, or both.
 
 disable-model-invocation: true
 icon: briefcase
 color: blue
 ---
 
-# Job search (TI vacancies and recruiters)
+# Job search (technology vacancies and recruiters)
 
-## Objetivo
+## Goal
 
-Encontrar oportunidades profissionais atuais e recrutadores relevantes para o perfil do usuário, sem inventar informações e sem transformar a busca em uma lista enorme. Não mostre recrutadores que eu ja tenho conectado e que vc ja tenha indicado, quero sempre novas vagas e recrutadores, antes de pegar a vaga confira se ela esta valida ainda.
+Find current professional opportunities and relevant recruiters for the user's profile. Do not invent information, and do not turn the search into a huge list. Do not show recruiters the user is already connected with, or recruiters already suggested earlier. Always look for new vacancies and recruiters. Before presenting a vacancy, confirm that it is still open.
 
-Sempre retornar no máximo:
-- 10 vagas
-- 10 recrutadores
+Always return at most:
 
-Se houver menos resultados realmente relevantes, retornar menos. Nunca preencher a lista com resultados fracos apenas para chegar a 10.
+- 10 vacancies
+- 10 recruiters
+
+If fewer results are truly relevant, return fewer. Never pad the list with weak results just to reach 10.
 
 ## Professional profile source
 
@@ -26,122 +27,128 @@ Do **not** embed a fixed personal profile in this skill.
 Before searching, obtain the active professional profile from, in order:
 
 1. The current session (what the user states now)
-2. Project or user ai-memory pages the user points to
-3. A short clarifying question if profile data is still missing
+2. A short clarifying question if profile data is still missing
 
 Use only skills, stack, seniority, languages, and location constraints
 that are present in that profile context. Do not invent seniority,
 certifications, languages, or experience.
 
 
-## Regras de pesquisa
+## Search rules
 
-### 1. Pesquisar vagas atuais
+### 1. Search current vacancies
 
-Pesquisar na web por vagas abertas e recentes relacionadas ao perfil.
+Search the web for open, recent vacancies related to the profile.
 
-Priorizar:
+Prioritize:
+
 1. Backend Engineer
 2. Software Engineer
 3. Full Stack Engineer
 4. Node.js / TypeScript Engineer
-5. NestJS / React / React Native quando houver aderência
+5. NestJS / React / React Native when there is a fit
 6. Go Engineer
 7. AI Engineer / AI Software Engineer
 8. AI Agent Engineer / LLM Engineer
 9. Applied AI / AI Platform Engineer
-10. Solutions/Platform Engineer quando houver forte aderência técnica
+10. Solutions/Platform Engineer when there is a strong technical fit
 
-Combinar termos de busca em português e inglês.
+Combine search terms in Portuguese and English.
 
-Dar preferência a:
-- vagas publicadas recentemente;
-- vagas ainda abertas;
-- contratação CLT/PJ ou equivalente quando claramente informado;
-- remoto ou localização compatível com o usuário;
-- empresas e páginas de carreira identificáveis;
-- vagas cujo stack e responsabilidades tenham aderência real ao perfil.
+Prefer:
 
-Evitar:
-- vagas expiradas;
-- resultados duplicados;
-- agregadores que não permitem identificar a vaga original quando houver uma fonte primária;
-- vagas genéricas de TI sem relação com o perfil;
-- vagas que exijam tecnologias completamente fora do perfil sem nenhuma aderência relevante.
+- recently published vacancies;
+- vacancies that are still open;
+- CLT or PJ hiring, or the local equivalent, when that is clearly stated;
+- remote work, or a location compatible with the user;
+- identifiable companies and career pages;
+- vacancies whose stack and responsibilities actually fit the profile.
 
-### 2. Pesquisar recrutadores
+Avoid:
 
-Pesquisar profissionais que atuem publicamente como:
+- expired vacancies;
+- duplicate results;
+- aggregators that hide the original vacancy when a primary source exists;
+- generic IT vacancies with no relation to the profile;
+- vacancies that require technologies completely outside the profile, with no relevant overlap.
+
+### 2. Search recruiters
+
+Search for people who publicly work as:
+
 - Tech Recruiter
 - Talent Acquisition
 - Technical Recruiter
 - IT Recruiter
 - Engineering Recruiter
 - Talent Partner
-- People/Recruitment especializado em tecnologia
+- People or recruitment specialists focused on technology
 
-Priorizar recrutadores que:
-- trabalham atualmente com contratação de tecnologia;
-- recrutam para empresas compatíveis com o perfil;
-- publicam vagas de engenharia/software/IA;
-- estejam no Brasil ou trabalhem com vagas remotas que aceitem profissionais no Brasil.
+Prioritize recruiters who:
 
-Não coletar nem expor dados pessoais privados. Usar somente informações profissionais públicas.
+- currently hire for technology roles;
+- recruit for companies compatible with the profile;
+- publish engineering, software, or AI vacancies;
+- are in Brazil, or hire for remote roles that accept professionals in Brazil.
 
-### 3. Validação
+Do not collect or expose private personal data. Use only public professional information.
 
-Para cada resultado, confirmar na fonte encontrada:
-- título;
-- empresa;
-- localização/remoto;
-- data ou indicação de atualidade, quando disponível;
-- link da fonte;
-- por que é relevante para o perfil.
+### 3. Validation
 
-Se não for possível confirmar uma informação, escrever "não informado" em vez de inferir.
+For each result, confirm the following from the source that was found:
 
-### 4. Deduplicação
+- title;
+- company;
+- location or remote;
+- date, or another sign that the listing is current, when available;
+- source link;
+- why it is relevant to the profile.
 
-Não mostrar a mesma vaga mais de uma vez mesmo que apareça em vários sites.
+If a fact cannot be confirmed, write "not informed" instead of inferring it.
 
-Quando houver uma página oficial da empresa para a mesma vaga, preferir a fonte oficial.
+### 4. Deduplication
 
-## Formato da resposta
+Do not show the same vacancy more than once, even when it appears on several sites.
 
-Começar com:
+When the company has an official page for the same vacancy, prefer the official source.
 
-"Encontrei X vagas e Y recrutadores relevantes."
+## Response format
 
-### Vagas
+Start with:
 
-Tabela:
+"Found X relevant vacancies and Y relevant recruiters."
 
-| # | Vaga | Empresa | Local/Remoto | Aderência | Fonte |
+### Vacancies
+
+Table:
+
+| # | Vacancy | Company | Location/Remote | Fit | Source |
 |---|---|---|---|---|---|
 
-Em "Aderência", usar uma descrição curta e factual, por exemplo:
+In "Fit", use a short factual description, for example:
+
 - "Node.js + TypeScript + AWS"
 - "AI Agents + LLM + Python"
-- "Backend + sistemas distribuídos"
+- "Backend + distributed systems"
 
-Não usar notas, estrelas ou ranking.
+Do not use scores, stars, or a ranking.
 
-### Recrutadores
+### Recruiters
 
-Tabela:
+Table:
 
-| # | Recrutador | Cargo | Empresa | Foco | Perfil |
+| # | Recruiter | Role | Company | Focus | Profile |
 |---|---|---|---|---|---|
 
-No campo "Foco", indicar o tipo de contratação observado.
+In "Focus", state the kind of hiring that was observed.
 
-## Importante
+## Important
 
-- Não inventar vagas, recrutadores, empresas, datas ou requisitos.
-- Não afirmar que uma vaga está aberta sem evidência atual.
-- Não apresentar uma vaga como "melhor" ou "mais indicada"; apenas explicar a aderência factual.
-- Não fazer contato, candidatura ou envio de mensagens automaticamente.
-- A finalidade desta skill é pesquisar e apresentar oportunidades para o usuário decidir o que fazer.
-- Se a pesquisa encontrar muitas opções, limitar estritamente a 10 vagas e 10 recrutadores.
-- Se uma busca não encontrar resultados suficientes, fazer novas consultas com termos equivalentes antes de concluir.
-- Registrar a data da pesquisa no final.
+- Do not invent vacancies, recruiters, companies, dates, or requirements.
+- Do not claim a vacancy is open without current evidence.
+- Do not present a vacancy as "better" or "more recommended". Explain the factual fit only.
+- Do not contact anyone, apply, or send messages automatically.
+- This skill researches and presents opportunities so the user can decide what to do.
+- If the search finds many options, limit the result strictly to 10 vacancies and 10 recruiters.
+- If a search does not find enough results, run new queries with equivalent terms before concluding.
+- Record the search date at the end.

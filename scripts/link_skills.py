@@ -35,12 +35,6 @@ PROTECTED_NAMES = frozenset(
     {
         ".system",
         "air-finance-sentinel",
-        "ai-memory-durable-pages",
-        "ai-memory-handoff",
-        "ai-memory-learning-maintenance",
-        "ai-memory-messaging",
-        "ai-memory-retrieval",
-        "ai-memory-routing-install",
     }
 )
 # Contract for references/install-map.md. The validator fails if the

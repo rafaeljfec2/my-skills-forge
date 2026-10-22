@@ -18,33 +18,28 @@ Use this skill when:
 - User mentions needing documentation for stakeholder approval
 - Before implementing significant technical changes
 
-## Language Adaptation
+## Language
 
-**CRITICAL**: Always generate the TDD in the **same language as the user's request**. Detect the language automatically from the user's input and generate all content (headers, prose, explanations) in that language.
+Write the TDD in English.
 
-**Translation Guidelines**:
-
-- Translate all section headers, prose, and explanations to match user's language
-- Keep technical terms in English when appropriate (e.g., "API", "webhook", "JSON", "rollback", "feature flag")
+- Keep technical terms in English (for example API, webhook, JSON, rollback, feature flag)
 - Keep code examples and schemas language-agnostic (JSON, diagrams, code)
-- Company/product names remain in original language
-- Use natural, professional language for the target language
-- Maintain consistency in terminology throughout the document
+- Keep company and product names as written
+- Use natural, professional English
+- Keep terminology consistent throughout the document
 
-**Common Section Header Translations**:
+Standard section headers:
 
-| English                    | Spanish                      |
-| -------------------------- | ---------------------------- |
-| Context                    | Contexto                     |
-| Problem Statement          | Definición del Problema      |
-| Scope                      | Alcance                      |
-| Technical Solution         | Solución Técnica             |
-| Risks                      | Riesgos                      |
-| Implementation Plan        | Plan de Implementación       |
-| Security Considerations    | Consideraciones de Seguridad |
-| Testing Strategy           | Estrategia de Pruebas        |
-| Monitoring & Observability | Monitoreo y Observabilidad   |
-| Rollback Plan              | Plan de Reversión            |
+- Context
+- Problem Statement
+- Scope
+- Technical Solution
+- Risks
+- Implementation Plan
+- Security Considerations
+- Testing Strategy
+- Monitoring and Observability
+- Rollback Plan
 
 ## Industry Standards Reference
 
@@ -1376,7 +1371,7 @@ We'll deploy and hope it works.
 - **Always validate mandatory sections** - Don't let user skip them
 - **For payments/auth** - Security section is MANDATORY
 - **For production** - Monitoring and Rollback are MANDATORY
-- **Ask clarifying questions** - Don't guess missing information (ask in user's language)
+- **Ask clarifying questions** - Don't guess missing information. Ask in English.
 - **Be thorough but pragmatic** - Small projects don't need all 20 sections
 - **Update the document** - TDDs should evolve as the project progresses
 - **Use industry standards** - Reference Google, Amazon, RFC patterns
@@ -1392,14 +1387,6 @@ We'll deploy and hope it works.
 - "Write a design doc for the API redesign"
 - "Help me document the payment integration architecture"
 - "Create a tech spec for migrating to microservices"
-
-### Spanish
-
-- "Crea un TDD para integración con Stripe"
-- "Necesito un documento de diseño técnico para el nuevo sistema de autenticación"
-- "Escribe un design doc para el rediseño de la API"
-- "Ayúdame a documentar la arquitectura de integración de pagos"
-- "Crea una especificación técnica para migración a microservicios"
 
 ## References
 

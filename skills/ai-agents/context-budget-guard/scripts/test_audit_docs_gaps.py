@@ -40,15 +40,15 @@ class TestAuditDocsGapsExtraction(unittest.TestCase):
 
     def test_extracts_inferido_with_detail(self) -> None:
         target = self.root / "docs" / "modules" / "auth.md"
-        write_file(target, "# Auth\n\nLogin emite cookie [INFERIDO — confirmar: TTL].\n")
+        write_file(target, "# Auth\n\nLogin issues a cookie [INFERRED — confirm: TTL].\n")
 
         gaps = extract_gaps_from_file(target, self.root)
 
         self.assertEqual(len(gaps), 1)
-        self.assertEqual(gaps[0].kind, "INFERIDO")
+        self.assertEqual(gaps[0].kind, "INFERRED")
         self.assertEqual(gaps[0].line, 3)
-        self.assertEqual(gaps[0].detail, "confirmar: TTL")
-        self.assertIn("Login emite cookie", gaps[0].context)
+        self.assertEqual(gaps[0].detail, "confirm: TTL")
+        self.assertIn("Login issues a cookie", gaps[0].context)
         self.assertEqual(gaps[0].category, "module")
 
     def test_extracts_tbd_without_detail(self) -> None:
@@ -64,12 +64,12 @@ class TestAuditDocsGapsExtraction(unittest.TestCase):
 
     def test_multiple_markers_on_same_line(self) -> None:
         target = self.root / "docs" / "architecture" / "esocial.md"
-        write_file(target, "Linha com [INFERIDO] e [TBD: motivação].\n")
+        write_file(target, "Line with [INFERRED] and [TBD: motivation].\n")
 
         gaps = extract_gaps_from_file(target, self.root)
 
         self.assertEqual(len(gaps), 2)
-        self.assertEqual({g.kind for g in gaps}, {"INFERIDO", "TBD"})
+        self.assertEqual({g.kind for g in gaps}, {"INFERRED", "TBD"})
         self.assertTrue(all(g.line == 1 for g in gaps))
 
     def test_long_context_truncated(self) -> None:
@@ -85,7 +85,7 @@ class TestAuditDocsGapsExtraction(unittest.TestCase):
 
     def test_no_markers_returns_empty(self) -> None:
         target = self.root / "docs" / "runbooks" / "db-migration.md"
-        write_file(target, "Sem marcadores aqui.\n")
+        write_file(target, "No markers here.\n")
 
         gaps = extract_gaps_from_file(target, self.root)
 
@@ -159,11 +159,11 @@ class TestAuditDocsGapsFiltersAndFormats(unittest.TestCase):
     def setUp(self) -> None:
         self._tmp = tempfile.TemporaryDirectory()
         self.root = Path(self._tmp.name)
-        write_file(self.root / "docs" / "modules" / "auth.md", "[INFERIDO — TTL]\n")
+        write_file(self.root / "docs" / "modules" / "auth.md", "[INFERRED — TTL]\n")
         write_file(self.root / "docs" / "features" / "clients.md", "[TBD]\n")
         write_file(
             self.root / "docs" / "architecture" / "esocial.md",
-            "[INFERIDO]\n[TBD: motivação]\n",
+            "[INFERRED]\n[TBD: motivation]\n",
         )
 
     def tearDown(self) -> None:
@@ -188,14 +188,14 @@ class TestAuditDocsGapsFiltersAndFormats(unittest.TestCase):
         out = format_text(gaps)
         self.assertIn("Docs gaps: 4 total", out)
         self.assertIn("=== docs/modules/auth.md", out)
-        self.assertIn("docs/architecture/esocial.md:1  [INFERIDO]", out)
+        self.assertIn("docs/architecture/esocial.md:1  [INFERRED]", out)
         self.assertIn("docs/architecture/esocial.md:2  [TBD]", out)
 
     def test_format_json_emits_summary_and_gaps(self) -> None:
         gaps = collect_gaps(self.root)
         payload = _json.loads(format_json(gaps))
         self.assertEqual(payload["summary"]["total"], 4)
-        self.assertEqual(payload["summary"]["inferido"], 2)
+        self.assertEqual(payload["summary"]["inferred"], 2)
         self.assertEqual(payload["summary"]["tbd"], 2)
         self.assertEqual(payload["summary"]["files"], 3)
         self.assertEqual(payload["summary"]["by_category"]["architecture"], 2)
@@ -211,7 +211,7 @@ class TestAuditDocsGapsFiltersAndFormats(unittest.TestCase):
         self.assertIn("## docs/modules/ (backend) (1)", out)
         self.assertIn("## docs/features/ (frontend) (1)", out)
         self.assertIn("## docs/architecture/ + index + glossary (2)", out)
-        self.assertIn("- [ ] `docs/modules/auth.md:1` **[INFERIDO]** — TTL", out)
+        self.assertIn("- [ ] `docs/modules/auth.md:1` **[INFERRED]** — TTL", out)
 
 
 if __name__ == "__main__":

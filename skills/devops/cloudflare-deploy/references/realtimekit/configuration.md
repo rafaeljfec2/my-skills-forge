@@ -192,14 +192,14 @@ const uiConfig: UIConfig = {
 import { useLanguage } from '@cloudflare/realtimekit-ui';
 
 const customLanguage = {
-  'join': 'Entrar',
-  'leave': 'Salir',
-  'mute': 'Silenciar',
-  'unmute': 'Activar audio',
-  'turn_on_camera': 'Encender cámara',
-  'turn_off_camera': 'Apagar cámara',
-  'share_screen': 'Compartir pantalla',
-  'stop_sharing': 'Dejar de compartir'
+  'join': 'Join',
+  'leave': 'Leave',
+  'mute': 'Mute',
+  'unmute': 'Unmute',
+  'turn_on_camera': 'Turn camera on',
+  'turn_off_camera': 'Turn camera off',
+  'share_screen': 'Share screen',
+  'stop_sharing': 'Stop sharing'
 };
 
 const t = useLanguage(customLanguage);

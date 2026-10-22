@@ -10,53 +10,54 @@ description: >-
 
 # Principal engineering workflow
 
-This skill defines the **mandatory closure** after any implementation. Treat it as the default bar for “trabalho concluído”.
+This skill defines the **mandatory closure** after any implementation. Treat it as the default bar for finished work.
 
-## Quando aplicar
+## When to apply
 
-- Sempre que tiveres **alterado código** (ficheiros criados, editados ou removidos) em resposta a um pedido.
-- Antes de declarar a tarefa **feita** ou pedires merge/PR ao utilizador.
+- Whenever you have **changed code** (files created, edited, or removed) in response to a request.
+- Before declaring the task **done** or asking the user for a merge or pull request.
 
-## Fluxo obrigatório (pós-implementação)
+## Required flow (after implementation)
 
-### 1. Code review minucioso das próprias alterações
+### 1. Careful review of your own changes
 
-Rever como Tech Lead o que foi entregue:
+Review what was delivered as a tech lead:
 
-- **Arquitetura e limites**: coesão, acoplamento, impacto em outros módulos.
-- **Correção e edge cases**: null/undefined, erros assíncronos, abort/cancel, i18n se aplicável.
-- **Segurança**: inputs, segredos, injeção, exposição de dados, OWASP relevante ao stack.
-- **Performance e observabilidade**: N+1, payloads, logs úteis sem dados sensíveis.
-- **Padrões do projeto**: regras do utilizador (ex.: `??` vs `||`, sem `any`, mobile first no frontend, props `readonly`, `Promise.all` só onde faz sentido).
-- **Testes**: cobertura do que mudou; descrições de testes em **inglês** quando adicionares testes.
-- **Lint / tipos / formatação**: alinhar com ESLint/Prettier/tsc do repo afetado.
+- **Architecture and boundaries**: cohesion, coupling, and impact on other modules.
+- **Correctness and edge cases**: null or undefined, async errors, abort or cancel, and i18n when it applies.
+- **Security**: inputs, secrets, injection, data exposure, and the OWASP issues relevant to the stack.
+- **Performance and observability**: N+1 queries, payloads, and useful logs without sensitive data.
+- **Project standards**: the user's rules (for example `??` versus `||`, no `any`, mobile first on the frontend, `readonly` props, and `Promise.all` only where it makes sense).
+- **Tests**: coverage of what changed. Write test descriptions in **English** when you add tests.
+- **Lint, types, and formatting**: align with the affected repo's ESLint, Prettier, and `tsc` setup.
 
-### 2. Propor correções de forma explícita
+### 2. Propose corrections explicitly
 
-- Listar achados por severidade (**crítico** / **importante** / **menor**).
-- Para cada ponto, indicar **o quê** mudar, **onde** (ficheiros/áreas) e **porquê** (risco ou qualidade).
+- List findings by severity (**critical** / **important** / **minor**).
+- For each item, state **what** to change, **where** (files or areas), and **why** (risk or quality).
 
-### 3. Ajustar o código
+### 3. Adjust the code
 
-- Aplicar as correções **acordadas com o desenho**; para mudanças grandes ou ambíguas, confirmar com o utilizador.
-- Evitar deixar “só recomendações” sem corrigir o que for óbvio e seguro.
+- Apply the corrections that **fit the design**. For large or ambiguous changes, confirm with the user.
+- Do not leave an obvious, safe fix as a recommendation only.
 
-### 4. Validar
+### 4. Validate
 
-- Correr **lint** e **build** (e testes quando fizer sentido) nos pacotes **tocados**; se o monorepo tiver vários projetos, indicar claramente o que passou e o que falhou noutros roots.
-- Re-verificar a aba **Problems** / diagnósticos do IDE nos ficheiros alterados.
+- Run **lint** and **build** (and tests when they apply) in the **touched** packages. If the monorepo has several projects, state clearly what passed and what failed in the other roots.
+- Re-check the IDE **Problems** diagnostics for the changed files.
 
-### 5. Resposta ao utilizador (PT-BR)
+### 5. Reply to the user
 
-- Resumo técnico curto: o que foi feito, o que foi corrigido após o review, e riscos/resíduos.
-- Próximos passos opcionais (testes manuais, feature flags, docs).
+- A short technical summary: what was done, what was corrected after review, and any remaining risks.
+- Optional next steps (manual tests, feature flags, docs).
+- Write this reply in Brazilian Portuguese unless the user asked for another language.
 
-## Relação com outras skills
+## Relation to other skills
 
-- Para a profundidade do review, seguir também **[senior-code-reviewer](../senior-code-reviewer/SKILL.md)** (estrutura de feedback e checklist).
-- Para segurança específica, **[application-security-expert](../application-security-expert/SKILL.md)** quando o fluxo tocar em auth, dados sensíveis ou superfície de ataque.
+- For review depth, also follow **[senior-code-reviewer](../senior-code-reviewer/SKILL.md)** (feedback structure and checklist).
+- For security-specific work, follow **[application-security-expert](../application-security-expert/SKILL.md)** when the flow touches auth, sensitive data, or an attack surface.
 
-## O que não fazer
+## What to avoid
 
-- Não encerrar implementação só com “implementei” sem review e validação mínima.
-- Não alterar `.env` ou segredos sem autorização explícita do utilizador (regra global mantém-se).
+- Do not close an implementation with only "done" and no review or minimal validation.
+- Do not change `.env` or secrets without explicit user authorization. The global rule still applies.

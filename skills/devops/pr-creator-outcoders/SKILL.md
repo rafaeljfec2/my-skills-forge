@@ -85,7 +85,7 @@ Format: `AB#<US_NUMBER> <concise description of what was done>`
 
 Examples:
 - `AB#1060986 Add TECNOS fields (ISS exigibility and national service code)`
-- `AB#1056408 Implement Domínio Rewards terms of use`
+- `AB#1056408 Implement Rewards domain terms of use`
 
 The `AB#<number>` prefix auto-links to Azure DevOps work items.
 

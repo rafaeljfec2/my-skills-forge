@@ -94,14 +94,14 @@ If the diff visibly violates any of these AND CI lint passes, ESLint config is p
 
 ## 6. Architectural rigor
 
-- **Coesão**: each function/class does ONE thing? Multi-responsibility → split
-- **Acoplamento**: dependências via interface, não implementação concreta? Constructor DI?
-- **Boundaries (clean architecture)**: domain ⟂ infrastructure (ORM client — Drizzle/Prisma/etc. — never in domain layer); use-case orquestra; adapter integra
-- **Testability**: mocking points são interfaces, não classes concretas; sem `new ConcreteService()` enterrado
-- **Scalability**: hot path tem cache? número de DB calls cresce com input size (N+1)? batching aplicável?
-- **Observability**: log estruturado nos error paths? span/trace em operações cross-service? métricas em SLO-relevant paths?
-- **Backwards compatibility**: API change: opt-in (additive) vs breaking? deprecation path documentado?
-- **Configurability**: valores hardcoded que deveriam vir de env/config? feature flag para rollout gradual?
+- **Cohesion**: does each function or class do one thing? Split anything with more than one responsibility.
+- **Coupling**: do dependencies go through an interface rather than a concrete implementation? Is construction injected?
+- **Boundaries (clean architecture)**: domain stays independent of infrastructure (an ORM client such as Drizzle or Prisma never belongs in the domain layer). The use case orchestrates. The adapter integrates.
+- **Testability**: mocking points are interfaces, not concrete classes. No buried `new ConcreteService()`.
+- **Scalability**: does the hot path have a cache? Does the number of database calls grow with input size (N+1)? Is batching applicable?
+- **Observability**: structured logs on error paths? A span or trace on cross-service operations? Metrics on paths that matter for the SLO?
+- **Backwards compatibility**: is an API change opt-in (additive) or breaking? Is the deprecation path documented?
+- **Configurability**: are hardcoded values that should come from env or config left in code? Is there a feature flag for a gradual rollout?
 
 ## 7. Final print
 

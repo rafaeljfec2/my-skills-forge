@@ -406,7 +406,7 @@ The rationale is *why this option and not the others* — not just what was chos
 - **Context ages** — always date the ADR; what seems obvious now won't be in 3 years.
 - **Honest consequences** — a one-sided ADR loses credibility. Future engineers will hit the downsides regardless.
 - **Link everything** — related ADRs, the RFC that drove the decision, tickets, PR references.
-- **Language adaptation** — always write in the user's language.
+- **Language** — write the ADR in English.
 - **Number sequentially** — check the directory before assigning a number.
 
 ## Example Prompts that Trigger This Skill
@@ -418,9 +418,3 @@ The rationale is *why this option and not the others* — not just what was chos
 - "Create an ADR for moving our frontend to Next.js"
 - "I need to record why we chose Kafka over RabbitMQ"
 - "Add an architecture decision record for our authentication approach"
-
-### Spanish
-
-- "Escribe un ADR sobre la decisión de usar PostgreSQL"
-- "Documenta la decisión de adoptar microservicios"
-- "Crea un ADR explicando por qué elegimos Next.js"

@@ -66,8 +66,8 @@ The template defines the sections to fill. Always respect the repository's templ
 Format: `AB#<US_NUMBER> <concise description of what was done>`
 
 Examples:
-- `AB#1060986 Adicionar campos TECNOS (Exigibilidade ISS e Código de Serviço Nacional)`
-- `AB#1056408 Implementar termos de uso do Domínio Rewards`
+- `AB#1060986 Add TECNOS fields (ISS taxability and national service code)`
+- `AB#1056408 Implement Rewards domain terms of use`
 
 The `AB#<number>` prefix auto-links to Azure DevOps work items.
 
@@ -77,10 +77,10 @@ Use the repository's template sections. Map content as follows:
 
 | Template Section | Content |
 |---|---|
-| **Descrição** | First line: `**US**: [AB#<NUMBER>](<ADO_URL>)` with the link to the work item. Then 1-2 sentences about what was done and why. Construct the URL as `https://dev.azure.com/<ORG>/<PROJECT>/_workitems/edit/<US_NUMBER>` |
-| **O que a PR faz** | Bullet list of all changes grouped by feature/area |
-| **Evidências de Teste** | **Mandatory.** Screenshots provided by the user in step 2. Upload via draft release workaround and embed as markdown images |
-| **Observações ao revisor** | Technical notes: dependencies, env config, breaking changes, data flow nuances |
+| **Description** | First line: `**US**: [AB#<NUMBER>](<ADO_URL>)` with the link to the work item. Then 1-2 sentences about what was done and why. Construct the URL as `https://dev.azure.com/<ORG>/<PROJECT>/_workitems/edit/<US_NUMBER>` |
+| **What this PR does** | Bullet list of all changes grouped by feature/area |
+| **Test evidence** | **Mandatory.** Screenshots provided by the user in step 2. Upload via draft release workaround and embed as markdown images |
+| **Notes for the reviewer** | Technical notes: dependencies, env config, breaking changes, data flow nuances |
 | **Code Review Checklist** | Mark items as `[x]` for applicable, `[ ]` with `(N/A)` for non-applicable |
 
 #### Changes Table (optional, for PRs with many files)
@@ -88,7 +88,7 @@ Use the repository's template sections. Map content as follows:
 When the PR touches 5+ files, add a summary table:
 
 ```markdown
-| Arquivo | Descrição |
+| File | Description |
 |---------|-----------|
 | `ComponentName.tsx` | Brief description of change |
 | `hookName.ts` | Brief description of change |
