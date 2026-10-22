@@ -17,7 +17,7 @@ See:
 
 - [LICENSING.md](LICENSING.md) — per-artifact licensing policy (no exclusive root license claim)
 - [PROVENANCE.md](PROVENANCE.md) — trail for every copied skill
-- [CATALOG.md](CATALOG.md) — inventory with status `ready`, `pending-review`, or `held`
+- [CATALOG.md](CATALOG.md) — inventory with status `ready` or `pending-review`
 - [references/upstream.lock.md](references/upstream.lock.md) — locked upstream sources
 - [references/install-map.md](references/install-map.md) — retired harness names and the forge skills that replace them
 
@@ -63,11 +63,8 @@ python3 scripts/link_skills.py
 The linker updates the harness directories above. A project that contains
 its own `.cursor/skills/<name>` or `.claude/skills/<name>` still uses
 that local copy. Portable skills are the ones linked from the harness.
-Catalog rows with status `held` stay in the project or harness that owns
-them.
 
 ## Status values
 
 - `ready` — copied and usable under the recorded license/provenance
 - `pending-review` — present and linked for local use; license or merge review is still open
-- `held` — cataloged and absent from `skills/` (portability, coupling, secrets, or generated-artifact reasons)

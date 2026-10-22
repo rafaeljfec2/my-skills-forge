@@ -8,8 +8,8 @@ only. It does not create a symlink with the retired name, and it does
 not delete the retired directory. Removing those directories is a later
 harness step, after the new names are linked.
 
-`air-finance-sentinel` stays in the Cursor skills directory. It is
-cataloged as `held` and is excluded from linking.
+`air-finance-sentinel` stays in the Cursor skills directory. The linker
+does not replace it.
 
 ## Replacements
 
