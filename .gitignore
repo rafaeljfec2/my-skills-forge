@@ -1,5 +1,10 @@
 _migrate.py
 _validate.py
+_git_add_all.py
+_git_add_all.log
+_git_add_log.txt
+_commit.log
+_commit2.log
 __pycache__/
 *.pyc
 .DS_Store
