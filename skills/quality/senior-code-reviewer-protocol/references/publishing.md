@@ -28,7 +28,7 @@ gh pr comment <pr-number> --repo <owner>/<repo> --body "$(cat <<'EOF'
 <entire STEP 7 verdict block — verbatim, no truncation>
 
 ---
-_Automated review by `senior-code-reviewer` skill. Verify CRITICAL/IMPORTANT items before merging._
+_Automated review by `senior-code-reviewer-protocol` skill. Verify CRITICAL/IMPORTANT items before merging._
 EOF
 )"
 ```
@@ -58,7 +58,7 @@ gh pr review <pr-number> --repo <owner>/<repo> --approve --body "<one-line summa
 2. Include the FULL verdict block from STEP 7 — no truncation, no summarization, no paraphrasing
 3. Use markdown so GitHub renders sections, code blocks, and lists correctly
 4. Keep `file:line` references as plain text — GitHub auto-linkifies when the path matches a file in the repo
-5. Add a footer attributing the review to the `senior-code-reviewer` skill
+5. Add a footer attributing the review to the `senior-code-reviewer-protocol` skill
 
 ## Confirmation
 

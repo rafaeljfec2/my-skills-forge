@@ -5,7 +5,7 @@ description: >-
   repository's `.github/pull_request_template.md`, filling every applicable
   section from the current session context. Use when the user asks to open
   or create a PR. Do not use for amending an existing PR, addressing review
-  comments (use gh-address-comments), or fixing CI (use gh-fix-ci).
+  comments, or fixing CI.
 metadata:
   version: '1.1.0'
   short-description: Create a PR filling the project template from session context

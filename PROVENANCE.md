@@ -38,18 +38,6 @@ Trail for each skill copied into this forge. Sources were not modified.
 - Status: `ready`
 - Delta applied: (none — verbatim copy)
 - Directory compare evidence: (not required / single source)
-## `ui-implement-figma-compact`
-
-- Domain: `design`
-- Forge path: `skills/design/ui-implement-figma-compact`
-- Source path: `/home/rafael/dev-rafael/connexto-job-search/.agents/skills/ui-implement-figma`
-- Upstream: (local / none recorded)
-- Author found: unknown
-- License found: `unknown`
-- Previous names: ui-implement-figma
-- Status: `pending-review`
-- Delta applied: (none — verbatim copy)
-- Directory compare evidence: (not required / single source)
 ## `gh-create-pr`
 
 - Domain: `devops`
@@ -98,18 +86,6 @@ Trail for each skill copied into this forge. Sources were not modified.
 - Status: `pending-review`
 - Delta applied: (none — verbatim copy)
 - Directory compare evidence: files_a=6 files_b=1; only_a=['claude-code/README.md', 'claude-code/create-pr.md', 'references/azure-devops-update.md', 'references/evidence-and-config.md', 'references/teams-notification.md']; only_b=[]; differ=['SKILL.md']; SKILL.md a=b8831fc074d6 b=5c7ee98bff9c
-## `create-technical-design-doc`
-
-- Domain: `documentation`
-- Forge path: `skills/documentation/create-technical-design-doc`
-- Source path: `/home/rafael/dev-rafael/connexto-vps-deploy-paas/.cursor/skills/create-technical-design-doc`
-- Upstream: https://github.com/tech-leads-club/agent-skills.git@d41f62b (catalog lineage); FlowDeploy fork delta applied
-- Author found: unknown
-- License found: `unknown`
-- Previous names: technical-design-doc-creator
-- Status: `pending-review`
-- Delta applied: Frontmatter name technical-design-doc-creator → create-technical-design-doc
-- Directory compare evidence: files_a=2 files_b=2; only_a=[]; only_b=[]; differ=['README.md', 'SKILL.md']; SKILL.md a=a972e0e3bfee b=947af11e12de | vs stflow: files_a=2 files_b=7; only_a=[]; only_b=['references/anti-patterns.md', 'references/checklists.md', 'references/section-templates-critical.md', 'references/section-templates-mandatory.md', 'references/section-templates-suggested.md']; differ=['README.md', 'SKILL.md']; SKILL.md a=a972e0e3bfee b=184c1737d248
 ## `backend-engineering-expert`
 
 - Domain: `engineering`
@@ -216,19 +192,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
-- Directory compare evidence: (not required / single source)
-## `cognitive-complexity-guard`
-
-- Domain: `quality`
-- Forge path: `skills/quality/cognitive-complexity-guard`
-- Source path: `/mnt/c/Users/rafae/.cursor/skills/cognitive-complexity-guard`
-- Upstream: (local / none recorded)
-- Author found: unknown
-- License found: `unknown`
-- Previous names: (none)
-- Status: `ready`
-- Delta applied: (none — verbatim copy)
+- Delta applied: Absorbed cognitive-complexity-guard how-to (extract branches, switch over long if/else, processItem loops, no eslint-disable/NOSONAR silence, avoid PromiseLike test classes)
 - Directory compare evidence: (not required / single source)
 ## `qa-automation-expert`
 
@@ -276,17 +240,5 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
-- Directory compare evidence: (not required / single source)
-## `snyk-rules`
-
-- Domain: `security`
-- Forge path: `skills/security/snyk-rules`
-- Source path: `/mnt/c/Users/rafae/.cursor/skills/snyk-rules`
-- Upstream: (local / none recorded)
-- Author found: unknown
-- License found: `unknown`
-- Previous names: (none)
-- Status: `pending-review`
 - Delta applied: (none — verbatim copy)
 - Directory compare evidence: (not required / single source)

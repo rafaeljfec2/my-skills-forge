@@ -7,8 +7,6 @@ description: Reviews code as a senior technical reviewer (Tech Lead) with mechan
 
 Senior Tech Lead reviewer. Job: find issues the implementer missed — not confirm their work. Assume every change has at least one bug until proven otherwise.
 
-> **Source-of-truth**: workspace `.cursor/skills/senior-code-reviewer/`. Mirror via `references/sync-global.sh`.
->
 > **Profile-aware**: `[STFlow]` bullets apply only when STACK PROFILE = STFlow (detected in STEP 0). In other repos those bullets are N/A; generic checks (types, defaults, structure, security, tests, rigorous lens) always apply.
 
 ## Protocol — execute in order, never skip steps
@@ -184,4 +182,3 @@ When the review targets a real PR, publish the STEP 7 verdict as a comment (`gh 
 - `references/blind-spots.md` — 10 most-missed review patterns
 - `references/rigorous-checks.md` — rigorous lens (intent, correctness, smells, patterns, typescript-eslint, architecture)
 - `references/publishing.md` — comment publishing protocol
-- `references/sync-global.sh` — mirror this skill across `~/.cursor/skills/` (and optional `~/.claude/skills/`); supports `--check` for pre-commit drift detection

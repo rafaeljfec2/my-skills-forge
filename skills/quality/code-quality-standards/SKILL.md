@@ -32,6 +32,19 @@ When you hit a limit, REFACTOR. Do NOT bump the threshold.
 | Function with cognitive >= 12 | Flatten branches; replace nested if/else with early returns or polymorphism |
 | Imports >15 in a single file | File is doing too much; split by feature |
 
+## Cognitive complexity how-to
+
+When flattening a function that hits Sonar S3776 (or nesting S2004):
+
+1. Prefer **early returns** instead of wrapping the whole body in `if (ok) { … }`.
+2. **Extract** branches into named functions: `parseX`, `handleY`, `buildZ`, `assertOk`.
+3. Replace long `if/else` chains with `switch (discriminant)` where each case delegates to a one-purpose function.
+4. In hooks and services, move parsing, API branches, and persistence into **separate modules** or **private methods** with narrow types.
+5. In loops, move body logic to `processItem(item)`; keep the loop itself short.
+6. In tests, avoid a `class` implementing `PromiseLike` with `then` (Sonar S7739); use a **factory** that returns a plain thenable object.
+
+Do **not** add `eslint-disable` / `NOSONAR` solely to silence complexity without refactoring. Do not grow a "god" function beyond ~50 lines without splitting. After refactors, run the project linter and Sonar (or IDE Sonar rules) on touched files.
+
 ## TypeScript strict - non-negotiable
 
 1. **Never `any`**. Use `unknown` and narrow, or define a proper type.

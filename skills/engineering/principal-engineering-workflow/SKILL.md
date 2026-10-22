@@ -54,8 +54,8 @@ Review what was delivered as a tech lead:
 
 ## Relation to other skills
 
-- For review depth, also follow **[senior-code-reviewer](../senior-code-reviewer/SKILL.md)** (feedback structure and checklist).
-- For security-specific work, follow **[application-security-expert](../application-security-expert/SKILL.md)** when the flow touches auth, sensitive data, or an attack surface.
+- For review depth, also follow **[senior-code-review-judge](../../quality/senior-code-review-judge/SKILL.md)** and **[senior-code-reviewer-protocol](../../quality/senior-code-reviewer-protocol/SKILL.md)**.
+- For security-specific work, follow **[application-security-expert](../../security/application-security-expert/SKILL.md)** when the flow touches auth, sensitive data, or an attack surface.
 
 ## What to avoid
 
