@@ -1,189 +1,143 @@
-# Skills quality audit
+# Auditoria de qualidade das skills
 
-Date: 2026-10-23 (budget table refreshed after Akita-style remediation)  
-Collection: `my-skills-forge` (20 skills under `skills/<domain>/<name>/`)  
-Scope: audit plus remediation of P0/P1 budget and portability findings.
+Data: 2026-10-23 (homogeneização thin-orchestrator concluída)  
+Coleção: `my-skills-forge` (20 skills em `skills/<domain>/<name>/`)  
+Escopo: orçamento de contexto, contrato de forma, progressive disclosure e política de idioma.
 
-## Method
+## Método
 
-### Context budget
+### Orçamento de contexto
 
-Same approximation as [`skills/ai-agents/context-budget-guard`](../skills/ai-agents/context-budget-guard/SKILL.md):
+Mesma aproximação de [`skills/ai-agents/context-budget-guard`](../skills/ai-agents/context-budget-guard/SKILL.md):
 
 - `tokens ≈ bytes / 3.5`
-- `SKILL.md`: soft 2,500 / hard 4,000
-- `references/*.md`: soft 5,000 / hard 7,000
+- `SKILL.md`: soft 2.500 / hard 4.000
+- `references/*.md`: soft 5.000 / hard 7.000
+- Preferência de forma: `SKILL.md` ≤ 1.500 tokens (aviso no `_validate.py`; orçamento soft 2.500 permanece)
 
-Measured with `python3 skills/ai-agents/context-budget-guard/scripts/audit_budget.py --root .`. The script discovers harness paths (`.cursor/skills`, `.claude/skills`) **and** the forge layout (`skills/*/*/SKILL.md`, `skills/*/*/references/**/*.md`).
+Medido com `python3 skills/ai-agents/context-budget-guard/scripts/audit_budget.py --root .`.
 
-### Qualitative axes
+### Contrato de forma
 
-Activation, role clarity, progressive disclosure, portability, memory/cost, and prose consistency (English artifacts; PT-BR user replies only where declared).
+Documentado em [`references/skill-shape.md`](../references/skill-shape.md). Toda skill do catálogo deve ter:
 
-### Curation lenses (Akita-informed)
+- `## Workflow (thin orchestrator)`
+- `## Token economy`
 
-Principles taken from [akitaonrails/my-skills](https://github.com/akitaonrails/my-skills) as **curation method only** (not as license or content to copy):
+Validado por `_validate.py` (`check_skill_shape`).
 
-| Lens | Upstream source | Use in this audit |
-|---|---|---|
-| Personal skills carry foreign paths and assumptions | README | Flag STFlow / team / machine-global coupling |
-| Inventory what stays outside the repo | README | Documented in forge README “Out of this repo / team-coupled” |
-| Smallest useful form; “create nothing” can succeed | `reflect/SKILL.md` | Score review/PR overlaps |
-| Frequency, cost, risk, stability, coverage | `reflect/SKILL.md` | Keep vs thin vs merge recommendations |
-| Token economy: thin orchestrator, detail elsewhere | `fact-check/SKILL.md` / `security-audit` pattern | Thin injectable `SKILL.md`; detail in `references/` |
-| Deletion test | `improve-codebase-architecture` | Does deleting the skill erase complexity or push it to many call sites? |
-| Plain language; short obligations | `humanizer/AGENTS.md` | Description and MUST density |
+### Lentes de curadoria (inspiradas no Akita)
 
-Flat Akita layout was **not** adopted; domain folders stay.
+Método de curadoria apenas — sem importar conteúdo do [akitaonrails/my-skills](https://github.com/akitaonrails/my-skills):
 
----
+| Lente | Uso nesta auditoria |
+|---|---|
+| Economia de tokens: orquestrador fino | `SKILL.md` injetável; detalhe em `references/` |
+| Forma útil mínima | Manter papéis distintos (reviews / PRs) |
+| Inventário do que fica fora | README “Out of this repo / team-coupled” |
+| Layout flat do Akita | **Não** adotado; pastas por domínio permanecem |
 
-## Executive summary
+### Política de idioma
 
-The collection is coherent: domains match roles, and **every** measured `SKILL.md` and `references/*.md` is under soft budget.
+| Artefato | Idioma |
+|---|---|
+| Skills e docs do repositório | Inglês |
+| Relatórios (`reports/**`) e planos | Português (PT-BR) |
+| Chat com o maintainer | PT-BR |
 
-| Metric | Result |
+## Resumo executivo
+
+A coleção está **homogênea** no contrato thin-orchestrator: as 20 skills têm headings obrigatórios, progressive disclosure onde o corpo era monolítico, e orçamento OK.
+
+| Métrica | Resultado |
 |---|---|
 | `SKILL.md` | **20 OK · 0 WARN · 0 FAIL** |
-| `references/*.md` | **36 OK · 0 WARN · 0 FAIL** |
-| Largest `SKILL.md` | `backend-engineering-expert` — 2,448 tok (soft 2,500) |
-| Largest reference | `senior-code-review-judge/references/workflow-steps.md` — 4,750 tok (soft 5,000) |
+| `references/*.md` | **60 arquivos · todos OK** (agregado audit: OK=81 com regras alwaysApply) |
+| Maior `SKILL.md` | `gh-create-pr` — 1.180 tok (soft 2.500) |
+| Maior reference | `senior-code-review-judge/references/workflow-steps.md` — 4.750 tok (soft 5.000) |
+| Preferência ≤1.500 tok | **20/20** skills do catálogo |
 
-Remediation applied: review skills thinned to Akita-style orchestrators; STFlow and step detail moved to `references/`; frontend SDD path retargeted; support docs under `references/`; README inventory added; `audit_budget.py` forge-aware.
+Quatro skills seguem `pending-review` no catálogo (licença/merge), não por orçamento: `pr-creator-tr`, `pr-creator-outcoders`, `senior-code-review-judge`, `senior-code-reviewer-protocol`.
 
-Four skills remain `pending-review` in the catalog for license/merge reasons (not budget): `pr-creator-tr`, `pr-creator-outcoders`, `senior-code-review-judge`, `senior-code-reviewer-protocol`.
+## Tabela de orçamento (`SKILL.md`) — atual
 
----
-
-## Budget table (`SKILL.md`) — current
-
-| Domain | Skill | Bytes | Tokens | Soft | Hard | Status |
+| Domínio | Skill | Bytes | Tokens | Soft | Hard | Status |
 |---|---|---|---|---|---|---|
-| ai-agents | context-budget-guard | 7,304 | 2,086 | 2,500 | 4,000 | OK |
-| architecture | software-architecture-expert | 5,228 | 1,493 | 2,500 | 4,000 | OK |
-| design | ui-implement-figma | 5,761 | 1,646 | 2,500 | 4,000 | OK |
-| devops | gh-create-pr | 3,829 | 1,094 | 2,500 | 4,000 | OK |
-| devops | pr-creator-outcoders | 6,835 | 1,952 | 2,500 | 4,000 | OK |
-| devops | pr-creator-tr | 5,693 | 1,626 | 2,500 | 4,000 | OK |
-| engineering | backend-engineering-expert | 8,569 | 2,448 | 2,500 | 4,000 | OK |
-| engineering | delphi-build | 5,028 | 1,436 | 2,500 | 4,000 | OK |
-| engineering | error-plan-then-fix | 2,790 | 797 | 2,500 | 4,000 | OK |
-| engineering | frontend-engineering-expert | 5,719 | 1,634 | 2,500 | 4,000 | OK |
-| engineering | performance-observability-expert | 4,408 | 1,259 | 2,500 | 4,000 | OK |
-| engineering | principal-engineering-workflow | 3,318 | 948 | 2,500 | 4,000 | OK |
-| engineering | sdd-workflow | 1,338 | 382 | 2,500 | 4,000 | OK |
-| productivity | job-search | 4,728 | 1,350 | 2,500 | 4,000 | OK |
-| quality | business-rule-guardian | 3,408 | 973 | 2,500 | 4,000 | OK |
-| quality | code-quality-standards | 7,343 | 2,098 | 2,500 | 4,000 | OK |
-| quality | qa-automation-expert | 3,629 | 1,036 | 2,500 | 4,000 | OK |
-| quality | senior-code-review-judge | 4,081 | 1,166 | 2,500 | 4,000 | OK |
-| quality | senior-code-reviewer-protocol | 5,415 | 1,547 | 2,500 | 4,000 | OK |
-| security | application-security-expert | 3,313 | 946 | 2,500 | 4,000 | OK |
+| ai-agents | context-budget-guard | 1702 | 486 | 2.500 | 4.000 | OK |
+| architecture | software-architecture-expert | 1822 | 520 | 2.500 | 4.000 | OK |
+| design | ui-implement-figma | 2130 | 608 | 2.500 | 4.000 | OK |
+| devops | gh-create-pr | 4133 | 1180 | 2.500 | 4.000 | OK |
+| devops | pr-creator-outcoders | 1433 | 409 | 2.500 | 4.000 | OK |
+| devops | pr-creator-tr | 1671 | 477 | 2.500 | 4.000 | OK |
+| engineering | backend-engineering-expert | 1988 | 568 | 2.500 | 4.000 | OK |
+| engineering | delphi-build | 1600 | 457 | 2.500 | 4.000 | OK |
+| engineering | error-plan-then-fix | 1665 | 475 | 2.500 | 4.000 | OK |
+| engineering | frontend-engineering-expert | 3156 | 901 | 2.500 | 4.000 | OK |
+| engineering | performance-observability-expert | 1538 | 439 | 2.500 | 4.000 | OK |
+| engineering | principal-engineering-workflow | 2146 | 613 | 2.500 | 4.000 | OK |
+| engineering | sdd-workflow | 1597 | 456 | 2.500 | 4.000 | OK |
+| productivity | job-search | 1423 | 406 | 2.500 | 4.000 | OK |
+| quality | business-rule-guardian | 3408 | 973 | 2.500 | 4.000 | OK |
+| quality | code-quality-standards | 2661 | 760 | 2.500 | 4.000 | OK |
+| quality | qa-automation-expert | 1455 | 415 | 2.500 | 4.000 | OK |
+| quality | senior-code-review-judge | 4081 | 1166 | 2.500 | 4.000 | OK |
+| quality | senior-code-reviewer-protocol | 2770 | 791 | 2.500 | 4.000 | OK |
+| security | application-security-expert | 1631 | 466 | 2.500 | 4.000 | OK |
 
-### References (`references/*.md`)
+### Referências
 
-Every file under soft (5,000). None at hard. Watch `workflow-steps.md` (~4,750) if it grows. Aggregate load still matters if an agent opens every reference at once (e.g. all five `sdd-workflow` refs); the orchestrator instructs “read only the phase/step needed”.
+Todas sob soft 5.000. Observar `workflow-steps.md` do judge (~4.750) se crescer. Carga agregada ainda importa se o agente abrir todas as refs de uma vez; o orquestrador manda ler só o passo atual.
 
 ### Progressive disclosure
 
-Support docs for `code-quality-standards` and `frontend-engineering-expert` live under `references/`. Scripts under `scripts/` are not injected as prompt text.
+Suporte e fases longas vivem em `references/`. Scripts em `scripts/` não entram como texto de prompt.
 
----
+## Homogeneização aplicada
 
-## Per-skill qualitative notes (current)
+1. Contrato em `references/skill-shape.md` + política de idioma no README e regras Cursor (forge + usuário).
+2. P0: monolitos (`backend-engineering-expert`, `pr-creator-outcoders`, `ui-implement-figma`, `software-architecture-expert`) extraídos para `references/`.
+3. P1: skills com refs alinhadas aos headings; `context-budget-guard`, PR creators, especialistas e `sdd-workflow` no formato orquestrador.
+4. P2: skills pequenas com headings + Do NOT use onde há vizinhos.
+5. P3: `_validate.py` exige headings; PROVENANCE com delta de homogeneização; este relatório em PT-BR.
 
-| Skill | Role fit | Notable notes | Keep posture |
-|---|---|---|---|
-| context-budget-guard | Clear; Do-NOT-use present | Forge layout scanned by `audit_budget.py` | Keep |
-| software-architecture-expert | Clear specialist | Optional: add Do-NOT-use line | Keep |
-| ui-implement-figma | Clear UI implementer | Token OK; 12-phase monolith (optional split) | Keep |
-| gh-create-pr | Portable PR opener | Healthy size | Keep as default PR skill |
-| pr-creator-tr | Team-TR PR + ADO/Teams | Team-coupled; pending-review | Keep for TR |
-| pr-creator-outcoders | Team-Outcoders PR | Team-coupled; pending-review | Keep for Outcoders |
-| backend-engineering-expert | Stack specialist | Near soft ceiling — prefer `references/` on next edits | Keep |
-| delphi-build | Build specialist | Example Windows roots intentional | Keep |
-| error-plan-then-fix | Error → plan → fix | Declares PT-BR user replies | Keep |
-| frontend-engineering-expert | Stack specialist | Discovery → forge `sdd-workflow`; refs under `references/` | Keep |
-| performance-observability-expert | Runtime perf/obs | Domain: engineering | Keep |
-| principal-engineering-workflow | Author closes own work | PT-BR replies; links judge + protocol + security | Keep |
-| sdd-workflow | Thin index + refs | Disclosure model; read one phase at a time | Keep |
-| job-search | Session-profile job search | Portable | Keep |
-| business-rule-guardian | Readonly subagent, business intent | Orchestrator ~973 tok; detail in `references/` | Keep |
-| code-quality-standards | Hard limits + ESLint | Support md under `references/`; repo-local quality-check preferred | Keep |
-| qa-automation-expert | Test strategy specialist | Clean | Keep |
-| senior-code-review-judge | Verdict, no fixes | Orchestrator ~1,166 tok; pending-review license | Keep |
-| senior-code-reviewer-protocol | Tech-lead checklist | Orchestrator ~1,547 tok; STFlow in `stflow-profile.md` | Keep |
-| application-security-expert | AppSec specialist | Clean | Keep |
+## Clusters de papel (scoring tipo `reflect`)
 
----
+### Reviews (quatro skills)
 
-## Role clusters (Akita `reflect` scoring)
-
-### Reviews (four skills)
-
-| Skill | Frequency (expected) | Cost when activated | Risk if missing | Coverage overlap |
-|---|---|---|---|---|
-| principal-engineering-workflow | High (every delivery) | Low tokens | Medium | Author self-review |
-| senior-code-review-judge | Medium (PR / pre-merge) | Low injectable; detail on demand | High if missing | Differs by “no fixes” + evidence verdict |
-| senior-code-reviewer-protocol | Medium (STFlow / tech-lead) | Low–medium injectable | Medium outside STFlow | STFlow profile is the keep-reason |
-| business-rule-guardian | Medium (gate before accept) | Low injectable + mandatory fresh subagent | High (intent drift) | Differs by isolation + business-rule mapping |
-
-Keep all four roles. Do not merge judge and protocol while STFlow gating remains the differentiator. Do not fold guardian into judge: the mandatory clean subagent is the product.
-
-### Pull requests (three skills)
-
-| Skill | Audience | Recommendation |
+| Skill | Papel | Postura |
 |---|---|---|
-| gh-create-pr | Any repo with a PR template | Default portable skill |
-| pr-creator-tr | TR + ADO + Teams | Keep; team-coupled |
-| pr-creator-outcoders | Outcoders + ADO | Keep; team-coupled |
+| principal-engineering-workflow | Autor fecha o próprio trabalho | Manter |
+| senior-code-review-judge | Veredito evidence-first, sem fixes | Manter |
+| senior-code-reviewer-protocol | Checklist Tech Lead / STFlow | Manter |
+| business-rule-guardian | Gate de intenção em subagent readonly | Manter |
 
----
+Não mesclar judge e protocol enquanto o perfil STFlow for o diferencial. Não dobrar guardian no judge: o subagent limpo é o produto.
 
-## Findings by priority
+### Pull requests (três skills)
 
-### P0 / P1 — Done
+| Skill | Público | Postura |
+|---|---|---|
+| gh-create-pr | Qualquer repo com template | Padrão portátil |
+| pr-creator-tr | TR + ADO + Teams | Manter (acoplado) |
+| pr-creator-outcoders | Outcoders + ADO | Manter (acoplado) |
 
-1. Judge hard FAIL → thinned (~1,166 tok); detail in `references/workflow-steps.md` + `report-template.md`.
-2. Guardian hard FAIL → thinned (~973 tok); detail in `references/workflow.md` + `output-and-severity.md`.
-3. `audit_budget.py` forge-aware.
-4. Frontend SDD path → forge `sdd-workflow`.
-5. Protocol WARN → thinned (~1,547 tok); STFlow in `references/stflow-profile.md`.
-6. Support markdown under `references/` for code-quality and frontend skills.
-7. README “Out of this repo / team-coupled” section.
+## Achados abertos (baixo risco)
 
-### P2 — Still open
+1. Licenças `pending-review` / `unknown` antes de publicação.
+2. Vigiar `senior-code-review-judge/references/workflow-steps.md` perto do soft 5.000.
+3. Linker (`scripts/link_skills.py`) não rodado nesta entrega (fora de escopo).
 
-8. **`backend-engineering-expert`** within ~50 tokens of soft; next edits via `references/`.
-9. **`ui-implement-figma`**: optional phase split into `references/`.
-10. Optional “Do NOT use …” on remaining specialist descriptions.
-11. PT-BR reply rule only where declared (`principal-engineering-workflow`, `error-plan-then-fix`).
-12. Catalog `pending-review` / unknown license before publication.
-13. Watch `workflow-steps.md` (~4,750 tok) if it grows past soft 5,000.
+## O que já está em boa forma
 
----
+- Forma thin-orchestrator em 100% do catálogo.
+- Orçamento soft/hard sem WARN/FAIL.
+- Domínios alinhados aos papéis.
+- Relatórios em PT-BR; skills/docs de governança em inglês.
 
-## What is already in good shape
+## Verificação
 
-- Domain placement matches work.
-- No `SKILL.md` or `references/*.md` soft/hard violations.
-- `gh-create-pr` does not name removed skills.
-- `principal-engineering-workflow` relative links resolve.
-- Review sync scripts that treated `~/.cursor/skills/senior-code-reviewer` as source of truth are gone.
-- Thin orchestrator pattern matches Akita token-economy curation.
-
----
-
-## Recommended next work
-
-1. Keep `backend-engineering-expert` under soft when editing (prefer `references/`).
-2. Optional: split `ui-implement-figma` phases into `references/`.
-3. Optional: add “Do NOT use” lines to remaining specialist descriptions.
-4. Resolve `pending-review` licenses before publishing the collection.
-
-## Verification
-
-- Skills counted: **20** `SKILL.md` files under `skills/`.
-- Current budget: **20 OK** for `SKILL.md`; **36 OK** for `references/*.md` (`audit_budget.py --root .`).
-- Akita principles used as curation method; no Akita skill content imported.
-- `test_audit_budget.py`: 18 tests OK. `_validate.py`: ALL VALIDATIONS PASSED.
+- Skills no catálogo: **20**
+- Orçamento atual: **20 OK** (`SKILL.md`); referências OK (`audit_budget.py --root .` → Summary OK=81 WARN=0 FAIL=0)
+- `_validate.py`: ALL VALIDATIONS PASSED (incluindo `check_skill_shape`)
+- `test_audit_budget.py`: 18 testes OK
+- Princípios Akita usados só como método de curadoria; nenhum conteúdo Akita importado

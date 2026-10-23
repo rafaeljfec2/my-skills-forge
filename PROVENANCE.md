@@ -2,6 +2,8 @@
 
 Trail for each skill copied into this forge. Sources were not modified.
 
+Homogenization note (2026-10-23): every catalog skill now follows `references/skill-shape.md` (thin orchestrator: required headings `## Workflow (thin orchestrator)` and `## Token economy`; detail in `references/` where needed).
+
 ## `context-budget-guard`
 
 - Domain: `ai-agents`
@@ -12,7 +14,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: cursor-context-budget-guard
 - Status: `ready`
-- Delta applied: Renamed folder+name; audit_budget.py also discovers forge `skills/*/*/SKILL.md` and `skills/*/*/references/**/*.md`
+- Delta applied: Renamed folder+name; audit_budget.py also discovers forge `skills/*/*/SKILL.md` and `skills/*/*/references/**/*.md`; thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: files_a=5 files_b=2; only_a=['scripts/audit_docs_gaps.py', 'scripts/test_audit_budget.py', 'scripts/test_audit_docs_gaps.py']; only_b=[]; differ=['SKILL.md', 'scripts/audit_budget.py']; SKILL.md a=c512c28e9566 b=a44d3bc6adb8
 ## `software-architecture-expert`
 
@@ -24,7 +26,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `ui-implement-figma`
 
@@ -36,7 +38,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `gh-create-pr`
 
@@ -48,7 +50,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: Removed AX-05/HR-13/HR-19/HR-21 hard references; fills current repo template
+- Delta applied: Removed AX-05/HR-13/HR-19/HR-21 hard references; fills current repo template; thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `performance-observability-expert`
 
@@ -60,7 +62,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `pr-creator-outcoders`
 
@@ -72,7 +74,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: pr-creator-ado
 - Status: `pending-review`
-- Delta applied: (none — verbatim copy)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `pr-creator-tr`
 
@@ -84,7 +86,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: pr-creator-ado
 - Status: `pending-review`
-- Delta applied: (none — verbatim copy)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: files_a=6 files_b=1; only_a=['claude-code/README.md', 'claude-code/create-pr.md', 'references/azure-devops-update.md', 'references/evidence-and-config.md', 'references/teams-notification.md']; only_b=[]; differ=['SKILL.md']; SKILL.md a=b8831fc074d6 b=5c7ee98bff9c
 ## `backend-engineering-expert`
 
@@ -96,7 +98,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `delphi-build`
 
@@ -108,7 +110,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: Added Example install roots section clarifying detection paths are examples
+- Delta applied: Added Example install roots section clarifying detection paths are examples; thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `error-plan-then-fix`
 
@@ -120,7 +122,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `frontend-engineering-expert`
 
@@ -132,7 +134,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: Discovery points at forge `sdd-workflow`; support markdown moved under `references/`
+- Delta applied: Discovery points at forge `sdd-workflow`; support markdown moved under `references/`; thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `principal-engineering-workflow`
 
@@ -144,7 +146,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `sdd-workflow`
 
@@ -156,7 +158,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: sdd-development-protocol-references
 - Status: `ready`
-- Delta applied: Wrapped references as skill; excluded product sdd-*.mdc files
+- Delta applied: Wrapped references as skill; excluded product sdd-*.mdc files; thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `job-search`
 
@@ -168,7 +170,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: buscar-vagas-ti
 - Status: `ready`
-- Delta applied: Removed embedded professional profile; asks the current session; folder+name=job-search
+- Delta applied: Removed embedded professional profile; asks the current session; folder+name=job-search; thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `business-rule-guardian`
 
@@ -180,7 +182,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: Portable project standards; thinned SKILL.md (Akita-style orchestrator); workflow and output moved to `references/`
+- Delta applied: Portable project standards; thinned SKILL.md (Akita-style orchestrator); workflow and output moved to `references/`; thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `code-quality-standards`
 
@@ -192,7 +194,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: Absorbed cognitive-complexity-guard how-to; moved support markdown under `references/`; prefer repo-local quality-check script over `~/.cursor/scripts`
+- Delta applied: Absorbed cognitive-complexity-guard how-to; moved support markdown under `references/`; prefer repo-local quality-check script over `~/.cursor/scripts`; thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `qa-automation-expert`
 
@@ -204,7 +206,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)
 ## `senior-code-review-judge`
 
@@ -216,7 +218,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: senior-code-reviewer, senior-code-review-judge
 - Status: `pending-review`
-- Delta applied: Renamed from senior-code-reviewer; thinned SKILL.md (Akita-style orchestrator); step detail in `references/workflow-steps.md` and `references/report-template.md`; removed sync-global.sh
+- Delta applied: Renamed from senior-code-reviewer; thinned SKILL.md (Akita-style orchestrator); step detail in `references/workflow-steps.md` and `references/report-template.md`; removed sync-global.sh; thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: files_a=6 files_b=6; only_a=[]; only_b=[]; differ=['SKILL.md', 'references/rigorous-checks.md']; SKILL.md a=a48117caa34e b=6c791e867988; vs job-search=files_a=6 files_b=1; only_a=['references/blind-spots.md', 'references/publishing.md', 'references/rigorous-checks.md', 'references/scans.md', 'references/sync-global.sh']; only_b=[]; differ=['SKILL.md']; SKILL.md a=a48117caa34e b=98d2d50c9e9d
 ## `senior-code-reviewer-protocol`
 
@@ -228,7 +230,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: senior-code-reviewer
 - Status: `pending-review`
-- Delta applied: Thinned SKILL.md; STFlow checks moved to `references/stflow-profile.md`; removed sync-global.sh
+- Delta applied: Thinned SKILL.md; STFlow checks moved to `references/stflow-profile.md`; removed sync-global.sh; thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: files_a=6 files_b=1; only_a=['references/blind-spots.md', 'references/publishing.md', 'references/rigorous-checks.md', 'references/scans.md', 'references/sync-global.sh']; only_b=[]; differ=['SKILL.md']; SKILL.md a=6c791e867988 b=98d2d50c9e9d
 ## `application-security-expert`
 
@@ -240,5 +242,5 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
 - Directory compare evidence: (not required / single source)

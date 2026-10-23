@@ -20,6 +20,20 @@ See:
 - [CATALOG.md](CATALOG.md) — inventory with status `ready` or `pending-review`
 - [references/upstream.lock.md](references/upstream.lock.md) — locked upstream sources
 - [references/install-map.md](references/install-map.md) — retired harness names and the forge skills that replace them
+- [references/skill-shape.md](references/skill-shape.md) — thin-orchestrator contract for every catalog skill
+
+## Language policy
+
+| Artifact | Language |
+|---|---|
+| Skills (`skills/**/SKILL.md`, `skills/**/references/**`) | English |
+| Repository documentation (README, CATALOG, PROVENANCE, LICENSING, forge `references/*.md`, etc.) | English |
+| Generated reports (`reports/**`) | Brazilian Portuguese (PT-BR) |
+| Delivery / Cursor plans | Brazilian Portuguese (PT-BR) |
+| Chat with the maintainer | Brazilian Portuguese (PT-BR) unless asked otherwise |
+
+Skills and repo docs stay English so harnesses and upstream sharing stay portable.
+Reports and plans are operator-facing and follow the maintainer language.
 
 ## Layout
 

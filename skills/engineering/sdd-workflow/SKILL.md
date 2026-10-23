@@ -12,15 +12,20 @@ description: >-
 Portable Spec-Driven Development reference pack. The five markdown documents
 under `references/` are the source of procedure detail.
 
+## When not to use
+
+- Author closeout after implementation → `principal-engineering-workflow`
+- Evidence-first PR verdict → `senior-code-review-judge`
+
 ## When to use
 
 - Starting or resuming an SDD delivery
 - Checking phase obligations, reviewer protocol, or trivial-change fallback
 - Aligning PR/review language with the SDD axioms and limits
 
-## References
+## Workflow (thin orchestrator)
 
-Read in this order unless the user asks for a specific phase:
+Read only the phase/document needed:
 
 1. [references/axioms-rules-limits.md](references/axioms-rules-limits.md)
 2. [references/phase-0-discovery.md](references/phase-0-discovery.md)
@@ -32,5 +37,9 @@ Read in this order unless the user asks for a specific phase:
 
 This skill absorbs only the five reference markdowns from
 `sdd-development-protocol-references`. Product-specific `sdd-*.mdc` rule files
-and per-app `sdd-protocol.mdc` copies are out of scope and remain in their
-source repositories.
+and per-app `sdd-protocol.mdc` copies are out of scope.
+
+## Token economy
+
+Keep the injectable surface small. Read the reference the current phase needs;
+do not paste entire reference files into the reply.

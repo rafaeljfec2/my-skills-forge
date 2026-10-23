@@ -1,0 +1,11 @@
+---
+description: Language policy for forge artifacts (skills/docs EN; reports/plans PT-BR)
+alwaysApply: true
+---
+
+# Language policy
+
+- **Skills** (`skills/**`) and **repository documentation** (README, CATALOG, PROVENANCE, LICENSING, forge `references/*.md`, etc.): write in **English**.
+- **Generated reports** (`reports/**`) and **delivery / Cursor plans**: write in **Brazilian Portuguese (PT-BR)**.
+- **Chat with the user**: Brazilian Portuguese (PT-BR) unless they ask otherwise.
+- Skill content, identifiers, and code remain English even when the chat is PT-BR.

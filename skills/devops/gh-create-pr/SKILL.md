@@ -13,6 +13,11 @@ metadata:
 
 # Create PR (template-driven)
 
+## When not to use
+
+- TR team ADO/Teams flow → `pr-creator-tr`
+- Outcoders / Axiom Chat flow → `pr-creator-outcoders`
+
 ## Overview
 
 Open a Pull Request via `gh pr create` whose body is the project template at
@@ -44,7 +49,7 @@ report what is missing, and do not open the PR.
 - `head`: current branch (must already be pushed to origin)
 - session context needed to fill the template sections
 
-## Workflow
+## Workflow (thin orchestrator)
 
 ### 1) Verify prerequisites
 
@@ -111,3 +116,7 @@ publish it now following that skill's publish instructions.
 ## References
 
 - [references/template-mapping.md](references/template-mapping.md)
+
+## Token economy
+
+Keep the injectable surface small. Load [references/template-mapping.md](references/template-mapping.md) only when mapping template sections.
