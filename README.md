@@ -64,6 +64,20 @@ The linker updates the harness directories above. A project that contains
 its own `.cursor/skills/<name>` or `.claude/skills/<name>` still uses
 that local copy. Portable skills are the ones linked from the harness.
 
+## Out of this repo / team-coupled
+
+These stay outside `skills/` or are intentionally team-scoped. Do not
+copy them into the forge as portable skills:
+
+| Item | Where it lives | Why |
+|---|---|---|
+| `air-finance-sentinel` | Cursor harness dir | Operational host/user/key material; linker never replaces it |
+| Codex `.system` | `~/.codex/skills` | Harness-owned |
+| Project-local skills | e.g. game-funny, FlowDeploy-coupled | Point at product files or stack |
+| `pr-creator-tr` / `pr-creator-outcoders` | In this forge | Kept, but coupled to TR / Outcoders + ADO config |
+| Optional quality-check script | Repo `scripts/` or docs | Prefer repo-local over machine-global paths |
+| Vendor / plugin skill caches | Cursor plugins, npm packages | Reinstalled with the tool |
+
 ## Status values
 
 - `ready` — copied and usable under the recorded license/provenance

@@ -12,7 +12,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: cursor-context-budget-guard
 - Status: `ready`
-- Delta applied: Renamed folder+name; internal path mentions updated to context-budget-guard
+- Delta applied: Renamed folder+name; audit_budget.py also discovers forge `skills/*/*/SKILL.md` and `skills/*/*/references/**/*.md`
 - Directory compare evidence: files_a=5 files_b=2; only_a=['scripts/audit_docs_gaps.py', 'scripts/test_audit_budget.py', 'scripts/test_audit_docs_gaps.py']; only_b=[]; differ=['SKILL.md', 'scripts/audit_budget.py']; SKILL.md a=c512c28e9566 b=a44d3bc6adb8
 ## `software-architecture-expert`
 
@@ -132,7 +132,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy)
+- Delta applied: Discovery points at forge `sdd-workflow`; support markdown moved under `references/`
 - Directory compare evidence: (not required / single source)
 ## `principal-engineering-workflow`
 
@@ -180,7 +180,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: Replaced flowdeploy-*.mdc / product skill hard refs with portable project standards
+- Delta applied: Portable project standards; thinned SKILL.md (Akita-style orchestrator); workflow and output moved to `references/`
 - Directory compare evidence: (not required / single source)
 ## `code-quality-standards`
 
@@ -192,7 +192,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: Absorbed cognitive-complexity-guard how-to (extract branches, switch over long if/else, processItem loops, no eslint-disable/NOSONAR silence, avoid PromiseLike test classes)
+- Delta applied: Absorbed cognitive-complexity-guard how-to; moved support markdown under `references/`; prefer repo-local quality-check script over `~/.cursor/scripts`
 - Directory compare evidence: (not required / single source)
 ## `qa-automation-expert`
 
@@ -216,7 +216,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: senior-code-reviewer, senior-code-review-judge
 - Status: `pending-review`
-- Delta applied: Folder renamed from senior-code-reviewer; name field set to senior-code-review-judge
+- Delta applied: Renamed from senior-code-reviewer; thinned SKILL.md (Akita-style orchestrator); step detail in `references/workflow-steps.md` and `references/report-template.md`; removed sync-global.sh
 - Directory compare evidence: files_a=6 files_b=6; only_a=[]; only_b=[]; differ=['SKILL.md', 'references/rigorous-checks.md']; SKILL.md a=a48117caa34e b=6c791e867988; vs job-search=files_a=6 files_b=1; only_a=['references/blind-spots.md', 'references/publishing.md', 'references/rigorous-checks.md', 'references/scans.md', 'references/sync-global.sh']; only_b=[]; differ=['SKILL.md']; SKILL.md a=a48117caa34e b=98d2d50c9e9d
 ## `senior-code-reviewer-protocol`
 
@@ -228,7 +228,7 @@ Trail for each skill copied into this forge. Sources were not modified.
 - License found: `unknown`
 - Previous names: senior-code-reviewer
 - Status: `pending-review`
-- Delta applied: (none — verbatim copy)
+- Delta applied: Thinned SKILL.md; STFlow checks moved to `references/stflow-profile.md`; removed sync-global.sh
 - Directory compare evidence: files_a=6 files_b=1; only_a=['references/blind-spots.md', 'references/publishing.md', 'references/rigorous-checks.md', 'references/scans.md', 'references/sync-global.sh']; only_b=[]; differ=['SKILL.md']; SKILL.md a=6c791e867988 b=98d2d50c9e9d
 ## `application-security-expert`
 

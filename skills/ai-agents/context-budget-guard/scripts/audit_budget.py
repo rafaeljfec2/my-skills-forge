@@ -5,8 +5,10 @@ Audit token budget for every agent-consumed markdown file.
 Categories:
   - always              : .cursor/rules/*.mdc with `alwaysApply: true`
   - requestable         : .cursor/rules/*.mdc otherwise
-  - skill               : .cursor/skills/*/SKILL.md, .claude/skills/*/SKILL.md
-  - reference           : .cursor/skills/**/references/*.md, .claude/skills/**/references/*.md
+  - skill               : .cursor/skills/*/SKILL.md, .claude/skills/*/SKILL.md,
+                          skills/*/*/SKILL.md (forge domain layout)
+  - reference           : .cursor/skills/**/references/*.md, .claude/skills/**/references/*.md,
+                          skills/*/*/references/**/*.md
   - root                : AGENTS.md, CLAUDE.md (repo root), apps/*/DESIGN.md
   - pr_template         : .github/pull_request_template.md
   - docs_architecture   : docs/README.md, docs/glossary.md, docs/architecture/**/*.md
@@ -180,6 +182,9 @@ def iter_candidates(root: Path) -> Iterable[Path]:
         ".cursor/skills/**/references/*.md",
         ".claude/skills/*/SKILL.md",
         ".claude/skills/**/references/*.md",
+        # Forge domain layout: skills/<domain>/<name>/SKILL.md
+        "skills/*/*/SKILL.md",
+        "skills/*/*/references/**/*.md",
     )
     seen: set[Path] = set()
     for pattern in patterns:

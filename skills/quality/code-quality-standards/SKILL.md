@@ -108,15 +108,15 @@ ESLint `import/order` enforces this.
 1. **Read the target file/diff** to understand the change.
 2. **Check against the hard limits table** - file size, function size, complexity. If violated, REFACTOR before proceeding.
 3. **Apply TypeScript strict rules** - replace `any`, `||`, missing `Readonly<>`.
-4. **Run `~/.cursor/scripts/quality-check.sh`** if available in the project to validate externally (does not consume context).
+4. **Run the project's quality-check script** if present (for example `scripts/quality-check.sh` or the path documented in `AGENTS.md`). Prefer a repo-local script over a machine-global path.
 5. **Report concisely**: only mention violations and the fix. No prose.
 
 ## Progressive disclosure - load only what you need
 
-- For deep TypeScript patterns (branded types, exhaustive checks, generic constraints, Result types, satisfies, type vs interface): see [TYPESCRIPT_RULES.md](TYPESCRIPT_RULES.md)
-- For Node.js patterns (error cause chains, signal handling, async pitfalls, no `process.exit` in libs): see [NODEJS_RULES.md](NODEJS_RULES.md)
-- For dependency management (evaluating new deps, audit, peer deps, deduplication, freshness): see [DEPENDENCY_HYGIENE.md](DEPENDENCY_HYGIENE.md)
-- For ESLint preset ready to copy into `.eslintrc.cjs`: see [ESLINT_PRESET.md](ESLINT_PRESET.md)
+- For deep TypeScript patterns (branded types, exhaustive checks, generic constraints, Result types, satisfies, type vs interface): see [references/TYPESCRIPT_RULES.md](references/TYPESCRIPT_RULES.md)
+- For Node.js patterns (error cause chains, signal handling, async pitfalls, no `process.exit` in libs): see [references/NODEJS_RULES.md](references/NODEJS_RULES.md)
+- For dependency management (evaluating new deps, audit, peer deps, deduplication, freshness): see [references/DEPENDENCY_HYGIENE.md](references/DEPENDENCY_HYGIENE.md)
+- For ESLint preset ready to copy into `.eslintrc.cjs`: see [references/ESLINT_PRESET.md](references/ESLINT_PRESET.md)
 
 ## Anti-patterns - reject on sight
 

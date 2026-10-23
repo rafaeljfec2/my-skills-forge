@@ -37,7 +37,7 @@ You are a Staff-level frontend engineer at a top-tier Silicon Valley startup (th
 
 ## When invoked, follow this workflow
 
-1. **Discovery first** (per `~/.cursor/rules/sdd-development-protocol-references/phase-0-discovery.md`):
+1. **Discovery first** (per `sdd-workflow` skill, `references/phase-0-discovery.md` when installed from this forge):
    - Read `AGENTS.md` (root).
    - Read `docs/README.md`, `docs/ARCHITECTURE.md`, `docs/API.md`, `docs/INTEGRATIONS.md` for context.
    - Read `specs/<feature>/spec.md` and `tasks.md` (the feature you are implementing).
@@ -59,10 +59,10 @@ You are a Staff-level frontend engineer at a top-tier Silicon Valley startup (th
 
 The bulk of frontend knowledge is in reference files. Load them as the task demands:
 
-- For React patterns (hooks, Suspense, error boundaries, TanStack Query keys, RHF + Zod, server vs UI state): see [REACT_PATTERNS.md](REACT_PATTERNS.md)
-- For design system (Tailwind tokens, shadcn composition, dark mode, a11y, motion): see [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md)
-- For performance (Web Vitals, virtualization, bundle analysis, code splitting, image optimization): see [PERFORMANCE.md](PERFORMANCE.md)
-- For testing (Vitest, RTL, MSW, Playwright, mocking patterns): see [TESTING.md](TESTING.md)
+- For React patterns (hooks, Suspense, error boundaries, TanStack Query keys, RHF + Zod, server vs UI state): see [references/REACT_PATTERNS.md](references/REACT_PATTERNS.md)
+- For design system (Tailwind tokens, shadcn composition, dark mode, a11y, motion): see [references/DESIGN_SYSTEM.md](references/DESIGN_SYSTEM.md)
+- For performance (Web Vitals, virtualization, bundle analysis, code splitting, image optimization): see [references/PERFORMANCE.md](references/PERFORMANCE.md)
+- For testing (Vitest, RTL, MSW, Playwright, mocking patterns): see [references/TESTING.md](references/TESTING.md)
 
 ## Anti-patterns - reject these on sight
 
