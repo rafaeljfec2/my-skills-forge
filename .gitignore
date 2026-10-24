@@ -8,3 +8,16 @@ _commit2.log
 __pycache__/
 *.pyc
 .DS_Store
+
+# Credential-shaped and local secrets (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*_rsa
+*_rsa.pub
+*token*
+*secret*
+credentials.json
+**/secrets/**

@@ -123,9 +123,9 @@ Não mesclar judge e protocol enquanto o perfil STFlow for o diferencial. Não d
 
 ## Achados abertos (baixo risco)
 
-1. Licenças `pending-review` / `unknown` antes de publicação.
+1. Licenças `pending-review` / `unknown` antes de publicação (checklist em LICENSING.md).
 2. Vigiar `senior-code-review-judge/references/workflow-steps.md` perto do soft 5.000.
-3. Linker (`scripts/link_skills.py`) não rodado nesta entrega (fora de escopo).
+3. Apply real do linker pendente — ver [link-dry-run.md](link-dry-run.md) (12 `conflict-real` no Cursor).
 
 ## O que já está em boa forma
 
@@ -134,10 +134,23 @@ Não mesclar judge e protocol enquanto o perfil STFlow for o diferencial. Não d
 - Domínios alinhados aos papéis.
 - Relatórios em PT-BR; skills/docs de governança em inglês.
 
+## Apêndice — maturidade operacional (2026-10-24)
+
+Leva Akita-like **sem** remodelar SKILL.md de novo:
+
+| Entrega | Status |
+|---|---|
+| Inventário externo | [references/external-inventory.md](../references/external-inventory.md) |
+| Dry-run do linker | [link-dry-run.md](link-dry-run.md) — apply real **não** executado |
+| Skill `reflect` | `skills/ai-agents/reflect/` no catálogo |
+| Fronteira publish/licença | [publish-boundary.md](../references/publish-boundary.md) + checklist em LICENSING.md |
+| Higiene de secrets | `.gitignore` + scan em `_validate.py` (skills + governança) |
+
 ## Verificação
 
-- Skills no catálogo: **20**
-- Orçamento atual: **20 OK** (`SKILL.md`); referências OK (`audit_budget.py --root .` → Summary OK=81 WARN=0 FAIL=0)
-- `_validate.py`: ALL VALIDATIONS PASSED (incluindo `check_skill_shape`)
+- Skills no catálogo: **22** (inclui `reflect` e `snyk-rules`)
+- Orçamento atual: SKILL/refs OK (`audit_budget.py --root .` → Summary OK=85 WARN=0 FAIL=0)
+- `_validate.py`: ALL VALIDATIONS PASSED (`check_skill_shape` + `check_governance_secrets`)
 - `test_audit_budget.py`: 18 testes OK
+- `link_skills.py --check-repo`: OK; `--dry-run`: exit 1 por conflitos Cursor (esperado)
 - Princípios Akita usados só como método de curadoria; nenhum conteúdo Akita importado

@@ -6,7 +6,8 @@ description: >-
   reviews dependencies, and defines security standards. Use for security review,
   OWASP, LGPD, encryption, or authentication. Do not use for general backend
   features without security focus (backend-engineering-expert) or performance-only
-  work (performance-observability-expert).
+  work (performance-observability-expert), or a Snyk scan and authorized
+  remediation (snyk-rules).
 ---
 
 # Application Security Expert
@@ -17,6 +18,7 @@ Application security specialist.
 
 - General backend implementation without security focus → `backend-engineering-expert`
 - Performance / observability without security focus → `performance-observability-expert`
+- Snyk discovery, scan, and authorized remediation → `snyk-rules`
 
 ## Core responsibilities
 

@@ -4,6 +4,19 @@ Trail for each skill copied into this forge. Sources were not modified.
 
 Homogenization note (2026-10-23): every catalog skill now follows `references/skill-shape.md` (thin orchestrator: required headings `## Workflow (thin orchestrator)` and `## Token economy`; detail in `references/` where needed).
 
+## `reflect`
+
+- Domain: `ai-agents`
+- Forge path: `skills/ai-agents/reflect`
+- Source path: (forge-authored)
+- Upstream: curation method inspired by https://github.com/akitaonrails/my-skills `reflect` (no skill text copied)
+- Author found: forge maintainer
+- License found: `unknown`
+- Previous names: (none)
+- Status: `ready`
+- Delta applied: New thin-orchestrator skill; scoring and output templates under `references/`; Akita used as method inspiration only
+- Directory compare evidence: (not applicable — original forge skill)
+
 ## `context-budget-guard`
 
 - Domain: `ai-agents`
@@ -242,5 +255,17 @@ Homogenization note (2026-10-23): every catalog skill now follows `references/sk
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23); When not to use points at `snyk-rules` (2026-10-24); wording updated when snyk-rules gained scan vs remediate modes
 - Directory compare evidence: (not required / single source)
+## `snyk-rules`
+
+- Domain: `security`
+- Forge path: `skills/security/snyk-rules`
+- Source path: `/mnt/c/Users/rafae/.cursor/skills/snyk-rules`
+- Upstream: (local / none recorded)
+- Author found: unknown
+- License found: `unknown`
+- Previous names: (none)
+- Status: `pending-review`
+- Delta applied: Rewrote as a thin orchestrator (2026-10-24). Scan mode reports and does not edit. Remediate mode plans, waits for approval, then fixes and rescans. Detail is in `references/discover-and-scope.md`, `references/collect-and-prioritize.md`, `references/plan-and-remediate.md`, and `references/verify-and-report.md`. Scanner severity is immutable; priority may only rise one level with evidence.
+- Directory compare evidence: source is a single `SKILL.md` (587 bytes); no `LICENSE` file in the source directory

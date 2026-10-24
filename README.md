@@ -21,6 +21,8 @@ See:
 - [references/upstream.lock.md](references/upstream.lock.md) — locked upstream sources
 - [references/install-map.md](references/install-map.md) — retired harness names and the forge skills that replace them
 - [references/skill-shape.md](references/skill-shape.md) — thin-orchestrator contract for every catalog skill
+- [references/external-inventory.md](references/external-inventory.md) — harness-owned and vendor components outside the catalog
+- [references/publish-boundary.md](references/publish-boundary.md) — what may go public vs stay local
 
 ## Language policy
 
@@ -67,10 +69,29 @@ Cursor entries are Windows directory symlinks. Their target is the
 same files. Linux harnesses use a direct symlink to the skill directory
 in this repository.
 
+### Linking harnesses
+
+1. Validate the install map: `python3 scripts/link_skills.py --check-repo`
+2. Preview actions: `python3 scripts/link_skills.py --dry-run`
+3. Resolve `conflict-real` / `conflict-target` (backup or remove the real
+   harness directory only when you intend the forge symlink to win)
+4. Apply: `python3 scripts/link_skills.py` (omit `--dry-run`)
+5. Restart the agent CLI so it reloads `SKILL.md` descriptions
+
+Latest dry-run snapshot: [reports/link-dry-run.md](reports/link-dry-run.md)
+(PT-BR). Do not apply links until conflicts in that report are accepted.
+
 ```bash
+python3 scripts/link_skills.py --check-repo
 python3 scripts/link_skills.py --dry-run
-python3 scripts/link_skills.py
+# python3 scripts/link_skills.py   # only after reviewing conflicts
 ```
+
+## Safety
+
+Do not commit credential-shaped files (`.env`, keys, tokens). The validator
+scans forge markdown for obvious private-key material and blocks
+`air-finance-sentinel` content from landing under `skills/`.
 
 ## Projects
 
