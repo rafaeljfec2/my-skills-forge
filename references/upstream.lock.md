@@ -12,6 +12,7 @@ Observed sources used by this migration.
 
 ## Local skill folders
 
+- Forge checkout (canonical): `C:\Users\rafae\dev-rafael\my-skills-forge` / `/mnt/c/Users/rafae/dev-rafael/my-skills-forge` (`/home/rafael/dev-rafael/my-skills-forge` → that path)
 - User Cursor skills: `/mnt/c/Users/rafae/.cursor/skills` (symlink target of `~/.cursor/skills`)
 - STFlow Cursor skills: `/home/rafael/dev-rafael/connexto-stt-flow/.cursor/skills`
 - STFlow Claude skills: `/home/rafael/dev-rafael/connexto-stt-flow/.claude/skills`

@@ -2,9 +2,10 @@
 """Link forge skills into local harness directories.
 
 The forge checkout is the editable copy. Each harness keeps a real
-skills directory and receives one symlink per skill folder. Existing
-real directories are left in place. Harness-owned entries listed in
-PROTECTED_NAMES are never replaced.
+skills directory and receives one link per skill folder: a Windows
+junction when the harness lives on /mnt/<drive>, otherwise a Linux
+symlink. Existing real directories are left in place. Harness-owned
+entries listed in PROTECTED_NAMES are never replaced.
 """
 from __future__ import annotations
 
@@ -236,13 +237,24 @@ def create_link(link_path: Path, target: str, kind: str) -> None:
     link_win = windows_path(link_path)
     assert_safe_windows_arg(link_win)
     assert_safe_windows_arg(target)
+    # Prefer /J (junction) when the forge lives on a Windows drive — no admin
+    # privilege required, and UNC \\wsl.localhost targets are unreliable here.
+    # Fall back to /D symlink for UNC targets.
+    flag = "/J" if not target.startswith("\\\\") else "/D"
+    script = (
+        f'@echo off\r\n'
+        f'cd /d C:\\Users\\rafae\r\n'
+        f'mklink {flag} "{link_win}" "{target}"\r\n'
+    )
+    bat = Path("/mnt/c/Users/rafae/AppData/Local/Temp/forge-link-skill.bat")
+    bat.write_text(script, encoding="ascii")
     completed = subprocess.run(
-        ["cmd.exe", "/c", f'mklink /D "{link_win}" "{target}"'],
+        ["cmd.exe", "/c", str(windows_path(bat))],
         capture_output=True,
-        text=True,
+        cwd="/mnt/c/Users/rafae",
     )
     if completed.returncode != 0:
-        detail = (completed.stderr or completed.stdout).strip()
+        detail = (completed.stderr or completed.stdout).decode("cp850", errors="replace").strip()
         raise RuntimeError(detail or f"mklink failed with status {completed.returncode}")
 
 

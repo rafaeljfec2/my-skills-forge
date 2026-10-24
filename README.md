@@ -1,8 +1,17 @@
 # my-skills-forge
 
 Local source of truth for agent skills on this machine. Each harness
-keeps a real skills directory whose per-skill entries are symlinks into
+keeps a real skills directory whose per-skill entries are links into
 this checkout. Editing a skill means editing it here.
+
+Canonical checkout (Windows + WSL):
+
+- Windows: `C:\Users\rafae\dev-rafael\my-skills-forge`
+- WSL path: `/mnt/c/Users/rafae/dev-rafael/my-skills-forge`
+- Convenience symlink: `/home/rafael/dev-rafael/my-skills-forge` → that checkout
+
+The forge lives on the Windows drive so Cursor can use directory
+junctions without UNC `\\wsl.localhost` targets.
 
 ## Maintainer vs provenance
 
@@ -53,38 +62,37 @@ identifier.
 
 | Harness | Directory | Link |
 |---|---|---|
-| Cursor | `~/.cursor/skills` (currently `/mnt/c/Users/rafae/.cursor/skills`) | per-skill symlink |
-| Claude Code | `~/.claude/skills` | per-skill symlink |
-| Codex | `~/.codex/skills` | per-skill symlink, beside `.system` |
-| Shared | `~/.agents/skills` | per-skill symlink |
+| Cursor | `~/.cursor/skills` → `/mnt/c/Users/rafae/.cursor/skills` | per-skill Windows junction (`mklink /J`) into this checkout |
+| Claude Code | `~/.claude/skills` | per-skill Linux symlink |
+| Codex | `~/.codex/skills` | per-skill Linux symlink, beside `.system` |
+| Shared | `~/.agents/skills` | per-skill Linux symlink |
 
-`scripts/link_skills.py` creates those symlinks for every skill under
+`scripts/link_skills.py` creates those links for every skill under
 `skills/`. Both `ready` and `pending-review` skills are installed. The
 script leaves an existing real directory in place and reports that name
 instead of replacing it. It also leaves harness-owned entries untouched:
 `.system` and `air-finance-sentinel`.
 
-Cursor entries are Windows directory symlinks. Their target is the
-`\\wsl.localhost\...` path of this checkout, so Windows and WSL read the
-same files. Linux harnesses use a direct symlink to the skill directory
-in this repository.
+Catalog skills must not keep a second real copy under a harness or
+project skills directory. Remove the real directory (after backup), then
+re-run the linker. Project overrides for catalog names should be
+symlinks into this forge, not forks.
 
 ### Linking harnesses
 
 1. Validate the install map: `python3 scripts/link_skills.py --check-repo`
 2. Preview actions: `python3 scripts/link_skills.py --dry-run`
 3. Resolve `conflict-real` / `conflict-target` (backup or remove the real
-   harness directory only when you intend the forge symlink to win)
+   harness directory only when you intend the forge link to win)
 4. Apply: `python3 scripts/link_skills.py` (omit `--dry-run`)
 5. Restart the agent CLI so it reloads `SKILL.md` descriptions
 
-Latest dry-run snapshot: [reports/link-dry-run.md](reports/link-dry-run.md)
-(PT-BR). Do not apply links until conflicts in that report are accepted.
+Latest link report: [reports/link-dry-run.md](reports/link-dry-run.md) (PT-BR).
 
 ```bash
 python3 scripts/link_skills.py --check-repo
 python3 scripts/link_skills.py --dry-run
-# python3 scripts/link_skills.py   # only after reviewing conflicts
+python3 scripts/link_skills.py
 ```
 
 ## Safety
@@ -95,9 +103,10 @@ scans forge markdown for obvious private-key material and blocks
 
 ## Projects
 
-The linker updates the harness directories above. A project that contains
-its own `.cursor/skills/<name>` or `.claude/skills/<name>` still uses
-that local copy. Portable skills are the ones linked from the harness.
+Harness links cover every project. A project-local
+`.cursor/skills/<name>` or `.claude/skills/<name>` still wins for that
+name. For catalog skills, keep those entries as symlinks into this forge.
+Product-only skills may stay as real directories in the product repo.
 
 ## Out of this repo / team-coupled
 
@@ -108,9 +117,10 @@ copy them into the forge as portable skills:
 |---|---|---|
 | `air-finance-sentinel` | Cursor harness dir | Operational host/user/key material; linker never replaces it |
 | Codex `.system` | `~/.codex/skills` | Harness-owned |
-| Project-local skills | e.g. game-funny, FlowDeploy-coupled | Point at product files or stack |
+| Portable skills not yet in the catalog | e.g. `create-adr`, `mermaid-studio`, `gh-fix-ci` | Left in place until imported |
+| Project-local / product skills | e.g. game-funny, banking-dev, axiom-* | Point at product files or stack |
 | `pr-creator-tr` / `pr-creator-outcoders` | In this forge | Kept, but coupled to TR / Outcoders + ADO config |
-| Optional quality-check script | Repo `scripts/` or docs | Prefer repo-local over machine-global paths |
+| Shared `ai-memory-*` | `~/.agents/skills` | Managed by ai-memory install |
 | Vendor / plugin skill caches | Cursor plugins, npm packages | Reinstalled with the tool |
 
 ## Status values

@@ -3,10 +3,11 @@
 Retired names still present in harness skill directories, and the forge
 skill that replaces each one.
 
-`scripts/link_skills.py` creates symlinks under the forge folder name
-only. It does not create a symlink with the retired name, and it does
-not delete the retired directory. Removing those directories is a later
-harness step, after the new names are linked.
+`scripts/link_skills.py` creates links under the forge folder name only.
+It does not create a link with the retired name, and it does not delete
+the retired directory. On this machine the retired harness directories
+listed below were removed on 2026-10-24 after the catalog links were
+installed (backups under `~/skill-backup-2026-10-24/`).
 
 `air-finance-sentinel` stays in the Cursor skills directory. The linker
 does not replace it.
