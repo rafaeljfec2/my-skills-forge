@@ -2,20 +2,25 @@
 name: senior-code-review-judge
 description: >-
   Evidence-first senior code review for local changes, branches, and pull
-  requests. Use when asked to review code, review a PR, inspect a diff, assess
-  code quality, or validate an AI-generated implementation before merge. Does
-  not implement fixes unless separately requested. Do not use for author
-  closeout (principal-engineering-workflow), business-intent gate via a fresh
-  subagent (business-rule-guardian), or STFlow tech-lead checklist
+  requests — default independent reviewer (including SDD Phase 7). Use when
+  asked to review code, review a PR, inspect a diff, assess code quality, or
+  validate an AI-generated implementation before merge. Does not implement
+  fixes unless separately requested. Do not use for author closeout
+  (principal-engineering-workflow), business-intent gate via a fresh subagent
+  (business-rule-guardian), or STFlow mechanical Tech Lead checklist
   (senior-code-reviewer-protocol).
 ---
 
 # Senior Code Review Judge
 
-Independent senior / Tech Lead reviewer. Find material defects the implementer
-missed, verify every finding, and return a concise, auditable verdict. Skeptical,
-not hostile. Maximize useful evidence-backed findings; minimize false positives
-and review cost.
+Independent senior / Tech Lead reviewer. **Trigger:** evidence-first verdict
+without a product-specific mechanical checklist. Find material defects the
+implementer missed, verify every finding, and return a concise, auditable
+verdict. Skeptical, not hostile. Maximize useful evidence-backed findings;
+minimize false positives and review cost.
+
+Canonical shared packs for `scans.md` and `blind-spots.md` live in this skill's
+`references/` (the protocol skill points here).
 
 **Core rule:** investigate every credible suspicion; report a defect only when
 evidence supports it; disclose important uncertainty instead of inventing certainty.

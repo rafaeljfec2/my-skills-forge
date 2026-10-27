@@ -6,6 +6,8 @@ description: >-
   TypeScript strict patterns, dependency hygiene, and a copy-paste ESLint
   preset. Use when writing or refactoring TS/JS, reviewing code, or when the
   user mentions code quality, complexity, lint, Sonar, or maintainability.
+  Do not use for evidence-first PR verdict (senior-code-review-judge), AppSec
+  review (application-security-expert), or Snyk scan/remediate (snyk-rules).
 ---
 
 # Code Quality Standards
@@ -13,39 +15,28 @@ description: >-
 You enforce production-grade code quality. These limits are NOT suggestions —
 they are hard gates. Code that violates them is rejected.
 
+## When not to use
+
+- Evidence-first PR / diff verdict → `senior-code-review-judge`
+- OWASP / auth / LGPD / security standards review → `application-security-expert`
+- Snyk tool scan or remediate loop → `snyk-rules`
+- Author implementation closeout → `principal-engineering-workflow`
+
 ## Workflow (thin orchestrator)
 
 1. Read the target file/diff.
 2. Check hard limits and refactor triggers → [references/core-rules.md](references/core-rules.md)
 3. Apply TypeScript strict / async / naming / imports from the same reference.
-4. Run the project's quality-check script if present (prefer repo-local over machine-global).
-5. Report concisely: only violations and the fix.
+4. Reject listed anti-patterns → [references/anti-patterns.md](references/anti-patterns.md)
+5. Run the project's quality-check script if present (prefer repo-local over machine-global).
+6. Report concisely: only violations and the fix (snippet, rule, refactor). No essays unless asked.
 
 ## Progressive disclosure (part of workflow)
 
-- For deep TypeScript patterns (branded types, exhaustive checks, generic constraints, Result types, satisfies, type vs interface): see [references/TYPESCRIPT_RULES.md](references/TYPESCRIPT_RULES.md)
-- For Node.js patterns (error cause chains, signal handling, async pitfalls, no `process.exit` in libs): see [references/NODEJS_RULES.md](references/NODEJS_RULES.md)
-- For dependency management (evaluating new deps, audit, peer deps, deduplication, freshness): see [references/DEPENDENCY_HYGIENE.md](references/DEPENDENCY_HYGIENE.md)
-- For ESLint preset ready to copy into `.eslintrc.cjs`: see [references/ESLINT_PRESET.md](references/ESLINT_PRESET.md)
-
-## Anti-patterns - reject on sight
-
-- `any`, `as any`, `// @ts-ignore`, `// @ts-nocheck`.
-- `||` for defaults (use `??`).
-- Mutable props (props without `Readonly<>`).
-- `enum` (use const object + literal union).
-- Functions returning `void` that throw (return `Result<T, E>` or document throw behavior in name).
-- Catch blocks that swallow errors silently.
-- Nested ternaries (extract to if/else or named function).
-- Long parameter lists (>4) - use options object.
-- Boolean parameters (use enum/literal union for clarity at call site).
-- `for` + index when `for...of` or `.map`/`.filter` express intent better.
-- Comments that restate the code (`// increment counter`).
-
-## Output style
-
-- Show the violating snippet, the rule it breaks, the refactored version. That is all.
-- No essays. No extensive explanation unless asked.
+- Deep TypeScript patterns → [references/TYPESCRIPT_RULES.md](references/TYPESCRIPT_RULES.md)
+- Node.js patterns → [references/NODEJS_RULES.md](references/NODEJS_RULES.md)
+- Dependency hygiene → [references/DEPENDENCY_HYGIENE.md](references/DEPENDENCY_HYGIENE.md)
+- ESLint preset → [references/ESLINT_PRESET.md](references/ESLINT_PRESET.md)
 
 ## Token economy
 

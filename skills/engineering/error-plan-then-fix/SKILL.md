@@ -4,10 +4,19 @@ description: >-
   When the user shares error output (stack traces, ESLint/TS failures, Husky or
   lint-staged logs, CI logs, git-error excerpts, test failures, build errors),
   runs a short planning phase then implements fixes. Use when the user pastes
-  errors or asks to fix/debug/resolve an error.
+  errors or asks to fix/debug/resolve an error. Do not use for full SDD delivery
+  (sdd-workflow), author closeout (principal-engineering-workflow), or
+  evidence-first review without fixing (senior-code-review-judge).
 ---
 
 # Error: plan first, then fix
+
+## When not to use
+
+- Spec-driven feature delivery / phase gates → `sdd-workflow`
+- Closing your own implementation after a green change → `principal-engineering-workflow`
+- Review-only / no fixes requested → `senior-code-review-judge`
+- Ask / read-only mode → run **only** the planning phase (no edits)
 
 ## When this skill applies
 
@@ -15,8 +24,6 @@ description: >-
 - `git-error-*`, husky, lint-staged, pre-commit failures
 - CI logs, eslint, tsc, vitest, jest, build failures
 - Explicit asks: "fix this error", "why did this fail"
-
-If the user is in Ask / read-only mode, run **only** the planning phase.
 
 ## Workflow (thin orchestrator)
 
@@ -40,12 +47,8 @@ Ask 1–3 questions if critical context is missing. Do not jump to implementatio
 - No `.env` secret edits without authorization
 - No destructive git/push without required confirmation
 - Code/identifiers in English; user replies in Brazilian Portuguese unless asked otherwise
-
-## Anti-patterns
-
-- Blind fixes on long/ambiguous logs
-- Out-of-scope refactors
-- Ignoring Git index vs working tree (lint-staged)
+- No blind fixes on long/ambiguous logs; no out-of-scope refactors
+- Respect Git index vs working tree (lint-staged)
 
 ## Token economy
 

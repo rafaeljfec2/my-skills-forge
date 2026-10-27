@@ -146,11 +146,24 @@ Leva Akita-like **sem** remodelar SKILL.md de novo:
 | Fronteira publish/licença | [publish-boundary.md](../references/publish-boundary.md) + checklist em LICENSING.md |
 | Higiene de secrets | `.gitignore` + scan em `_validate.py` (skills + governança) |
 
+## Apêndice — curadoria Akita-lenses (2026-10-27)
+
+Melhorias aplicadas sem importar texto do Akita:
+
+| Item | Ação |
+|---|---|
+| `snyk-rules` | SKILL thin restaurado (Scan/Remediate); refs intactas |
+| `gh-create-pr` | Procedimento movido para `references/prerequisites-and-create.md` |
+| Cluster review | `scans`/`blind-spots` do protocol → ponteiros para o judge; triggers distintos |
+| `code-quality-standards` | When-not + anti-patterns em reference |
+| `error-plan-then-fix` | When-not vs SDD / principal / judge |
+| `frontend-engineering-expert` | Discovery genérico (sem paths fixos de produto) |
+| `ui-implement-figma` | Skip/collapse de fases; nota anti-cerimônia em `phases.md` |
+| `_validate.py` | `check_skill_shape` só imprime OK se não houve `err` |
+
 ## Verificação
 
 - Skills no catálogo: **22** (inclui `reflect` e `snyk-rules`)
-- Orçamento atual: SKILL/refs OK (`audit_budget.py --root .` → Summary OK=85 WARN=0 FAIL=0)
-- `_validate.py`: ALL VALIDATIONS PASSED (`check_skill_shape` + `check_governance_secrets`)
-- `test_audit_budget.py`: 18 testes OK
-- `link_skills.py --check-repo`: OK; `--dry-run`: exit 1 por conflitos Cursor (esperado)
+- Orçamento atual: SKILL/refs OK (`audit_budget.py --root .` → Summary OK=92 WARN=0 FAIL=0, 2026-10-27)
+- `_validate.py`: shape + governance OK; snapshot `/tmp/skills-forge-source-hashes.json` ausente é ambiente (não regressão de skill)
 - Princípios Akita usados só como método de curadoria; nenhum conteúdo Akita importado

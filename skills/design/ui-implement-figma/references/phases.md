@@ -1,3 +1,12 @@
+# Phases — progressive, not ceremonial
+
+Work phases 1–12 in order when they apply. **Skip or collapse** a phase with a
+one-line reason when it adds no evidence for this request (e.g. no a11y delta,
+no perf risk, analysis-only stop after extraction). Do not invent work to fill
+the checklist. Prefer claim-scoped evidence over ritual completion.
+
+---
+
 # Phase 1 — Requirements (R)
 
 Understand:

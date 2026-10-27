@@ -78,22 +78,50 @@ project skills directory. Remove the real directory (after backup), then
 re-run the linker. Project overrides for catalog names should be
 symlinks into this forge, not forks.
 
-### Linking harnesses
+### Install / re-link harnesses (step by step)
 
-1. Validate the install map: `python3 scripts/link_skills.py --check-repo`
-2. Preview actions: `python3 scripts/link_skills.py --dry-run`
-3. Resolve `conflict-real` / `conflict-target` (backup or remove the real
-   harness directory only when you intend the forge link to win)
-4. Apply: `python3 scripts/link_skills.py` (omit `--dry-run`)
-5. Restart the agent CLI so it reloads `SKILL.md` descriptions
+Editing a skill in this checkout updates every linked harness. Re-run the
+linker when you add a catalog skill, after a conflict, or if a link is
+missing. Already-correct links do not need reinstall.
 
-Latest link report: [reports/link-dry-run.md](reports/link-dry-run.md) (PT-BR).
+1. **Enter the forge**
+
+```bash
+cd /home/rafael/dev-rafael/my-skills-forge
+# or: cd /mnt/c/Users/rafae/dev-rafael/my-skills-forge
+```
+
+2. **Validate the install map**
 
 ```bash
 python3 scripts/link_skills.py --check-repo
+```
+
+3. **Preview (no changes)**
+
+```bash
 python3 scripts/link_skills.py --dry-run
+```
+
+Inspect `conflict-real` / `conflict-target`. If a harness still has a
+**real** directory for a catalog name, back it up and remove it only when
+you intend the forge link to win.
+
+4. **Apply links**
+
+```bash
 python3 scripts/link_skills.py
 ```
+
+Creates Windows junctions for Cursor and Linux symlinks for Claude Code,
+Codex, and shared agents — for every skill under `skills/`.
+
+5. **Restart the agent**
+
+Close and reopen the chat (or restart Cursor / Claude Code) so it reloads
+`SKILL.md` descriptions.
+
+Latest link report: [reports/link-dry-run.md](reports/link-dry-run.md) (PT-BR).
 
 ## Safety
 
@@ -105,8 +133,16 @@ scans forge markdown for obvious private-key material and blocks
 
 Harness links cover every project. A project-local
 `.cursor/skills/<name>` or `.claude/skills/<name>` still wins for that
-name. For catalog skills, keep those entries as symlinks into this forge.
-Product-only skills may stay as real directories in the product repo.
+name. For catalog skills, keep those entries as **symlinks into this forge**,
+not forks. Product-only skills may stay as real directories in the product
+repo.
+
+Optional — replace a project-local real copy with a forge link:
+
+```bash
+ln -sfn /mnt/c/Users/rafae/dev-rafael/my-skills-forge/skills/engineering/sdd-workflow \
+  /path/to/project/.cursor/skills/sdd-workflow
+```
 
 ## Out of this repo / team-coupled
 

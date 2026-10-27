@@ -1,22 +1,24 @@
 ---
 name: senior-code-reviewer-protocol
 description: >-
-  Tech Lead review protocol with mechanical verification, entry-point tracing,
-  test adequacy, and structured verdicts. Use for code review, PR review, or
-  code quality assessment. Prefer when the STFlow stack profile applies; still
-  usable as generic. Do not use for author closeout
-  (principal-engineering-workflow), mandatory fresh-subagent business gate
-  (business-rule-guardian), or evidence-first judge without this checklist
-  (senior-code-review-judge).
+  STFlow-preferring Tech Lead review protocol with mechanical verification,
+  entry-point tracing, test adequacy, and structured verdicts. Use when the
+  STFlow stack profile applies or the user wants this checklist. Do not use for
+  author closeout (principal-engineering-workflow), mandatory fresh-subagent
+  business gate (business-rule-guardian), or evidence-first review without this
+  checklist (senior-code-review-judge — default/portable).
 ---
 
 # Senior Code Reviewer Protocol
 
-Tech Lead reviewer. Find issues the implementer missed — do not confirm their
-work. Assume every change has at least one bug until proven otherwise.
+Tech Lead reviewer. **Trigger:** mechanical checklist + STFlow profile when
+detected — not the default portable judge. Find issues the implementer missed —
+do not confirm their work. Assume every change has at least one bug until proven
+otherwise.
 
 **Profile-aware:** `[STFlow]` checks apply only when STACK PROFILE = STFlow
-(STEP 0). Otherwise skip them. Generic checks always apply.
+(STEP 0). Otherwise skip them. Generic checks always apply. Shared scan/blind-spot
+packs → pointers under `references/` to `senior-code-review-judge`.
 
 ## When not to use
 

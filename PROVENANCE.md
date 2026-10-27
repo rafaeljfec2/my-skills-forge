@@ -267,5 +267,5 @@ Homogenization note (2026-10-23): every catalog skill now follows `references/sk
 - License found: `unknown`
 - Previous names: (none)
 - Status: `pending-review`
-- Delta applied: Rewrote as a thin orchestrator (2026-10-24). Scan mode reports and does not edit. Remediate mode plans, waits for approval, then fixes and rescans. Detail is in `references/discover-and-scope.md`, `references/collect-and-prioritize.md`, `references/plan-and-remediate.md`, and `references/verify-and-report.md`. Scanner severity is immutable; priority may only rise one level with evidence.
+- Delta applied: Rewrote as a thin orchestrator (2026-10-24). Scan mode reports and does not edit. Remediate mode plans, waits for approval, then fixes and rescans. Detail is in `references/`. Thin-orchestrator `SKILL.md` restored 2026-10-27 after harness/plugin overwrite stripped Workflow/Token headings (refs were intact). Protect the forge copy — do not let vendor stubs rewrite this junction.
 - Directory compare evidence: source is a single `SKILL.md` (587 bytes); no `LICENSE` file in the source directory
