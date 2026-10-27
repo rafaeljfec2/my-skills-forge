@@ -18,17 +18,26 @@ This baseline allows projects to opt into a Trivial Fallback for genuinely small
 - JSDoc / non-obvious-intent comment adjustment
 - Manual import reordering / formatting
 
+## Evidence path (trivial form)
+
+Replace the full Evidence block with **1–2 lines**, e.g.:
+
+`Claim: <one sentence>. Success type: test|lint|manual. Path: <smoke/focused check>.`
+
+Still hand this mini-block to Phase 7 with the judge package
+([evidence-and-loop.md](evidence-and-loop.md), [reviewer-protocol.md](reviewer-protocol.md)).
+
 ## Phase map for trivials
 
 | Phase                     | Trivial?            | Detail                                                                                                                                                         |
 | ------------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1. Intake                 | MANDATORY           | 1-line classification + affected file                                                                                                                          |
-| 2. SPEC                   | OMITTED             | Replaced by short description (1-2 lines) in PR/commit                                                                                                         |
+| 2. SPEC                   | OMITTED             | Replaced by short description (1–2 lines) in PR/commit **plus** the 1–2 line evidence form above                                                                  |
 | 3. Dev Review             | OMITTED             | No prior approval needed                                                                                                                                       |
 | 4. Design                 | MANDATORY (reduced) | Identify file + pointed change (1-3 lines explaining "what" and "why")                                                                                         |
 | 5. Test                   | MANDATORY           | Smoke test or focused test covering the change. AX-02 applies (test sacred)                                                                                    |
-| 6. Implementation (Green) | MANDATORY           | Minimum code + run local quality gates                                                                                                                         |
-| 7. PR + Reviewer          | MANDATORY (reduced) | Full quality gates + reviewer subagent with focused checklist. Max **1 round** (if NEEDS_FIX persists = it wasn't trivial — escalate and follow full pipeline) |
+| 6. Implementation (Green) | MANDATORY           | Minimum code + Claim-scoped evidence + local quality gates                                                                                                     |
+| 7. PR + Reviewer          | MANDATORY (reduced) | Full quality gates + `senior-code-review-judge` with **minimum handoff package**. Max **1 round** (if NEEDS_FIX persists = it wasn't trivial — escalate to full pipeline) |
 
 ## Always enforced (even in trivials)
 

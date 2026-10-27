@@ -171,7 +171,7 @@ Homogenization note (2026-10-23): every catalog skill now follows `references/sk
 - License found: `unknown`
 - Previous names: sdd-development-protocol-references
 - Status: `ready`
-- Delta applied: Wrapped references as skill; excluded product sdd-*.mdc files; thin-orchestrator homogenization (2026-10-23)
+- Delta applied: Wrapped references as skill; excluded product sdd-*.mdc files; thin-orchestrator homogenization (2026-10-23); hybrid evidence path + typed green loop + Phase 7 adapter to `senior-code-review-judge` via forge-owned `references/evidence-and-loop.md` (method inspiration only — no upstream Akita skill text copied) (2026-10-26)
 - Directory compare evidence: (not required / single source)
 ## `job-search`
 

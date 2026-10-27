@@ -48,8 +48,9 @@ Agent behavior:
    - For modified interfaces: find ALL files that implement or depend on them
 5. Challenge necessity: does an existing module/package already solve this?
 6. Identify ambiguities — if any, STOP and ask dev before proceeding
+7. Deepwork screen — apply the ≥2-criteria brake in [evidence-and-loop.md](evidence-and-loop.md). If met, mark `DEEPWORK=yes` in the Intake output; otherwise leave unset
 
-**Output**: List of files to touch with justification, blast radius map, classification.
+**Output**: List of files to touch with justification, blast radius map, classification, optional `DEEPWORK=yes`.
 
 ## Phase 2 — SPEC
 
@@ -62,6 +63,7 @@ Agent behavior:
 2. Anti-overengineering check: verify shared packages and existing utilities before creating new abstractions
 3. Define: proposed changes, contracts, affected modules, edge cases, acceptance criteria
 4. Verify every function/type in SPEC exists or is justified as new (AX-08)
+5. Close with the mandatory **Evidence** block (Claim, Success type, Evidence path, Budget, Affordance?) per [evidence-and-loop.md](evidence-and-loop.md). A SPEC without this block is incomplete
 
 ## Phase 3 — Review
 
@@ -71,9 +73,10 @@ Agent behavior:
 Agent behavior:
 
 1. Check SPEC completeness: are all affected files listed? Are edge cases covered?
-2. Verify HARD RULE compliance (HR-01..06 + any local HRs in proposed code patterns)
-3. Check for duplication: does similar logic already exist in shared packages or services?
-4. Present findings to dev — SPEC only proceeds with explicit approval
+2. Verify the Evidence block is present and coherent (Claim + Success type + path) — reject incomplete SPECs
+3. Verify HARD RULE compliance (HR-01..06 + any local HRs in proposed code patterns)
+4. Check for duplication: does similar logic already exist in shared packages or services?
+5. Present findings to dev — SPEC **and** evidence path only proceed with explicit approval
 
 ## Phase 4 — Design
 
@@ -88,6 +91,7 @@ Agent behavior:
 4. For schema changes: plan migration in the project's migration tool/folder
 5. For new endpoints: plan module, controller, service, DTOs in the project's conventional structure
 6. Document architectural decisions with rationale
+7. If `DEEPWORK=yes`: split into delivery boundaries with gate order and ownership; full independent judge stays at Phase 7 only ([evidence-and-loop.md](evidence-and-loop.md))
 
 ## Phase 5 — Test (Red Phase)
 
@@ -127,7 +131,7 @@ Agent behavior enforces:
 - Node.js / language built-ins via explicit imports
 - AX-07: divergence between code and SPEC is a bug — fix the code, not the SPEC
 
-**Verification loop**: run tests → if fail → fix code → re-run → repeat until green or escalate.
+**Typed green loop + anti-theater:** follow [evidence-and-loop.md](evidence-and-loop.md) §§2–3. Criterion = SPEC Success type; max 3 attempts then escalate; generic suite green without establishing the Claim is not a Phase 6 pass.
 
 ## Phase 7 — PR
 
@@ -153,7 +157,7 @@ Verify `git diff --name-only` contains ONLY task-related files. No out-of-scope 
 
 ### Step 3 — Independent Reviewer Subagent
 
-See `reviewer-protocol.md` (in this same references folder) for the full reviewer protocol: spawn parameters, prompt template, checks, conversational rounds, and resume templates.
+Invoke **`senior-code-review-judge`** (baseline default) via [reviewer-protocol.md](reviewer-protocol.md): spawn parameters, claim/evidence handoff, verdict mapping, conversational rounds, and resume templates. Hand off Claim + Evidence path + actual evidence result + diff + HR-13 per [evidence-and-loop.md](evidence-and-loop.md) §5.
 
 ### Step 4 — Create PR
 

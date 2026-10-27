@@ -1,22 +1,46 @@
-# Phase 7 Step 3 — Independent Reviewer Subagent Protocol
+# Phase 7 Step 3 — Independent Reviewer Adapter
 
-**CRITICAL**: Review MUST be executed by a SEPARATE agent via the Task tool. The implementing agent CANNOT objectively review its own code. **Zero-bias** requirement — the reviewer has never seen the code before.
+**CRITICAL**: Review MUST run in a SEPARATE agent via the Task tool. The
+implementing agent CANNOT review its own code. **Zero-bias** — the reviewer has
+not authored the change.
+
+## Default skill
+
+Baseline default: **`senior-code-review-judge`**.
+
+The subagent follows that skill's workflow and report template. This document is
+only the SDD **adapter**: spawn, handoff package, verdict mapping, and rounds.
+
+Local override: a project rule may require `senior-code-reviewer-protocol`
+(e.g. STFlow). If unset, use `senior-code-review-judge`.
 
 ## Spawn the reviewer
 
 ```
 subagent_type: "generalPurpose"
 readonly: true
-description: "Independent code review — Round 1"
+description: "Independent code review — Round 1 (senior-code-review-judge)"
 ```
 
-Save the returned `agentId` — you need it for resume rounds.
+Save the returned `agentId` for resume rounds.
 
-## Prompt template
+## Prompt template (handoff package)
 
 ```
-You are an independent code reviewer. You have NOT seen this code before.
-Read the SDD protocol rule(s) in .cursor/rules/ and follow the reviewer checklist.
+You are an independent reviewer. You have NOT authored this change.
+Follow the catalog skill `senior-code-review-judge` (its SKILL.md and
+references). Do not implement fixes unless separately requested.
+
+## Claim (from approved SPEC)
+<exact Claim text>
+
+## Evidence path (from SPEC)
+- Success type: <test|build|lint|command|manual|oracle>
+- Path: <how the claim was to be established>
+- Budget / affordance notes: <if any>
+
+## Actual evidence result
+<command output, paths, or manual notes that should establish the Claim>
 
 ## What was implemented
 <one paragraph describing the goal>
@@ -27,39 +51,41 @@ Read the SDD protocol rule(s) in .cursor/rules/ and follow the reviewer checklis
 ## Full diff
 <output of git diff>
 
-## Build & test evidence
-<HR-13 results: typecheck, lint, format, test, coverage, build>
+## Build & test evidence (HR-13)
+<typecheck, lint, format, test, coverage, build>
 
-## SDD Compliance
-- Verify AX-01..08 compliance
-- Verify HR-01..06, HR-13, HR-14, HR-19 compliance (+ any project-specific HRs)
-- Verify LIM-01..10 compliance
+## SDD Compliance (also verify)
+- AX-01..08
+- HR-01..06, HR-13, HR-14, HR-19 (+ project-specific HRs)
+- LIM-01..10
 
-Execute the FULL review checklist.
-Return findings in structured format with verdict.
+If Claim or the Evidence block is missing from this package, emit
+CLARIFICATION_NEEDED — do not APPROVE as a favor.
 
-If any design decision is unclear or you lack context to evaluate an item,
-emit CLARIFICATION_NEEDED instead of assuming it is a bug.
+Return the judge report with an explicit SDD loop verdict mapping
+(APPROVED | NEEDS_FIX | CLARIFICATION_NEEDED) per the adapter table.
 ```
 
-## Reviewer checks
+## Verdict mapping (judge → SDD loop)
 
-- **AX/HR/LIM compliance**: verify axiom, hard rule, and limit adherence
-- **Structural**: file size (~300 ideal / ~500 ceiling), complexity (15 max), duplication
-- **Type safety**: no `any`, no unsafe casts, `readonly`, explicit return types
-- **Security**: no secrets in code, parameterized queries, validated inputs, tenant isolation if applicable
-- **Architecture**: domain logic in services, shared types in shared packages, no deep relative imports across workspaces
-- **Integration completeness**: every new parameter has a call site, no dead exports, no duplicate functions, shared types not redefined locally
-- **Regression risk**: existing tests for modified modules still pass
-- **Call-graph tracing**: grep all callers of modified functions, verify signature compatibility
+| Judge outcome | SDD loop response | Action |
+| --- | --- | --- |
+| No material CRITICAL / IMPORTANT | `APPROVED` | Create PR |
+| CRITICAL or IMPORTANT findings | `NEEDS_FIX` | Fix, re-run HR-13, resume with Template B |
+| Missing claim/evidence package, or unclear design context | `CLARIFICATION_NEEDED` | Answer via Template A |
+| Only MINOR / NIT after round 3 | Treat as proceed | Create PR; report remaining nits to the developer |
+
+Legacy labels CRITICAL/HIGH in older notes map to CRITICAL/IMPORTANT.
 
 ## Conversational review — max 3 rounds (default)
 
-| Response                       | Action                                                       |
-| ------------------------------ | ------------------------------------------------------------ |
-| `APPROVED` (no CRITICAL/HIGH)  | Create PR                                                    |
-| `CLARIFICATION_NEEDED`         | Answer via resume (template A)                               |
-| `NEEDS_FIX` (CRITICAL or HIGH) | Fix code, re-run quality gates, resume reviewer (template B) |
+| Response | Action |
+| --- | --- |
+| `APPROVED` | Create PR |
+| `CLARIFICATION_NEEDED` | Answer via resume (Template A) |
+| `NEEDS_FIX` | Fix code, re-run quality gates, resume (Template B) |
+
+Trivial fallback: **max 1 round** — see [trivial-fallback.md](trivial-fallback.md).
 
 ### Template A — Resume for clarification
 
@@ -82,7 +108,7 @@ Emit updated findings for any items that were pending clarification.
 Round N — Re-validation after fixes.
 
 ## Issues fixed
-<list each issue ID (C1, H1, etc.) with what was changed and file:line references>
+<list each issue ID with what changed and file:line references>
 
 ## New diff (only the fixes)
 <output of git diff for the fix commits>
@@ -90,8 +116,11 @@ Round N — Re-validation after fixes.
 ## Updated build evidence
 <quality gates results after fixes>
 
+## Claim evidence (if affected)
+<re-run of SPEC success-type evidence if the fix touched the claim path>
+
 Re-validate ONLY the items you flagged. Do NOT re-review the entire diff.
-Emit updated verdict.
+Emit updated verdict (APPROVED | NEEDS_FIX | CLARIFICATION_NEEDED).
 ```
 
 ## Loop control
@@ -100,4 +129,5 @@ Emit updated verdict.
 - Round 2: Clarification response OR first fix validation (resume)
 - Round 3: Final fix validation if needed (resume)
 
-After 3 rounds: if APPROVED or only LOW/NIT items → create PR. If CRITICAL/HIGH remain → **STOP and report to dev**.
+After 3 rounds: if `APPROVED` or only MINOR/NIT → create PR. If CRITICAL or
+IMPORTANT remain → **STOP and report to the developer**.
