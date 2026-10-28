@@ -77,6 +77,7 @@ def harnesses() -> tuple[Harness, ...]:
         Harness("claude", home / ".claude" / "skills"),
         Harness("codex", home / ".codex" / "skills"),
         Harness("agents", home / ".agents" / "skills"),
+        Harness("opencode", home / ".config" / "opencode" / "skills"),
     )
 
 

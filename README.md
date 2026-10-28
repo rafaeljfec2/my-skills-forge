@@ -66,6 +66,12 @@ identifier.
 | Claude Code | `~/.claude/skills` | per-skill Linux symlink |
 | Codex | `~/.codex/skills` | per-skill Linux symlink, beside `.system` |
 | Shared | `~/.agents/skills` | per-skill Linux symlink |
+| OpenCode | `~/.config/opencode/skills` | per-skill Linux symlink |
+
+OpenCode also reads `~/.claude/skills` and `~/.agents/skills` for
+compatibility, and it resolves a duplicated skill id from the source with
+the higher precedence. `~/.config/opencode/skills` is its native source, so
+it outranks both compatibility directories.
 
 `scripts/link_skills.py` creates those links for every skill under
 `skills/`. Both `ready` and `pending-review` skills are installed. The
@@ -114,12 +120,13 @@ python3 scripts/link_skills.py
 ```
 
 Creates Windows junctions for Cursor and Linux symlinks for Claude Code,
-Codex, and shared agents — for every skill under `skills/`.
+Codex, shared agents, and OpenCode — for every skill under `skills/`.
 
 5. **Restart the agent**
 
 Close and reopen the chat (or restart Cursor / Claude Code) so it reloads
-`SKILL.md` descriptions.
+`SKILL.md` descriptions. OpenCode re-scans its sources on config changes, so
+a new session is enough.
 
 Latest link report: [reports/link-dry-run.md](reports/link-dry-run.md) (PT-BR).
 
