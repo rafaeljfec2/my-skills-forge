@@ -1,0 +1,7 @@
+interface:
+  display_name: "Iterative SDD Workflow"
+  short_description: "Deliver approved corrections one at a time"
+  default_prompt: "Use $iterative-sdd-workflow to audit and deliver one approved correction at a time."
+
+policy:
+  allow_implicit_invocation: false

@@ -4,7 +4,7 @@ Components installed around this forge that are **not** catalog skills under
 `skills/`, or that must stay harness-owned. Re-check occasionally — nothing
 here auto-updates into the forge.
 
-Last checked: **2026-10-24** (catalog skills linked; forge on Windows drive).
+Last checked: **2026-11-01** (catalog skills linked; forge on Windows drive).
 
 | Component | Where it lives | Why outside the forge | Update procedure |
 |---|---|---|---|
@@ -23,10 +23,11 @@ Last checked: **2026-10-24** (catalog skills linked; forge on Windows drive).
 
 | Harness | Skills directory | Notes |
 |---|---|---|
-| Cursor | `~/.cursor/skills` → `/mnt/c/Users/rafae/.cursor/skills` | All 22 catalog names are junctions into the forge; leftovers listed above stay as real dirs |
-| Claude Code | `~/.claude/skills` | All 22 catalog names are Linux symlinks; portable non-catalog leftovers remain |
-| Codex | `~/.codex/skills` | All 22 catalog names are Linux symlinks; `.system` protected |
-| Shared | `~/.agents/skills` | All 22 catalog names are Linux symlinks; `ai-memory-*` remain |
+| Cursor | `~/.cursor/skills` → `/mnt/c/Users/rafae/.cursor/skills` | All 23 catalog names are junctions into the forge; leftovers listed above stay as real dirs |
+| Claude Code | `~/.claude/skills` | All 23 catalog names are Linux symlinks; portable non-catalog leftovers remain |
+| Codex | `~/.codex/skills` | All 23 catalog names are Linux symlinks; `.system` protected |
+| Shared | `~/.agents/skills` | All 23 catalog names are Linux symlinks; `ai-memory-*` remain |
+| OpenCode | `~/.config/opencode/skills` | All 23 catalog names are Linux symlinks |
 
 ## Forge checkout location
 

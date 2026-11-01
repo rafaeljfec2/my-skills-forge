@@ -173,6 +173,19 @@ Homogenization note (2026-10-23): every catalog skill now follows `references/sk
 - Status: `ready`
 - Delta applied: Wrapped references as skill; excluded product sdd-*.mdc files; thin-orchestrator homogenization (2026-10-23); hybrid evidence path + typed green loop + Phase 7 adapter to `senior-code-review-judge` via forge-owned `references/evidence-and-loop.md` (method inspiration only — no upstream Akita skill text copied) (2026-10-26)
 - Directory compare evidence: (not required / single source)
+## `iterative-sdd-workflow`
+
+- Domain: `engineering`
+- Forge path: `skills/engineering/iterative-sdd-workflow`
+- Source path: (forge-authored)
+- Upstream: Method inspiration from Fabio Akita's engineering approach, based on a maintainer-provided summary; no upstream skill text copied
+- Author found: forge maintainer
+- License found: `unknown`
+- Previous names: (none)
+- Status: `pending-review`
+- Delta applied: New manual-only, lightweight SDD workflow with individually approved corrections, claim-scoped verification, human acceptance, and release handoff
+- Directory compare evidence: (not applicable — original forge skill)
+
 ## `job-search`
 
 - Domain: `productivity`
