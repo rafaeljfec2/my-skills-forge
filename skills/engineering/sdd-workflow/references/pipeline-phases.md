@@ -20,7 +20,12 @@ Every agent message that plans, proposes, or applies a diff MUST start with the 
 [Phase N — Name]
 ```
 
-Examples: `[Phase 0 — Project Discovery]`, `[Phase 1 — Intake]`, `[Phase 3 — Review]`, `[Phase 5 — Test (Red)]`, `[Phase 7 — PR]`.
+Examples: `[Phase 0 — Project Discovery]`, `[Phase 1 — Intake]`, `[Phase 3 — Review]`, `[Phase 5 — Test (Red)]`, `[Phase 7 — PR / Step 3 Review]`, `[Phase 7 — PR / Step 4 Create]`.
+
+Phase 7 step tags (required when acting in that step):
+
+- `[Phase 7 — PR / Step 3 Review]` — before spawning the judge or summarizing its verdict
+- `[Phase 7 — PR / Step 4 Create]` — only after Step 3 returns `APPROVED`
 
 Pure-conversation messages (no diff in this turn and no diff planned) use:
 
@@ -159,7 +164,20 @@ Verify `git diff --name-only` contains ONLY task-related files. No out-of-scope 
 
 Invoke **`senior-code-review-judge`** (baseline default) via [reviewer-protocol.md](reviewer-protocol.md): spawn parameters, claim/evidence handoff, verdict mapping, conversational rounds, and resume templates. Hand off Claim + Evidence path + actual evidence result + diff + HR-13 per [evidence-and-loop.md](evidence-and-loop.md) §5.
 
+Tag this turn `[Phase 7 — PR / Step 3 Review]` (HR-20).
+
+**Forbidden substitutes** (none of these satisfy Step 3 / AX-05):
+
+- Author self-review or checklist-only closeout
+- `principal-engineering-workflow` alone (author hygiene after Phase 6 is allowed; it does **not** replace the judge)
+- HR-13 quality gates alone, or a single `[Phase 7 — PR]` tag without a subagent
+- Reading `senior-code-review-judge` inline in the implementer's context (no Task / no separate readonly subagent)
+
 ### Step 4 — Create PR
+
+**Entry gate (MANDATORY):** Step 4 begins ONLY after a prior message in the same session carries `[Phase 7 — PR / Step 3 Review]` with an explicit subagent verdict `APPROVED` (or `NEEDS_FIX` resolved through re-review that returns `APPROVED`), reviewer output in the session, and HR-13 evidence. Cite `agentId` / round when Task was used. Opening a PR, pushing for merge, or tagging `[Phase 7 — PR / Step 4 Create]` without that gate is a protocol violation (LIM-11).
+
+Tag this turn `[Phase 7 — PR / Step 4 Create]` only after the entry gate passes.
 
 - **Title**: follow Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, etc.) or the project-specific convention defined in local rule
 - **Branch**: follow the project-specific naming convention defined in local rule. Default fallback: `{type}/{short-slug}` (e.g., `feat/user-login`)
@@ -168,6 +186,8 @@ Invoke **`senior-code-review-judge`** (baseline default) via [reviewer-protocol.
 - **Base branch**: as defined by the project (typically `main` or `develop`)
 
 ### Step 5 — Converge
+
+**Entry gate:** Declare the SDD delivery "done" only after Step 3 `APPROVED`. Step 4 (Create PR) remains optional when the developer did not ask for a PR — Step 3 is still mandatory (LIM-11).
 
 Report to dev:
 

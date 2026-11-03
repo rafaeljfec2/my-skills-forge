@@ -56,8 +56,8 @@ references). Do not implement fixes unless separately requested.
 
 ## SDD Compliance (also verify)
 - AX-01..08
-- HR-01..06, HR-13, HR-14, HR-19 (+ project-specific HRs)
-- LIM-01..10
+- HR-01..06, HR-13, HR-14, HR-19, HR-20 (+ project-specific HRs)
+- LIM-01..11
 
 If Claim or the Evidence block is missing from this package, emit
 CLARIFICATION_NEEDED — do not APPROVE as a favor.
@@ -131,3 +131,14 @@ Emit updated verdict (APPROVED | NEEDS_FIX | CLARIFICATION_NEEDED).
 
 After 3 rounds: if `APPROVED` or only MINOR/NIT → create PR. If CRITICAL or
 IMPORTANT remain → **STOP and report to the developer**.
+
+## Protocol violations (SDD)
+
+STOP and report to the developer — do not open a PR or declare delivery done — when any of these occur:
+
+- Skipping Phase 7 Step 3
+- No Task / no separate readonly subagent (inline judge in the author context)
+- Same-context "self-APPROVED" without subagent reviewer output
+- `gh pr create`, push-for-merge, or asking the developer to merge before Step 3 returns `APPROVED` (LIM-11)
+
+Step 4 (`gh pr create` / merge request) is **blocked** until `APPROVED` (or the trivial 1-round equivalent with reviewer output in the session).

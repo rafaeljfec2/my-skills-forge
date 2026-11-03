@@ -39,11 +39,15 @@ Still hand this mini-block to Phase 7 with the judge package
 | 6. Implementation (Green) | MANDATORY           | Minimum code + Claim-scoped evidence + local quality gates                                                                                                     |
 | 7. PR + Reviewer          | MANDATORY (reduced) | Full quality gates + `senior-code-review-judge` with **minimum handoff package**. Max **1 round** (if NEEDS_FIX persists = it wasn't trivial — escalate to full pipeline) |
 
+Trivial fallback **reduces review rounds**; it does **not** eliminate Phase 7
+Step 3 / the judge. Omitting Step 3 is never a trivial optimization (HR-20,
+LIM-11).
+
 ## Always enforced (even in trivials)
 
-- HR-01..06 + any local HRs
-- LIM-01..10
-- AX-02 (test sacred), AX-04 (no any), AX-05 (review required), AX-08 (verify)
+- HR-01..06, HR-20 + any local HRs
+- LIM-01..11
+- AX-02 (test sacred), AX-04 (no any), AX-05 (review required via Step 3 subagent), AX-08 (verify)
 - Quality gates (ALL)
 
 ## When in doubt about triviality

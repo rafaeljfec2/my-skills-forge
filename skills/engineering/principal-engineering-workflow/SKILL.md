@@ -18,13 +18,19 @@ Mandatory closure after any implementation. Default bar for finished work.
 ## When not to use
 
 - Independent evidence-first PR review (no authoring) → `senior-code-review-judge`
+- Active delivery under **`sdd-workflow`**: Phase 7 Step 3 MUST be a separate
+  readonly subagent running `senior-code-review-judge` (or the project-mandated
+  protocol skill). This skill does **not** satisfy AX-05 / Step 3.
 - Business-rule gate in a fresh readonly subagent → `business-rule-guardian`
 - STFlow mechanical tech-lead checklist → `senior-code-reviewer-protocol`
 
 ## When to apply
 
 - Whenever you have **changed code** in response to a request
-- Before declaring the task **done** or asking for merge/PR
+- Optional **author hygiene after SDD Phase 6** (self-review before the
+  independent judge) — never **instead of** Phase 7 Step 3
+- Before declaring the task **done** or asking for merge/PR **outside** an
+  active SDD delivery (under SDD, Step 3 `APPROVED` is required first)
 
 ## Workflow (thin orchestrator)
 

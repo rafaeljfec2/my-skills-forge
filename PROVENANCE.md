@@ -159,7 +159,7 @@ Homogenization note (2026-10-23): every catalog skill now follows `references/sk
 - License found: `unknown`
 - Previous names: (none)
 - Status: `ready`
-- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23)
+- Delta applied: (none — verbatim copy); thin-orchestrator homogenization (2026-10-23); When-not / When-to-apply clarify that this skill does not replace `sdd-workflow` Phase 7 Step 3 (`senior-code-review-judge` subagent) (2026-11-03)
 - Directory compare evidence: (not required / single source)
 ## `sdd-workflow`
 
@@ -171,7 +171,7 @@ Homogenization note (2026-10-23): every catalog skill now follows `references/sk
 - License found: `unknown`
 - Previous names: sdd-development-protocol-references
 - Status: `ready`
-- Delta applied: Wrapped references as skill; excluded product sdd-*.mdc files; thin-orchestrator homogenization (2026-10-23); hybrid evidence path + typed green loop + Phase 7 adapter to `senior-code-review-judge` via forge-owned `references/evidence-and-loop.md` (method inspiration only — no upstream Akita skill text copied) (2026-10-26)
+- Delta applied: Wrapped references as skill; excluded product sdd-*.mdc files; thin-orchestrator homogenization (2026-10-23); hybrid evidence path + typed green loop + Phase 7 adapter to `senior-code-review-judge` via forge-owned `references/evidence-and-loop.md` (method inspiration only — no upstream Akita skill text copied) (2026-10-26); Phase 7 Step 3 enforcement — Core contract in SKILL.md, HR-20, LIM-11, AX-05 note, pipeline Step 3/4 tags and entry gates, reviewer protocol violations, evidence handoff prerequisite, trivial still requires judge (2026-11-03)
 - Directory compare evidence: (not required / single source)
 ## `iterative-sdd-workflow`
 

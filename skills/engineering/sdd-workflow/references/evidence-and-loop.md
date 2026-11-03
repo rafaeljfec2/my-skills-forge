@@ -82,6 +82,12 @@ Minimum package for the independent reviewer (see
 If Claim (or the Evidence block) is missing from the package, the reviewer MUST
 emit `CLARIFICATION_NEEDED` — never `APPROVED` as a favor.
 
+**Prerequisite for Step 4 / Converge:** a complete handoff and Step 3 judge
+verdict are required before Create PR or declaring delivery done (LIM-11). A
+missing claim package yields `CLARIFICATION_NEEDED`; the implementer MUST NOT
+close the delivery until the package is fixed and the subagent returns
+`APPROVED`.
+
 ## 6. Trivial changes
 
 Use the one-line evidence form and single-round judge rules in
