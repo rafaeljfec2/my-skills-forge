@@ -67,11 +67,17 @@ identifier.
 | Codex | `~/.codex/skills` | per-skill Linux symlink, beside `.system` |
 | Shared | `~/.agents/skills` | per-skill Linux symlink |
 | OpenCode | `~/.config/opencode/skills` | per-skill Linux symlink |
+| Antigravity | `~/.gemini/config/skills` | per-skill Linux symlink (global user skills) |
+| Antigravity CLI | `~/.gemini/antigravity-cli/skills` | per-skill Linux symlink |
 
 OpenCode also reads `~/.claude/skills` and `~/.agents/skills` for
 compatibility, and it resolves a duplicated skill id from the source with
 the higher precedence. `~/.config/opencode/skills` is its native source, so
 it outranks both compatibility directories.
+
+Antigravity **builtin** trees (`~/.gemini/antigravity/builtin/skills`,
+`~/.gemini/antigravity-ide/builtin/skills`) stay package-owned. The linker
+never writes there — only into the user skills directories above.
 
 `scripts/link_skills.py` creates those links for every skill under
 `skills/`. Both `ready` and `pending-review` skills are installed. The

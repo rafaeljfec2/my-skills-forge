@@ -75,11 +75,39 @@ ID repetido entre fontes não é erro: a fonte de maior precedência vence.
 | Claude | `create-adr`, `create-rfc`, `create-technical-design-doc`, `gh-address-comments`, `gh-fix-ci`, `mermaid-studio`, `nestjs-modular-monolith` |
 | Codex | `.system` |
 | agents | `ai-memory-*` |
-| OpenCode | nenhuma — todas as 22 são links para o forge |
+| OpenCode | nenhuma — todas as skills do catálogo são links para o forge |
+| Antigravity | `ui-implement-figma` (real); `ai-memory-*` |
+| Antigravity CLI | `ai-memory-*` |
 | Projetos de produto | skills de game-funny, banking-dev, axiom-*, frontend-dev, backend-dev, etc. |
+
+## 2026-11-04 — harness Antigravity adicionado
+
+Antigravity / Gemini passou a ser consumidor do linker:
+
+```python
+Harness("antigravity", home / ".gemini" / "config" / "skills"),
+Harness("antigravity-cli", home / ".gemini" / "antigravity-cli" / "skills"),
+```
+
+- Destino global (docs Antigravity): `~/.gemini/config/skills`
+- Destino CLI: `~/.gemini/antigravity-cli/skills`
+- **Builtin** (`antigravity/builtin/skills`, `antigravity-ide/builtin/skills`) permanece package-owned — o linker não escreve lá
+
+Apply (`python3 scripts/link_skills.py`, 2026-11-04):
+
+```text
+antigravity: conflict-real=1 create=22   → pós-apply: conflict-real=1 unchanged=22
+  conflict-real ui-implement-figma
+antigravity-cli: create=23               → pós-apply: unchanged=23
+```
+
+`ui-implement-figma` em `~/.gemini/config/skills` é pasta real (cópia antiga);
+o linker não a substitui até backup/remoção manual. Demais 22 nomes no
+Antigravity e todas as 23 no Antigravity CLI já apontam para o forge.
 
 ## Próximo passo operacional
 
-Reiniciar Cursor / Claude / Codex / agents para recarregar as descriptions
-dos `SKILL.md`. No OpenCode basta abrir uma nova sessão: ele re-escaneia as
-fontes de skills a cada mudança de config.
+Reiniciar Cursor / Claude / Codex / agents / OpenCode / Antigravity para
+recarregar as descriptions dos `SKILL.md`. Opcional: backup + remover
+`~/.gemini/config/skills/ui-implement-figma` e re-rodar o linker para
+eliminar o último `conflict-real`.

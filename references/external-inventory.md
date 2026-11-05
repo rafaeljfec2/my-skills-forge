@@ -17,6 +17,8 @@ Last checked: **2026-11-01** (catalog skills linked; forge on Windows drive).
 | Team-coupled forge skills | `pr-creator-tr`, `pr-creator-outcoders` (in this forge) | ADO/Teams/team standards; not portable publish defaults | Edit in forge; see [publish-boundary.md](publish-boundary.md) |
 | Optional quality-check script | Repo `scripts/` or project docs | Prefer repo-local over machine-global paths | Per project |
 | Vendor / plugin skill caches | Cursor plugins under `~/.cursor/plugins/`, npm global packages | Reinstalled with the tool | Update the plugin/package; do not vendor blindly into `skills/` |
+| Antigravity / Gemini builtin skills | `~/.gemini/antigravity/builtin/skills`, `~/.gemini/antigravity-ide/builtin/skills` | Package-owned; replaced on Antigravity update | Never link forge skills here; update Antigravity |
+| Antigravity plugins | `~/.gemini/config/plugins/` (and IDE plugin links) | Vendor plugin bundles | Update the plugin; do not copy into forge catalog |
 | Pre-link backups | `~/skill-backup-2026-10-24/` | Real dirs removed when catalog links were installed | Delete when no longer needed |
 
 ## Harness path notes (this machine)
@@ -28,6 +30,8 @@ Last checked: **2026-11-01** (catalog skills linked; forge on Windows drive).
 | Codex | `~/.codex/skills` | All 23 catalog names are Linux symlinks; `.system` protected |
 | Shared | `~/.agents/skills` | All 23 catalog names are Linux symlinks; `ai-memory-*` remain |
 | OpenCode | `~/.config/opencode/skills` | All 23 catalog names are Linux symlinks |
+| Antigravity | `~/.gemini/config/skills` | 22 catalog symlinks + real `ui-implement-figma` conflict; `ai-memory-*` remain |
+| Antigravity CLI | `~/.gemini/antigravity-cli/skills` | 23 catalog symlinks; `ai-memory-*` remain; do not touch `builtin/` |
 
 ## Forge checkout location
 

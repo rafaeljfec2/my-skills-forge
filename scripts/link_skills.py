@@ -78,6 +78,13 @@ def harnesses() -> tuple[Harness, ...]:
         Harness("codex", home / ".codex" / "skills"),
         Harness("agents", home / ".agents" / "skills"),
         Harness("opencode", home / ".config" / "opencode" / "skills"),
+        # Google Antigravity / Gemini: user skills live under config/skills
+        # (not builtin/). CLI also reads antigravity-cli/skills.
+        Harness("antigravity", home / ".gemini" / "config" / "skills"),
+        Harness(
+            "antigravity-cli",
+            home / ".gemini" / "antigravity-cli" / "skills",
+        ),
     )
 
 
