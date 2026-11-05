@@ -209,16 +209,45 @@ Keep each round focused on unresolved findings and regressions introduced by the
 
 ## Step 8 — Report format
 
-Use the template in [report-template.md](report-template.md). Return one consolidated report in the user's requested language (conversation language if unspecified). Keep code identifiers and tool output verbatim.
+Use the template in [report-template.md](report-template.md). Return one consolidated report in the user's requested language (conversation language if unspecified). Keep code identifiers and tool output verbatim. Always set `Round: N` (start at 1).
+
+After emitting the report, **immediately** execute Step 8a unless the verdict is already `APPROVED` or an escape condition applies.
+
+## Step 8a — Remediation loop (until APPROVED)
+
+The judge **never** edits repository code itself. Fixes go through
+`principal-engineering-workflow` with an explicit finding ledger.
+
+### Stop conditions
+
+| Condition | Action |
+|---|---|
+| `VERDICT: APPROVED` | Done. Proceed to Step 9 only if publishing was authorized. |
+| `VERDICT: INCOMPLETE` | Stop. List missing access/context; do not invent fixes. |
+| Readonly session (e.g. Task `readonly: true`) or PATCH-ONLY / no writable checkout | Stop after the report. Instruct the **parent** agent to run principal + a new judge round with write tools. |
+| User explicitly requested **review-only** (no fixes) | Stop after the report. |
+| Round already at **3** and still not `APPROVED` | Stop. Deliver the latest report + finding ledger and require a human decision. |
+
+### Loop (when verdict is `REJECTED` or `APPROVED_WITH_NOTES`)
+
+1. Build a finding ledger from the report (stable ids `F01`, `F02`, …): severity, `path:line`, excerpt/behavior, fix direction, status `OPEN`.
+2. Invoke **`principal-engineering-workflow`** with: original user request; current branch/diff scope; the full ledger; instruction to fix open CRITICAL/IMPORTANT (and MINOR when they block `APPROVED` under Step 6 rules); validate lint/tests/build on touched packages; return what changed per finding id.
+3. After principal completes, set `Round := Round + 1` (must not exceed 3 total review rounds that produced a verdict).
+4. Re-run Steps 1–7 on the new diff (Step 7 convergence: mark each prior finding `RESOLVED` / `OPEN` / `DECLINED` with evidence; hunt regressions from the fixes).
+5. Emit Step 8 report for the new round (include `FINDING LEDGER` and `REMEDIATION` blocks).
+6. If still not `APPROVED` and Round < 3, repeat from (1). If Round == 3 and not `APPROVED`, stop per the table above.
+
+Do not skip the principal step and “quick-fix” inline as the judge. Do not start a fourth remediation cycle without human approval.
 
 ## Step 9 — Publishing external reviews
 
 Publishing is an external side effect. Follow [publishing.md](publishing.md).
 
+- Prefer publishing only the **final** `APPROVED` (or final escalated) verdict unless the user asked to post every round.
 - If the user explicitly asked to review a PR and authorized publishing, publish one consolidated review.
 - If authorization is unclear, provide the review in chat and ask before publishing.
 - Never claim a review was posted unless the tool confirms success.
-- Do not open PRs, merge branches, or modify code as part of this skill unless separately requested.
+- Do not open PRs, merge branches, or modify code **as the judge**. Code changes happen only via `principal-engineering-workflow` in Step 8a.
 
 ## Optional project-specific rules
 
@@ -238,4 +267,6 @@ Before returning the report, confirm:
 - [ ] Findings are deduplicated and severity is proportional.
 - [ ] The verdict follows the stated rules.
 - [ ] Review limitations are visible; INCOMPLETE is used when necessary.
-- [ ] No code was changed and no external review was published without authorization.
+- [ ] Non-APPROVED verdicts entered Step 8a (or documented an escape: readonly, review-only, INCOMPLETE, max rounds).
+- [ ] Code changes (if any) were made only via `principal-engineering-workflow`, not by the judge inline.
+- [ ] No external review was published without authorization.

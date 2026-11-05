@@ -4,8 +4,9 @@ description: >-
   Evidence-first senior code review for local changes, branches, and pull
   requests — default independent reviewer (including SDD Phase 7). Use when
   asked to review code, review a PR, inspect a diff, assess code quality, or
-  validate an AI-generated implementation before merge. Does not implement
-  fixes unless separately requested. Do not use for author closeout
+  validate an AI-generated implementation before merge. After a non-APPROVED
+  report, delegates fixes to principal-engineering-workflow and re-reviews
+  until APPROVED (max 3 rounds). Do not use for author closeout alone
   (principal-engineering-workflow), business-intent gate via a fresh subagent
   (business-rule-guardian), or STFlow mechanical Tech Lead checklist
   (senior-code-reviewer-protocol).
@@ -27,9 +28,10 @@ evidence supports it; disclose important uncertainty instead of inventing certai
 
 ## When not to use
 
-- Closing your own implementation → `principal-engineering-workflow`
+- Closing your own implementation without an independent verdict → `principal-engineering-workflow`
 - Business-rule gate in a fresh readonly subagent → `business-rule-guardian`
 - STFlow-profile tech-lead mechanical protocol → `senior-code-reviewer-protocol`
+- Explicit **review-only** (no remediation loop) when the user forbids fixes
 
 ## Non-negotiable principles
 
@@ -41,20 +43,20 @@ evidence supports it; disclose important uncertainty instead of inventing certai
 6. **Do not duplicate deterministic tooling.** Run project checks first; do not re-post what the linter already clearly reported.
 7. **No stack assumptions.** Detect the real stack; apply project profiles only when detection succeeds.
 8. **Do not ingest the whole repository by default.** Start from the diff; expand only to verify a claim.
-9. **No automatic remediation.** Review and report only unless the user asks for fixes.
+9. **Remediation loop.** The judge does **not** edit code. After a consolidated report whose verdict is not `APPROVED`, invoke `principal-engineering-workflow` with the finding ledger, then re-run Steps 1–7. Repeat until `APPROVED` or stop per Step 8a (max 3 rounds / escape).
 10. **External claims need current sources.** Libraries, APIs, advisories → official docs; otherwise state the limitation.
-11. **First review should be complete.** Report all verified material findings in one consolidated result.
+11. **First review should be complete.** Report all verified material findings in one consolidated result per round.
 12. **Human owns merge.** Never merge, approve, request changes, or publish externally without explicit user authorization and tool support.
 
 ## Workflow (thin orchestrator)
 
 Execute steps in order. Load detail only when the step needs it:
 
-1. Read [references/workflow-steps.md](references/workflow-steps.md) for Steps 0–9 (mode/scope, verification, risk passes, research, severity, re-review, publishing).
+1. Read [references/workflow-steps.md](references/workflow-steps.md) for Steps 0–9 (mode/scope, verification, risk passes, research, severity, re-review, report, **remediation loop**, publishing).
 2. Use [references/scans.md](references/scans.md) for base-ref resolution and profile-specific searches.
 3. Use [references/rigorous-checks.md](references/rigorous-checks.md) and [references/blind-spots.md](references/blind-spots.md) during risk passes.
-4. Format the report with [references/report-template.md](references/report-template.md).
-5. If publishing to a host, follow [references/publishing.md](references/publishing.md).
+4. Format each round with [references/report-template.md](references/report-template.md).
+5. If publishing to a host, follow [references/publishing.md](references/publishing.md) only when authorized (usually after final `APPROVED`).
 
 Step index:
 
@@ -67,8 +69,9 @@ Step index:
 | 4 | External research when claims depend on third parties |
 | 5 | Verify, challenge, deduplicate |
 | 6 | Severity and verdict |
-| 7 | Re-review / convergence |
-| 8 | Report |
+| 7 | Re-review / convergence (later rounds) |
+| 8 | Report (template, Round N) |
+| 8a | Remediation loop — principal fixes → re-review until APPROVED |
 | 9 | Publish only when authorized |
 
 ## Token economy

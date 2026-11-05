@@ -244,7 +244,7 @@ Homogenization note (2026-10-23): every catalog skill now follows `references/sk
 - License found: `unknown`
 - Previous names: senior-code-reviewer, senior-code-review-judge
 - Status: `pending-review`
-- Delta applied: Renamed from senior-code-reviewer; thinned SKILL.md (Akita-style orchestrator); step detail in `references/workflow-steps.md` and `references/report-template.md`; removed sync-global.sh; thin-orchestrator homogenization (2026-10-23)
+- Delta applied: Renamed from senior-code-reviewer; thinned SKILL.md (Akita-style orchestrator); step detail in `references/workflow-steps.md` and `references/report-template.md`; removed sync-global.sh; thin-orchestrator homogenization (2026-10-23); remediation loop Step 8a via `principal-engineering-workflow` until APPROVED (max 3 rounds; readonly/INCOMPLETE/review-only escapes) (2026-11-05)
 - Directory compare evidence: files_a=6 files_b=6; only_a=[]; only_b=[]; differ=['SKILL.md', 'references/rigorous-checks.md']; SKILL.md a=a48117caa34e b=6c791e867988; vs job-search=files_a=6 files_b=1; only_a=['references/blind-spots.md', 'references/publishing.md', 'references/rigorous-checks.md', 'references/scans.md', 'references/sync-global.sh']; only_b=[]; differ=['SKILL.md']; SKILL.md a=a48117caa34e b=98d2d50c9e9d
 ## `senior-code-reviewer-protocol`
 

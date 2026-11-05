@@ -14,6 +14,15 @@ only the SDD **adapter**: spawn, handoff package, verdict mapping, and rounds.
 Local override: a project rule may require `senior-code-reviewer-protocol`
 (e.g. STFlow). If unset, use `senior-code-review-judge`.
 
+### Remediation loop vs readonly Task
+
+`senior-code-review-judge` Step 8a requires a **writable** session to invoke
+`principal-engineering-workflow`. Phase 7 Step 3 still spawns the judge with
+`readonly: true` for zero-bias review. In that mode the subagent **reports and
+stops** (escape: readonly). The **parent** agent applies fixes (principal or
+Template B), then resumes/spawns the judge for the next round until `APPROVED`
+or the round cap. Do not ask the readonly subagent to edit code.
+
 ## Spawn the reviewer
 
 ```
@@ -29,7 +38,9 @@ Save the returned `agentId` for resume rounds.
 ```
 You are an independent reviewer. You have NOT authored this change.
 Follow the catalog skill `senior-code-review-judge` (its SKILL.md and
-references). Do not implement fixes unless separately requested.
+references). This Task is readonly: emit the report and finding ledger; do not
+edit code. Remediation is handled by the parent via principal-engineering-workflow
+or Template B, then a new judge round.
 
 ## Claim (from approved SPEC)
 <exact Claim text>

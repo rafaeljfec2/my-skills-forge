@@ -31,6 +31,9 @@ Mandatory closure after any implementation. Default bar for finished work.
   independent judge) — never **instead of** Phase 7 Step 3
 - Before declaring the task **done** or asking for merge/PR **outside** an
   active SDD delivery (under SDD, Step 3 `APPROVED` is required first)
+- When **`senior-code-review-judge` Step 8a** invokes this skill with a finding
+  ledger: focus on those open findings, apply fixes, validate, and return status
+  per finding id to the judge. Do **not** replace the judge’s independent verdict.
 
 ## Workflow (thin orchestrator)
 
