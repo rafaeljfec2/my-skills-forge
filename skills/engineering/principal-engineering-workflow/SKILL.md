@@ -17,6 +17,7 @@ Mandatory closure after any implementation. Default bar for finished work.
 
 ## When not to use
 
+- Persisted multi-step delivery state → `connexto-development-workflow`. Keep this skill as author hygiene during IMPLEMENT.
 - Independent evidence-first PR review (no authoring) → `senior-code-review-judge`
 - Active delivery under **`sdd-workflow`**: Phase 7 Step 3 MUST be a separate
   readonly subagent running `senior-code-review-judge` (or the project-mandated

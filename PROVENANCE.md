@@ -173,6 +173,19 @@ Homogenization note (2026-10-23): every catalog skill now follows `references/sk
 - Status: `ready`
 - Delta applied: Wrapped references as skill; excluded product sdd-*.mdc files; thin-orchestrator homogenization (2026-10-23); hybrid evidence path + typed green loop + Phase 7 adapter to `senior-code-review-judge` via forge-owned `references/evidence-and-loop.md` (method inspiration only — no upstream Akita skill text copied) (2026-10-26); Phase 7 Step 3 enforcement — Core contract in SKILL.md, HR-20, LIM-11, AX-05 note, pipeline Step 3/4 tags and entry gates, reviewer protocol violations, evidence handoff prerequisite, trivial still requires judge (2026-11-03)
 - Directory compare evidence: (not required / single source)
+## `connexto-development-workflow`
+
+- Domain: `engineering`
+- Forge path: `skills/engineering/connexto-development-workflow`
+- Source path: (forge-authored)
+- Upstream: (none — no skill text copied)
+- Author found: forge maintainer
+- License found: `unknown`
+- Previous names: (none)
+- Status: `pending-review`
+- Delta applied: New recoverable demand runtime (state machine, project adapter, evidence logs, review and memory gates) that delegates phase law to `sdd-workflow`, author hygiene to `principal-engineering-workflow`, and independent review to `senior-code-review-judge`
+- Directory compare evidence: (not applicable — original forge skill)
+
 ## `iterative-sdd-workflow`
 
 - Domain: `engineering`

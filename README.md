@@ -32,6 +32,15 @@ See:
 - [references/skill-shape.md](references/skill-shape.md) — thin-orchestrator contract for every catalog skill
 - [references/external-inventory.md](references/external-inventory.md) — harness-owned and vendor components outside the catalog
 - [references/publish-boundary.md](references/publish-boundary.md) — what may go public vs stay local
+- [references/maintainer-commands.md](references/maintainer-commands.md) — pnpm entrypoint for validate, link, workflow tests
+
+## Prerequisites (maintainer)
+
+| Tool | Notes |
+|---|---|
+| **pnpm** 11+ | `pnpm install` at forge root; see [references/maintainer-commands.md](references/maintainer-commands.md) |
+| **Python** 3.8+ | Linker, `_validate.py`, Connexto `cdw.py` |
+| **Node.js** | Runs pnpm (`corepack enable` if needed) |
 
 ## Language policy
 
@@ -79,7 +88,7 @@ Antigravity **builtin** trees (`~/.gemini/antigravity/builtin/skills`,
 `~/.gemini/antigravity-ide/builtin/skills`) stay package-owned. The linker
 never writes there — only into the user skills directories above.
 
-`scripts/link_skills.py` creates those links for every skill under
+`scripts/link_skills.py` (via **`pnpm link:apply`**) creates those links for every skill under
 `skills/`. Both `ready` and `pending-review` skills are installed. The
 script leaves an existing real directory in place and reports that name
 instead of replacing it. It also leaves harness-owned entries untouched:
@@ -106,23 +115,24 @@ cd /home/rafael/dev-rafael/my-skills-forge
 2. **Validate the install map**
 
 ```bash
-python3 scripts/link_skills.py --check-repo
+pnpm link:check
+# or: python3 scripts/link_skills.py --check-repo
 ```
 
 3. **Preview (no changes)**
 
 ```bash
-python3 scripts/link_skills.py --dry-run
+pnpm link:dry-run
 ```
 
-Inspect `conflict-real` / `conflict-target`. If a harness still has a
-**real** directory for a catalog name, back it up and remove it only when
-you intend the forge link to win.
+Inspect `SKIP conflict-real` lines. A harness with a **local copy** of a catalog skill (for example Antigravity `ui-implement-figma`) is skipped on purpose; the run still ends **`Link status: OK with warnings`** and exit code **0**. Exit **1** only on real errors (failed `mklink`, missing map, etc.).
+
+Do not run bare `pnpm link` — that is pnpm's package-link command, not this repo.
 
 4. **Apply links**
 
 ```bash
-python3 scripts/link_skills.py
+pnpm link:apply
 ```
 
 Creates Windows junctions for Cursor and Linux symlinks for Claude Code,
@@ -135,6 +145,23 @@ Close and reopen the chat (or restart Cursor / Claude Code) so it reloads
 a new session is enough.
 
 Latest link report: [reports/link-dry-run.md](reports/link-dry-run.md) (PT-BR).
+
+### Maintainer commands (pnpm)
+
+From the forge root, after `pnpm install` (no npm dependencies; scripts only):
+
+| Command | Action |
+|---|---|
+| `pnpm test` | All Python unit tests (Connexto + context-budget-guard) |
+| `pnpm validate` | Run `_validate.py` (catalog, shape, secrets scan) |
+| `pnpm link:check` | Validate `references/install-map.md` |
+| `pnpm link:dry-run` | Preview harness links |
+| `pnpm link:apply` | Apply links to Cursor, Claude, Codex, OpenCode, … |
+| `pnpm workflow:test` | Connexto workflow unit tests |
+| `pnpm workflow:proof` | End-to-end proof into `/tmp/connexto-proof` |
+
+Requires **Node.js** and **pnpm** on PATH (`corepack enable` if needed).
+Python **3.8+** remains required for the underlying scripts.
 
 ## Safety
 
@@ -171,6 +198,25 @@ copy them into the forge as portable skills:
 | `pr-creator-tr` / `pr-creator-outcoders` | In this forge | Kept, but coupled to TR / Outcoders + ADO config |
 | Shared `ai-memory-*` | `~/.agents/skills` | Managed by ai-memory install |
 | Vendor / plugin skill caches | Cursor plugins, npm packages | Reinstalled with the tool |
+
+## Connexto development workflow
+
+Recoverable demand loop for a **target repository** (not the forge itself):
+
+`skills/engineering/connexto-development-workflow`
+
+| Audience | Doc |
+|---|---|
+| Operator (chat only) | [operator-usage.md](skills/engineering/connexto-development-workflow/references/operator-usage.md) |
+| Adapter / adoption | [project-adapter.md](skills/engineering/connexto-development-workflow/references/project-adapter.md) |
+| Example product | `connexto-proxy-cli-llms/docs/connexto-workflow.md` |
+
+Install the skill with **`pnpm link:apply`**, add `connexto.project.json` on the product repo, then invoke the skill in chat (see operator doc).
+
+Forge smoke tests: **`pnpm workflow:test`**, **`pnpm workflow:proof`**.
+
+SDD phase rules, author self-review, and independent review stay in
+`sdd-workflow`, `principal-engineering-workflow`, and `senior-code-review-judge`.
 
 ## Status values
 

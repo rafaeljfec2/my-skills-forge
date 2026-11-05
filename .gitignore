@@ -7,6 +7,8 @@ _commit.log
 _commit2.log
 __pycache__/
 *.pyc
+node_modules/
+.connexto/
 .DS_Store
 
 # Credential-shaped and local secrets (never commit)

@@ -1,0 +1,15 @@
+{
+  "name": "my-skills-forge",
+  "private": true,
+  "description": "Maintainer scripts for the local skills forge (Python); pnpm is the command entrypoint.",
+  "packageManager": "pnpm@11.12.0",
+  "scripts": {
+    "test": "python3 skills/engineering/connexto-development-workflow/scripts/tests/test_workflow.py && python3 skills/engineering/connexto-development-workflow/scripts/tests/test_v02.py && python3 skills/ai-agents/context-budget-guard/scripts/test_audit_budget.py && python3 skills/ai-agents/context-budget-guard/scripts/test_audit_docs_gaps.py",
+    "validate": "python3 _validate.py",
+    "link:check": "python3 scripts/link_skills.py --check-repo",
+    "link:dry-run": "python3 scripts/link_skills.py --dry-run",
+    "link:apply": "python3 scripts/link_skills.py",
+    "workflow:test": "python3 skills/engineering/connexto-development-workflow/scripts/tests/test_workflow.py && python3 skills/engineering/connexto-development-workflow/scripts/tests/test_v02.py",
+    "workflow:proof": "python3 skills/engineering/connexto-development-workflow/scripts/cdw.py proof --dest /tmp/connexto-proof"
+  }
+}

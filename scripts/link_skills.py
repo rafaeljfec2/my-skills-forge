@@ -309,18 +309,74 @@ def apply_planned_links(planned: list[PlannedLink], kind: str, dry_run: bool) ->
     return errors
 
 
+@dataclass(frozen=True)
+class LinkRunSummary:
+    harness_ok: list[str]
+    harness_warnings: dict[str, list[PlannedLink]]
+    apply_failures: list[str]
+    harness_errors: list[str]
+
+    @property
+    def has_hard_failure(self) -> bool:
+        return bool(self.apply_failures or self.harness_errors)
+
+    @property
+    def has_skipped_conflicts(self) -> bool:
+        return bool(self.harness_warnings)
+
+    def exit_code(self) -> int:
+        if self.has_hard_failure:
+            return 1
+        return 0
+
+
+_CONFLICT_HINTS: dict[str, str] = {
+    "conflict-real": "local directory kept (not overwritten); backup and re-run, or symlink manually",
+    "conflict-target": "link points elsewhere; remove or fix the existing link",
+}
+
+
 def print_harness_report(harness_name: str, planned: list[PlannedLink], dry_run: bool) -> None:
     counts: dict[str, int] = {}
     for item in planned:
         counts[item.action] = counts.get(item.action, 0) + 1
     prefix = "dry-run " if dry_run else ""
     summary = " ".join(f"{key}={counts[key]}" for key in sorted(counts))
-    print(f"{prefix}{harness_name}: {summary or 'no skills'}")
-    for item in planned:
-        if not item.action.startswith("conflict"):
-            continue
-        print(f"  {item.action} {item.skill_name}")
+    conflicts = [item for item in planned if item.action.startswith("conflict")]
+    if conflicts:
+        print(f"{prefix}{harness_name}: {summary or 'no skills'} (skipped {len(conflicts)})")
+    else:
+        print(f"{prefix}{harness_name}: {summary or 'no skills'}")
+    for item in conflicts:
+        hint = _CONFLICT_HINTS.get(item.action, "skipped")
+        print(f"  SKIP {item.action} {item.skill_name} — {hint}")
     sys.stdout.flush()
+
+
+def print_link_summary(summary: LinkRunSummary, dry_run: bool) -> None:
+    mode = "dry-run" if dry_run else "apply"
+    print("---")
+    if summary.has_hard_failure:
+        print(f"Link status ({mode}): FAILED")
+        for problem in summary.harness_errors:
+            print(f"  ERROR {problem}")
+        for problem in summary.apply_failures:
+            print(f"  ERROR {problem}")
+        return
+    if summary.has_skipped_conflicts:
+        print(f"Link status ({mode}): OK with warnings (exit 0 — not a failure)")
+        print(f"Harnesses OK: {', '.join(summary.harness_ok) or 'none'}")
+        for harness_name, items in sorted(summary.harness_warnings.items()):
+            names = ", ".join(item.skill_name for item in items)
+            print(f"Skipped conflicts ({harness_name}): {names}")
+        print(
+            "Conflicts are local copies or wrong links left untouched on purpose. "
+            "Other harnesses are still linked."
+        )
+        return
+    print(f"Link status ({mode}): OK")
+    if summary.harness_ok:
+        print(f"Harnesses: {', '.join(summary.harness_ok)}")
 
 
 def link_all(forge: Path, dry_run: bool) -> int:
@@ -333,26 +389,33 @@ def link_all(forge: Path, dry_run: bool) -> int:
         for problem in errors:
             print(f"ERROR: {problem}", file=sys.stderr)
         return 1
-    failed = False
+    summary = LinkRunSummary(
+        harness_ok=[],
+        harness_warnings={},
+        apply_failures=[],
+        harness_errors=[],
+    )
     for harness in harnesses():
         planned, harness_errors = plan_harness(harness, forge, index)
         for problem in harness_errors:
+            summary.harness_errors.append(problem)
             print(f"ERROR: {problem}", file=sys.stderr)
-            failed = True
         if not harness.directory.exists():
             continue
         kind = link_kind(harness.directory.resolve())
         apply_errors = apply_planned_links(planned, kind, dry_run)
         for problem in apply_errors:
+            summary.apply_failures.append(problem)
             print(f"ERROR: {problem}", file=sys.stderr)
-            failed = True
         print_harness_report(harness.name, planned, dry_run)
-        if any(item.action.startswith("conflict") for item in planned):
-            failed = True
-    if failed:
-        print("Link incomplete. Real directories were left in place.", file=sys.stderr)
-        return 1
-    return 0
+        conflicts = [item for item in planned if item.action.startswith("conflict")]
+        if conflicts:
+            summary.harness_warnings[harness.name] = conflicts
+        elif not harness_errors:
+            summary.harness_ok.append(harness.name)
+    print_link_summary(summary, dry_run)
+    sys.stdout.flush()
+    return summary.exit_code()
 
 
 def main(argv: list[str]) -> int:

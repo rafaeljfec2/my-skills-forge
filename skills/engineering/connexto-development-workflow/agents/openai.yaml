@@ -1,0 +1,4 @@
+interface:
+  display_name: "Connexto Development Workflow"
+  short_description: "Run a demand from intake through evidenced delivery"
+  default_prompt: "Use $connexto-development-workflow to execute this software demand with persisted state, validation, and independent review."

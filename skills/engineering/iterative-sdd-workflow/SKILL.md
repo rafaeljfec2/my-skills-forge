@@ -16,6 +16,7 @@ system unless the approved correction requires it.
 
 ## When not to use
 
+- Autonomous multi-phase delivery with a persisted run → `connexto-development-workflow`
 - Explanation-only requests or independent code review without implementation
   → answer directly or use `senior-code-review-judge`.
 - A request for the canonical seven-phase SDD protocol → `sdd-workflow`.

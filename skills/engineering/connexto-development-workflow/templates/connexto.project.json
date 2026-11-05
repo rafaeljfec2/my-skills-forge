@@ -1,0 +1,40 @@
+{
+  "project": {
+    "name": "example-project",
+    "language": null,
+    "framework": null
+  },
+  "commands": {
+    "install": null,
+    "test": "python3 -m unittest",
+    "lint": null,
+    "typecheck": null,
+    "build": null,
+    "implement": null
+  },
+  "quality": {
+    "require_tests": true,
+    "require_lint": false,
+    "require_typecheck": false,
+    "require_build": false,
+    "max_validate_attempts": 3,
+    "command_timeout_seconds": 120
+  },
+  "git": {
+    "base_branch": "main",
+    "isolated_branch": true,
+    "allow_commit": false
+  },
+  "memory": {
+    "enabled": true,
+    "workspace": "default",
+    "project": "example-project"
+  },
+  "workflow": {
+    "max_review_rounds": 3,
+    "developer_command": null,
+    "judge_command": null,
+    "memory_write_command": null,
+    "memory_read_command": null
+  }
+}

@@ -30,6 +30,7 @@ independent review defaults to `senior-code-review-judge`.
 
 ## When not to use
 
+- Persisted autonomous execution (state, project commands, resume) → `connexto-development-workflow`. That skill does not replace these phase rules.
 - Author closeout after implementation → `principal-engineering-workflow`
   (hygiene only; not Phase 7 Step 3)
 - Standalone evidence-first PR review **outside** an SDD delivery →
