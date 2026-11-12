@@ -41,16 +41,23 @@ Flag and suggest the refactor explicitly. Cite Fowler's catalog where applicable
 | ------------------------ | --------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | Long Method              | > 30 LOC body                                                         | Extract Method                                                              |
 | Long Parameter List      | > 4 positional params                                                 | Introduce Parameter Object / Builder                                        |
-| Long Class / God Object  | > 800 LOC or > 15 public methods                                      | Extract Class / Module                                                      |
+| Long Class / God Object  | > 500 LOC or > 15 public methods                                      | Extract Class / Module                                                      |
 | Feature Envy             | method uses other class's data more than its own                      | Move Method                                                                 |
 | Primitive Obsession      | bare `string`/`number` for domain concepts (e.g., `tenantId: string`) | Branded types / Value Object                                                |
 | Switch Statement         | switch on type/enum that drives behavior                              | Replace Conditional with Polymorphism / Strategy                            |
 | Data Clumps              | 3+ fields always travel together                                      | Extract Object                                                              |
 | Shotgun Surgery          | a logical change requires edits across many unrelated files           | Move Field/Method to consolidate                                            |
 | Magic Number/String      | `if (x > 86400)`                                                      | Extract Constant                                                            |
-| Duplicated Code          | same shape twice                                                      | Extract Function (after 2nd repetition; Rule of Three for early extraction) |
+| Duplicated Code          | third copy of the same shape (Rule of Three)                          | Extract Function; second duplicate is a note, not a finding                 |
 | Comments explaining WHAT | code unclear → comment compensates                                    | Rename + Extract Method until comment is redundant                          |
 | Dead Code                | unreferenced exports/private methods                                  | Remove                                                                      |
+
+### Refactoring discipline (findings need cited diff)
+
+- **Mixed hats:** same diff adds behavior and unrelated structural reshaping → IMPORTANT maintainability finding (split PR or sequence: prep refactor verified, then feature).
+- **Unverified refactor:** large rename/extract/move without evidence the project test suite ran in this cycle → IMPORTANT unless labeled prep-only with explicit test gap.
+- **SOLID (evidence only):** cite a snippet before flagging SRP/OCP/LSP/ISP/DIP violations; do not invent interfaces or patterns without a second real use in the diff.
+- **Duplication:** second copy → note only (Rule of Three); third copy → finding with both sites cited.
 
 ## 4. Design patterns (use when applicable, flag when missing)
 

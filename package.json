@@ -10,6 +10,7 @@
     "link:dry-run": "python3 scripts/link_skills.py --dry-run",
     "link:apply": "python3 scripts/link_skills.py",
     "workflow:test": "python3 skills/engineering/connexto-development-workflow/scripts/tests/test_workflow.py && python3 skills/engineering/connexto-development-workflow/scripts/tests/test_v02.py",
-    "workflow:proof": "python3 skills/engineering/connexto-development-workflow/scripts/cdw.py proof --dest /tmp/connexto-proof"
+    "workflow:proof": "python3 skills/engineering/connexto-development-workflow/scripts/cdw.py proof --dest /tmp/connexto-proof",
+    "snapshot:sources": "python3 scripts/source_hash_snapshot.py"
   }
 }

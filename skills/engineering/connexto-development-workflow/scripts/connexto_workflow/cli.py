@@ -63,6 +63,7 @@ def main(argv: list[str] | None = None) -> int:
     report = sub.add_parser("develop-report")
     _actor(report)
     report.add_argument("--file", type=Path, required=True)
+    report.add_argument("--session", default=None)
 
     judge = sub.add_parser("run-judge")
     _actor(judge)

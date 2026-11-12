@@ -15,6 +15,15 @@ Executable delivery loop for a target repository. Roles share one runtime;
 actor ids and writable artifacts stay separated. Methodology stays in the
 existing skills. This skill owns state, gates, evidence, and the project adapter.
 
+## Core contract (non-negotiable)
+
+- Persist `state.json` under `.connexto/runs/<id>/` before stopping; chat is not recovery.
+- Operators and agents drive transitions only through **`cdw.py`** (no ad-hoc state edits).
+- When `commands.implement` is null, the developer must submit **`developer/report.json`** (or a successful implement hook).
+- **REVIEW** uses a different actor/session than **IMPLEMENT**; same actor is rejected.
+- Remote memory counts only after **read-back** confirms the written body (see `memory-sync`).
+- Do not declare **merge**, **production publish**, or **deploy** unless a protected approval was recorded.
+
 ## When not to use
 
 - Canonical SDD phase rules → `sdd-workflow` (still binding inside PLAN and REVIEW)
@@ -29,7 +38,7 @@ existing skills. This skill owns state, gates, evidence, and the project adapter
 1. Read [references/project-adapter.md](references/project-adapter.md) and load `connexto.project.json`. Do not invent commands or a stack.
 2. Read [references/lifecycle.md](references/lifecycle.md). Drive [scripts/cdw.py](scripts/cdw.py). Persist `.connexto/runs/<id>/state.json` before stopping.
 3. INTAKE and RESEARCH: [references/roles.md](references/roles.md). The researcher does not edit product code.
-4. PLAN: follow the `sdd-workflow` phase obligations that apply. Write spec, plan, and tasks from [templates/](templates/).
+4. PLAN: [references/planning.md](references/planning.md) (`sdd-workflow` obligations, required headings, template pointers).
 5. IMPLEMENT: materialize `developer/task.json`, implement in the repo, submit `developer/report.json` when `commands.implement` is null (optional `run-developer` backend). Prefer TDD when the project has a test command. Scope change → PLAN. Author hygiene: `principal-engineering-workflow`.
 6. VALIDATE: run only configured commands. Record argv, exit code, and redacted output. Failures return to IMPLEMENT until `quality.max_validate_attempts`.
 7. REVIEW: different actor and session from the developer. Prefer `run-judge` when configured; otherwise readonly `senior-code-review-judge` and structured review JSON. See [references/policies.md](references/policies.md).

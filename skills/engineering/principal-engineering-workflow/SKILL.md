@@ -38,7 +38,7 @@ Mandatory closure after any implementation. Default bar for finished work.
 
 ## Workflow (thin orchestrator)
 
-1. **Careful self-review** — architecture/boundaries, correctness/edges, security, perf/observability, project standards, tests (English descriptions), lint/types/format.
+1. **Careful self-review** — architecture/boundaries, correctness/edges, security, perf/observability, project standards, tests (English descriptions), lint/types/format. When authoring or refactoring, follow [references/refactoring.md](references/refactoring.md) (SOLID with evidence, Rule of Three, two hats, test safety net).
 2. **Propose corrections** — critical / important / minor; what, where, why.
 3. **Adjust the code** — apply safe fixes; confirm large/ambiguous ones with the user.
 4. **Validate** — lint, build, tests in touched packages; IDE Problems on changed files.

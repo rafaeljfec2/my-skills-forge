@@ -39,8 +39,21 @@ Restart Cursor, Codex, OpenCode, or Claude Code after `pnpm link:apply` so skill
 | `pnpm link:apply` | `link_skills.py` | After adding a skill or fixing a `conflict-real` |
 | `pnpm workflow:test` | Connexto unit tests (31 tests) | After editing `connexto-development-workflow` |
 | `pnpm workflow:proof` | `cdw.py proof` → `/tmp/connexto-proof` | Smoke test of the workflow engine |
+| `pnpm snapshot:sources` | `scripts/source_hash_snapshot.py` | Refresh `/tmp/skills-forge-source-hashes.json` for `pnpm validate` |
 
-`link:dry-run` and `link:apply` print **SKIP** lines for skills left untouched (`conflict-real`, `conflict-target`). When only those warnings exist, the script exits **0** with `Link status: OK with warnings`. Exit **1** means a real failure (install map, missing harness, or `mklink`/symlink error).
+`link:dry-run` and `link:apply` print **SKIP** lines for skills left untouched (`conflict-real`, `conflict-target`).
+
+### Upstream source hash snapshot
+
+`pnpm validate` compares migrated skills against upstream copies recorded in [PROVENANCE.md](../PROVENANCE.md). The snapshot file is not committed; regenerate it when upstream paths exist and hashes should be pinned:
+
+```bash
+pnpm snapshot:sources
+# or
+python3 scripts/source_hash_snapshot.py -o /tmp/skills-forge-source-hashes.json
+```
+
+Roots without a local directory are skipped with a warning. Re-run after a deliberate upstream pull that should change hashes. When only those warnings exist, the script exits **0** with `Link status: OK with warnings`. Exit **1** means a real failure (install map, missing harness, or `mklink`/symlink error).
 
 Direct Python invocation remains valid for automation and CI.
 

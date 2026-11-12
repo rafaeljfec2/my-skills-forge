@@ -47,8 +47,9 @@ CRITICAL-CORRECTNESS if zero tests or mocks bypass the behavior.
 
 Process one file at a time. Local: Read tool, never memory. Remote: patch only.
 
-Generic checks: no `any` / unsafe casts; `??` not `||`; file ≤ 800 LOC (exemptions
-in scans); cognitive complexity ≤ 15; no hardcoded secrets; no I/O in hot paths /
+Generic checks: no `any` / unsafe casts; `??` not `||`; file size per
+[references/scans.md](references/scans.md) (target band; `OVER_LIMIT` > 500);
+cognitive complexity ≤ 15; no hardcoded secrets; no I/O in hot paths /
 N+1. STFlow-only bullets: [references/stflow-profile.md](references/stflow-profile.md).
 
 **Anti-hallucination:** every issue must include `file:line` + snippet + convention.
