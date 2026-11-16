@@ -42,7 +42,11 @@ Mandatory closure after any implementation. Default bar for finished work.
 2. **Propose corrections** — critical / important / minor; what, where, why.
 3. **Adjust the code** — apply safe fixes; confirm large/ambiguous ones with the user.
 4. **Validate** — lint, build, tests in touched packages; IDE Problems on changed files.
-5. **Reply** — short technical summary + remaining risks; Brazilian Portuguese unless the user asked otherwise.
+5. **Reply** — senior staff **pair-programming** closeout in the user's language
+   (Brazilian Portuguese by default): what we changed together, checks you ran,
+   honest open risks, one natural next step. No ticket-bot or ASCII ledgers unless
+   the user or a judge round explicitly asked; offer “detalhes técnicos” only when
+   useful.
 
 For deeper review, also follow `senior-code-review-judge` and/or `senior-code-reviewer-protocol`. For auth/sensitive data, follow `application-security-expert`.
 

@@ -40,12 +40,13 @@ the Claim.
 2. Execute production changes allowed in Phase 6.
 3. Run the Claim-scoped evidence.
 4. If fail → fix production code only (AX-02, LIM-01) → re-run.
-5. **Max 3 attempts.** On the third failure, escalate to the dev: do not invent a
-   fourth hack, weaken tests, or change the Claim without re-approval.
+5. **Max 3 attempts.** On the third failure, stop and report the inconsistency:
+   do not invent a fourth hack, weaken tests, or change the Claim without a new
+   spec review.
 6. Record attempt count and last evidence output in the session before Phase 7.
 
-Red→Green (AX-06) remains mandatory unless a dev-approved `TDD-EXCEPTION`
-covers the change.
+Red→Green (AX-06) remains mandatory unless a `TDD-EXCEPTION` accepted by the
+Phase 3 spec-review subagent covers the change.
 
 ## 4. Deepwork brake (optional, rare)
 

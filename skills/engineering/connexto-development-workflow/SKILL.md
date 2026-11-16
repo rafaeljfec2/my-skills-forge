@@ -3,10 +3,13 @@ name: connexto-development-workflow
 description: >-
   Execute a software demand as a recoverable state machine (intake, research,
   plan, implement, validate, independent review, delivery, AI Memory) using the
-  target repo's connexto.project.json. Use for FEATURE, BUGFIX, REFACTOR,
-  HOTFIX, and TECHNICAL_DEBT work that must survive interruption. Do not use
-  for one manually approved correction (iterative-sdd-workflow), SDD phase law
-  alone (sdd-workflow), or author self-review (principal-engineering-workflow).
+  target repo's connexto.project.json. After the demand is triggered, continue
+  until DONE. Stop only for an inconsistency, an unresolved doubt, or a
+  protected action. SPEC approval is a separate readonly agent. Use for
+  FEATURE, BUGFIX, REFACTOR, HOTFIX, and TECHNICAL_DEBT work that must survive
+  interruption. Do not use for one manually approved correction
+  (iterative-sdd-workflow), SDD phase law alone (sdd-workflow), or author
+  self-review (principal-engineering-workflow).
 ---
 
 # Connexto development workflow
@@ -18,6 +21,10 @@ existing skills. This skill owns state, gates, evidence, and the project adapter
 ## Core contract (non-negotiable)
 
 - Persist `state.json` under `.connexto/runs/<id>/` before stopping; chat is not recovery.
+- After the operator triggers a demand, drive every state through DONE in the same run. Do not pause for the operator to confirm intake, spec, or design.
+- **Stop and ask only** when an inconsistency or a doubt that would change the outcome cannot be resolved from the repo or a fresh reviewer, when the run is BLOCKED or FAILED, or when a protected action is waiting (merge, production, destructive, infrastructure, secrets, irreversible, permission).
+- **SPEC approval** before `plan_accepted` is a separate readonly subagent with a fresh context and a different actor id. The planner does not approve its own spec. On `APPROVED`, transition immediately.
+- `start_high_risk` is the same pattern: a different actor in a fresh context approves a coherent brief. Do not ask the operator unless that review reports an inconsistency or a doubt.
 - Operators and agents drive transitions only through **`cdw.py`** (no ad-hoc state edits).
 - When `commands.implement` is null, the developer must submit **`developer/report.json`** (or a successful implement hook).
 - **REVIEW** uses a different actor/session than **IMPLEMENT**; same actor is rejected.
@@ -38,7 +45,7 @@ existing skills. This skill owns state, gates, evidence, and the project adapter
 1. Read [references/project-adapter.md](references/project-adapter.md) and load `connexto.project.json`. Do not invent commands or a stack.
 2. Read [references/lifecycle.md](references/lifecycle.md). Drive [scripts/cdw.py](scripts/cdw.py). Persist `.connexto/runs/<id>/state.json` before stopping.
 3. INTAKE and RESEARCH: [references/roles.md](references/roles.md). The researcher does not edit product code.
-4. PLAN: [references/planning.md](references/planning.md) (`sdd-workflow` obligations, required headings, template pointers).
+4. PLAN: [references/planning.md](references/planning.md) (`sdd-workflow` obligations, required headings, template pointers). Before `plan_accepted`, spawn the independent SPEC review. Continue on `APPROVED`.
 5. IMPLEMENT: materialize `developer/task.json`, implement in the repo, submit `developer/report.json` when `commands.implement` is null (optional `run-developer` backend). Prefer TDD when the project has a test command. Scope change → PLAN. Author hygiene: `principal-engineering-workflow`.
 6. VALIDATE: run only configured commands. Record argv, exit code, and redacted output. Failures return to IMPLEMENT until `quality.max_validate_attempts`.
 7. REVIEW: different actor and session from the developer. Prefer `run-judge` when configured; otherwise readonly `senior-code-review-judge` and structured review JSON. See [references/policies.md](references/policies.md).

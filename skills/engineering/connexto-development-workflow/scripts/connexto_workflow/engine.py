@@ -20,7 +20,7 @@ from connexto_workflow.engine_support import (
 from connexto_workflow.errors import ConfigError, PolicyError, WorkflowError
 from connexto_workflow.git_ops import GitOpsMixin
 from connexto_workflow.memory_flow import MemoryFlowMixin
-from connexto_workflow.model import NEXT_STEP
+from connexto_workflow.model import next_step_for
 from connexto_workflow.operator_flow import OperatorFlowMixin
 from connexto_workflow.redact import redact
 from connexto_workflow.render import render_brief
@@ -110,7 +110,7 @@ class Engine(
             "demand_id": state.demand_id,
             "status": state.status,
             "risk": state.risk,
-            "next_step": NEXT_STEP[state.status],
+            "next_step": next_step_for(state.status, state.pending_action),
             "validate_failures": state.validate_failures,
             "max_validate_attempts": state.max_validate_attempts,
             "developer_id": state.developer_id,

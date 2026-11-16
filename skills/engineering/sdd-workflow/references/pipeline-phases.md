@@ -6,11 +6,15 @@ Canonical order: **Intake → SPEC → Review → Design → Test (Red) → Impl
 
 - **Every task that produces a diff** (code, tests, `*.md`, config, schema) MUST traverse all 7 phases in order.
 - **No phase may be skipped, merged, shortened, or marked "N/A"** under any excuse ("it's a typo", "it's a small fix", "it's just docs", "the dev said hotfix") — unless the local rule defines a Trivial Fallback.
-- **Zero `Edit` / `Write` on production files is permitted before**: (a) SPEC approved by the dev (AX-03), and (b) failing tests committed or presented (AX-06, Phase 5 Red).
+- **Zero `Edit` / `Write` on production files is permitted before**: (a) SPEC approved by the independent spec-review subagent (AX-03), and (b) failing-test evidence recorded in this run (AX-06, Phase 5 Red).
 - **Pure conversation** (questions, explanations, exploration that produce NO diff) is outside the pipeline. The moment a diff is proposed, the pipeline starts at Phase 1.
 - **Test-only edits** (adding/updating a test for existing behavior) still require Phase 5 Red: the new/updated test MUST fail first against current production code, or the assertion is explicitly documented as "already passing — regression guard" in the SPEC.
-- **Docs-only changes** follow the same 7 phases. SPEC and Review become lightweight in content (1–2 paragraphs) but are still **produced and approved**. Phase 5 Red may be replaced by an explicit "no-test justification" in the SPEC, approved by the dev.
-- **Judging a phase "unnecessary" is a protocol violation**, not an optimization. If a phase feels redundant, STOP and ask the dev.
+- **Docs-only changes** follow the same 7 phases. SPEC and Review become lightweight in content (1–2 paragraphs) but are still **produced and approved** by the spec-review subagent. Phase 5 Red may be replaced by an explicit "no-test justification" in the SPEC, accepted by that subagent.
+- **Judging a phase "unnecessary" is a protocol violation**, not an optimization. Run the phase. Do not stop to ask whether to skip it.
+
+## Stop rule
+
+Continue after the skill is triggered. Stop and ask the developer only when an inconsistency, or a doubt that would change the outcome, cannot be resolved from the repository or by the independent reviewer. Do not stop for confirmation, SPEC approval, or design approval. Destructive commands, secret files, force-push, and merge still wait for an explicit request (LIM-05, LIM-08, LIM-10, LIM-11).
 
 ## Mandatory Phase Declaration
 
@@ -40,7 +44,7 @@ The tag is the FIRST line of the message. Missing or incorrect tag = protocol vi
 ## Phase 1 — Intake
 
 **Goal**: Understand the task and produce structured intent.
-**Gate**: Dev confirms intention.
+**Gate**: Automatic. The triggering request is the intention. Continue unless a blocking doubt or inconsistency remains after reading the code.
 
 Agent behavior:
 
@@ -52,7 +56,7 @@ Agent behavior:
    - For new types: check shared packages first — import, never redefine
    - For modified interfaces: find ALL files that implement or depend on them
 5. Challenge necessity: does an existing module/package already solve this?
-6. Identify ambiguities — if any, STOP and ask dev before proceeding
+6. Identify ambiguities. Resolve them from the repository (AX-08). Stop and ask only when a remaining doubt or inconsistency would change the outcome.
 7. Deepwork screen — apply the ≥2-criteria brake in [evidence-and-loop.md](evidence-and-loop.md). If met, mark `DEEPWORK=yes` in the Intake output; otherwise leave unset
 
 **Output**: List of files to touch with justification, blast radius map, classification, optional `DEEPWORK=yes`.
@@ -73,7 +77,7 @@ Agent behavior:
 ## Phase 3 — Review
 
 **Goal**: Validate SPEC for completeness and correctness.
-**Gate**: **STOP — Dev approves SPEC** (AX-03). No code proceeds without approval.
+**Gate**: Independent SPEC review by a **separate readonly subagent** with a fresh context (AX-03). The author does not approve the SPEC. On `APPROVED`, continue in the same run. No production code before that verdict.
 
 Agent behavior:
 
@@ -81,12 +85,43 @@ Agent behavior:
 2. Verify the Evidence block is present and coherent (Claim + Success type + path) — reject incomplete SPECs
 3. Verify HARD RULE compliance (HR-01..06 + any local HRs in proposed code patterns)
 4. Check for duplication: does similar logic already exist in shared packages or services?
-5. Present findings to dev — SPEC **and** evidence path only proceed with explicit approval
+5. Spawn the spec reviewer below. Do not declare `APPROVED` in the author context.
+6. `APPROVED` → continue to Phase 4 immediately.
+7. `NEEDS_FIX` → revise the SPEC and spawn a new readonly review. Do not ask the developer.
+8. `STOP` → the finding is an inconsistency or an unresolved doubt. Stop and ask the developer. Do not implement.
+
+### Spec reviewer spawn
+
+```
+subagent_type: "generalPurpose"
+readonly: true
+description: "Independent SPEC review"
+```
+
+The reviewer has not authored the SPEC. Prompt:
+
+```
+You have not authored this SPEC. Review it against the repository.
+Do not edit files. Do not approve it as a favor.
+
+Return exactly one verdict:
+- APPROVED — the SPEC, evidence block, and blast radius match the code you read
+- NEEDS_FIX — concrete spec defects the author can correct without a product decision
+- STOP — one inconsistency or doubt that would change the outcome and cannot be resolved from the repository
+
+## SPEC
+<full SPEC, including the Evidence block>
+
+## Intake
+<classification, files, blast radius>
+```
+
+Record the verdict and subagent id in the session. A self-`APPROVED` SPEC is a protocol violation.
 
 ## Phase 4 — Design
 
 **Goal**: Architecture, implementation sequence, interfaces.
-**Gate**: Dev confirms design.
+**Gate**: Automatic. Continue to Phase 5 unless the design is inconsistent with the approved SPEC or a blocking doubt remains.
 
 Agent behavior:
 
@@ -101,7 +136,7 @@ Agent behavior:
 ## Phase 5 — Test (Red Phase)
 
 **Goal**: Write tests that FAIL because production code does not exist yet (AX-06).
-**Gate**: Tests compile and FAIL (Red Phase confirmed). The failing output MUST be shown to the dev in a message tagged `[Phase 5 — Test (Red)]` — or committed on the branch — before Phase 6 begins.
+**Gate**: Tests compile and FAIL (Red Phase confirmed). Record the failing output in this run (runner output or commit) under the tag `[Phase 5 — Test (Red)]`, then continue to Phase 6. Do not end the turn only to show that output.
 
 Agent behavior:
 
@@ -119,7 +154,7 @@ Agent behavior:
 **Goal**: Write production code that makes all Red Phase tests pass.
 **Gate**: All tests pass + lint clean.
 
-**Entry gate (MANDATORY):** Phase 6 begins ONLY after a prior message in the same session carries the tag `[Phase 5 — Test (Red)]` with visible failing-test evidence (runner output or commit hash), OR the SPEC contains a dev-approved `TDD-EXCEPTION` covering this change. Starting Phase 6 without one of these two conditions is a protocol violation (AX-01, AX-06).
+**Entry gate (MANDATORY):** Phase 6 begins ONLY after Red evidence exists in this run (runner output or commit hash), OR the SPEC contains a `TDD-EXCEPTION` accepted by the Phase 3 spec-review subagent. Starting Phase 6 without one of these two conditions is a protocol violation (AX-01, AX-06). Do not wait for a developer reply between Phase 5 and Phase 6.
 
 Agent behavior enforces:
 

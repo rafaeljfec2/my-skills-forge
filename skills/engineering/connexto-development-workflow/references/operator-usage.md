@@ -56,10 +56,15 @@ The agent must call `cdw.py status --repo <root> --run FEAT-001` and follow `nex
 - On REVIEW, use a different actor and session than the developer; prefer `run-judge` when `workflow.judge_command` is set, otherwise `senior-code-review-judge` readonly + `review` JSON.
 - On MEMORY, use `memory-sync` when remote commands are configured; otherwise write AI Memory and `memory-ack` only after a real page write.
 
-## Human approvals only when
+## When to stop
 
-- State is `WAITING_APPROVAL` (HIGH risk start, protected actions).
-- The agent asks explicitly.
+Continue from the trigger through DONE. Stop and ask the operator only when:
+
+- the run is BLOCKED or FAILED
+- a step finds an inconsistency, or a doubt that would change the outcome, and neither the repo nor a fresh reviewer can resolve it
+- state is `WAITING_APPROVAL` for a **protected** action (merge, production publish, destructive database, infrastructure, secret rotation, irreversible change, permission change)
+
+Do not stop for intake confirmation, SPEC approval, design confirmation, or `start_high_risk`. Those are reviewed by a separate readonly agent with a fresh context and a different actor id. On `APPROVED`, continue in the same run.
 
 Do not run merge, production deploy, or infrastructure changes through this workflow MVP.
 

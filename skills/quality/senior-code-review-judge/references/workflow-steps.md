@@ -4,6 +4,15 @@ Load this file when executing a review. The `SKILL.md` holds mission and princip
 
 ## Step 0 — Mode, scope, and project profile
 
+Do not ask the user to choose a scope. Resolve it and continue:
+
+- A PR URL or number in the request → **REMOTE** for that PR.
+- A repository checkout with local changes → **LOCAL** on `git status` / `git diff` (staged, unstaged, and relevant untracked files).
+- A clean checkout → **LOCAL** on the current branch versus its merge base.
+- Only a pasted diff, no checkout → **PATCH-ONLY**.
+
+Editor tabs are not the scope.
+
 Identify the mode:
 
 - **LOCAL**: repository checkout is available.
@@ -209,7 +218,14 @@ Keep each round focused on unresolved findings and regressions introduced by the
 
 ## Step 8 — Report format
 
-Use the template in [report-template.md](report-template.md). Return one consolidated report in the user's requested language (conversation language if unspecified). Keep code identifiers and tool output verbatim. Always set `Round: N` (start at 1).
+Use [report-template.md](report-template.md). Return one consolidated report in the
+user's requested language (conversation language if unspecified). Keep code
+identifiers and tool output verbatim. Always set `Round: N` (start at 1) inside the
+formal block when you emit it.
+
+**Chat default:** follow the “Chat delivery” section in the template — human summary
+first; full `=== SENIOR CODE REVIEW ===` only when formal output or publishing
+requires it. Do not paste the entire template into the reply by default.
 
 After emitting the report, **immediately** execute Step 8a unless the verdict is already `APPROVED` or an escape condition applies.
 

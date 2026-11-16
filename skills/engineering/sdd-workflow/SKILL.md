@@ -2,10 +2,12 @@
 name: sdd-workflow
 description: >-
   Spec-Driven Development workflow: discovery, pipeline phases, evidence path
-  and typed green loop, reviewer protocol (Phase 7 MUST spawn
-  senior-code-review-judge before PR or done), axioms/limits, and trivial
-  fallback. Use when the user asks for SDD, spec-driven delivery, phase gates,
-  or reviewer protocol guidance that should stay technology-agnostic.
+  and typed green loop, independent SPEC review, reviewer protocol (Phase 7
+  MUST spawn senior-code-review-judge before PR or done), axioms/limits, and
+  trivial fallback. After the user triggers it, continue through the phases.
+  Stop only for an inconsistency or an unresolved doubt. Use when the user asks
+  for SDD, spec-driven delivery, phase gates, or reviewer protocol guidance
+  that should stay technology-agnostic.
 ---
 
 # SDD Workflow
@@ -18,6 +20,15 @@ independent review defaults to `senior-code-review-judge`.
 ## Core contract (non-negotiable)
 
 - Phases 0→7 in order (LIM-02 / AX-01). No phase or Phase 7 step may be skipped.
+- After the user triggers this skill, continue through the phases in the same
+  run. Do not end the turn to ask the developer to confirm intention, approve
+  the SPEC, or confirm the design.
+- **Stop and ask only** when an inconsistency, or a doubt that would change the
+  outcome, cannot be resolved from the repository or by the independent
+  reviewer. Fixable review findings are not a stop: revise and review again.
+- **SPEC approval (Phase 3 / AX-03)** is a separate readonly subagent with a
+  fresh context. The author does not approve its own SPEC. On `APPROVED`,
+  continue immediately.
 - **Phase 7 Step 3 is mandatory** before PR, push, merge, or declaring the task
   done.
 - Step 3 = a **separate readonly subagent** via Task executing

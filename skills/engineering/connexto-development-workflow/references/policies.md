@@ -14,7 +14,7 @@ Autonomous work may read the tree, write run artifacts, create a work branch, ed
 - `irreversible`
 - `permission_change`
 
-HIGH demands also wait for `start_high_risk` before RESEARCH. The actor who requested the wait cannot approve it.
+HIGH demands park on `start_high_risk` before RESEARCH. The actor who requested the wait cannot approve it. The parent spawns a separate readonly agent with a fresh context; that agent approves with a different actor id when the brief is coherent. Stop and ask the operator only when that review reports an inconsistency or an unresolved doubt. Protected actions still stop for the operator. They are not auto-approved.
 
 ## Git
 

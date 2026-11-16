@@ -6,7 +6,7 @@ One runtime may play every role. The engine still refuses a role that does not o
 |---|---|---|
 | orchestrator | init, intake, delivery, memory ack, block, cancel, fail, approval of someone else's request | submit the review for a demand whose developer id is this same actor |
 | researcher | `research.md` | edit product code or record `Implemented: yes` |
-| planner | `spec.md`, `plan.md`, `tasks.md` | implement the change |
+| planner | `spec.md`, `plan.md`, `tasks.md` | implement the change, or approve its own spec. SPEC approval is a separate readonly subagent and a different actor id |
 | developer | implementation note, optional `commands.implement` hook, validation request, work-branch commit | approve the review |
 | reviewer | `review.json` | be the developer id; edit the product tree while acting as reviewer |
 

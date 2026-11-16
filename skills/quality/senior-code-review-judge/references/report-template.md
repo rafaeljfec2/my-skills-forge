@@ -1,5 +1,18 @@
 # Judge report template
 
+## Chat delivery (default)
+
+Senior staff **pair-programming** voice unless the user asked for formal output.
+
+1. Open with a short spoken summary (verdict + what you looked at + suggested next step).
+2. Material findings as bullets (`path` — issue — impact). Offer depth, don’t dump it.
+3. Omit the ASCII block below unless formal audit, Round > 1 ledger, or publishing.
+   Optional appendix: “Detalhes técnicos” with stable `Fnn` ids.
+
+One progress line per logical batch of tools — think aloud, not workflow narration.
+
+## Machine-readable block (when required)
+
 ```text
 === SENIOR CODE REVIEW ===
 Mode: LOCAL | REMOTE | PATCH-ONLY

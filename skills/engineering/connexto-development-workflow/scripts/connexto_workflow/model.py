@@ -109,7 +109,7 @@ NEXT_STEP: dict[str, str] = {
     "PENDING": "transition to INTAKE with reason start",
     "INTAKE": "transition to RESEARCH with reason intake_complete",
     "RESEARCH": "write research.md, then transition to PLAN with reason research_complete",
-    "PLAN": "write spec.md, plan.md, and tasks.md, then transition to IMPLEMENT",
+    "PLAN": "write spec.md, plan.md, and tasks.md; spawn a separate readonly agent to review spec.md; on APPROVED, transition to IMPLEMENT",
     "IMPLEMENT": "materialize developer/task.json, run the developer agent or run-developer, submit develop-report, then validate",
     "VALIDATE": "validation is in progress; reload and continue validate",
     "REVIEW": "run-judge with a reviewer session id, or submit review.json when judge_command is null",
@@ -121,6 +121,23 @@ NEXT_STEP: dict[str, str] = {
     "FAILED": "run failed; start a new demand id to try again",
     "CANCELLED": "run was cancelled",
 }
+
+WAITING_APPROVAL_HIGH_RISK = (
+    "spawn a separate readonly agent with a fresh context to review the brief; "
+    "that agent approves start_high_risk with a different actor id when the brief is coherent. "
+    "Stop and ask the operator only if it reports an inconsistency or an unresolved doubt"
+)
+
+
+def next_step_for(status: str, pending_action: str | None) -> str:
+    if status != "WAITING_APPROVAL":
+        return NEXT_STEP[status]
+    action = pending_action or ""
+    if action == "start_high_risk":
+        return WAITING_APPROVAL_HIGH_RISK
+    if action.startswith("protected:"):
+        return f"stop and ask the operator; protected actions are not auto-approved ({action})"
+    return NEXT_STEP["WAITING_APPROVAL"]
 
 PUTTABLE: frozenset[str] = frozenset({"research.md", "spec.md", "plan.md", "tasks.md"})
 
