@@ -32,8 +32,8 @@ independent review defaults to `senior-code-review-judge`.
 - **Phase 7 Step 3 is mandatory** before PR, push, merge, or declaring the task
   done.
 - Step 3 = a **separate readonly subagent** via Task executing
-  **`senior-code-review-judge`** (adapter in `reviewer-protocol.md`). Use
-  `senior-code-reviewer-protocol` only when a local rule mandates STFlow.
+  **`senior-code-review-judge`** only (adapter in `reviewer-protocol.md`). STFlow
+  checks live in the judge's `scans.md`; no alternate protocol skill for delivery.
 - **`principal-engineering-workflow` does not replace Step 3.** It may run after
   Phase 6 as author hygiene; it never satisfies AX-05 for SDD delivery.
 - Forbidden: reading the judge skill inline in the author context; declaring

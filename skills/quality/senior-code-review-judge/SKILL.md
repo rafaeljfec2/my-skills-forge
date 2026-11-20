@@ -47,6 +47,7 @@ evidence supports it; disclose important uncertainty instead of inventing certai
 10. **External claims need current sources.** Libraries, APIs, advisories → official docs; otherwise state the limitation.
 11. **First review should be complete.** Report all verified material findings in one consolidated result per round.
 12. **Human owns merge.** Never merge, approve, request changes, or publish externally without explicit user authorization and tool support.
+13. **File-size gate.** Any touched non-exempt file over **300 lines** is an **IMPORTANT** finding; split by responsibility before `APPROVED` ([scans.md](references/scans.md)).
 
 ## Start now (do not ask for scope)
 

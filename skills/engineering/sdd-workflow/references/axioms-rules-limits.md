@@ -10,7 +10,7 @@ No agent, in any phase, may violate these.
 | AX-02 | Tests are Sacred        | Never modify, skip (`it.skip`), comment out, relax matchers, or delete a test to make code pass. The test is the truth. If the test fails, the production code is wrong. If the test itself is wrong, the SPEC is wrong — STOP and escalate. |
 | AX-03 | Approved SPEC Required  | Never implement without a SPEC approved by a separate readonly subagent with a fresh context. The author does not approve its own SPEC. No production code without that verdict.                                                            |
 | AX-04 | No Any                  | Never use `any` in TypeScript. Use explicit types, `unknown` + narrowing, generics, or `as unknown as Type`. (Adapt to the project language: equivalent loose-type escape hatches are forbidden.)                                            |
-| AX-05 | Review Required         | Never commit without independent review. For SDD delivery that review is Phase 7 Step 3 via a separate readonly subagent (`senior-code-review-judge` or project-mandated protocol skill) — not the implementer's checklist and not a human sign-off between phases. |
+| AX-05 | Review Required         | Never commit without independent review. For SDD delivery that review is Phase 7 Step 3 via a separate readonly subagent running **`senior-code-review-judge`** — not the implementer's checklist and not a human sign-off between phases. |
 | AX-06 | Strict TDD              | Tests BEFORE code. Tests must fail first (Red), then code makes them pass (Green).                                                                                                                                                           |
 | AX-07 | SPEC is Source of Truth | The approved SPEC is the source of truth. Divergences between code and SPEC are bugs.                                                                                                                                                        |
 | AX-08 | Don't Assume, Verify    | Never assume patterns, names, or behaviors. READ THE CODE and confirm with `file:line` evidence. Stop and ask the dev only when the missing fact is an inconsistency or a doubt that would change the outcome and cannot be verified from the repository. |
@@ -37,7 +37,7 @@ Mandatory technical rules. Independent reviewer verifies each. **Local rules may
 | HR-13 | Pre-PR: typecheck + lint + format + test + build — ALL must pass. PR with failing test is FATAL VIOLATION. |
 | HR-14 | Coverage threshold per local rule. Default: ≥ 80% lines on new code; uncovered branches must be justified. |
 | HR-19 | Diff contains ONLY task-related files. Out-of-scope changes are PROHIBITED without explicit dev request.   |
-| HR-20 | Phase 7 Step 3 MUST use a separate readonly subagent executing `senior-code-review-judge` (or the project-mandated protocol skill). Author self-review — including `principal-engineering-workflow` — does not satisfy AX-05 for SDD delivery. |
+| HR-20 | Phase 7 Step 3 MUST use a separate readonly subagent executing **`senior-code-review-judge`**. Author self-review — including `principal-engineering-workflow` — does not satisfy AX-05 for SDD delivery. |
 
 ## IA Limits — HARD CONSTRAINTS
 

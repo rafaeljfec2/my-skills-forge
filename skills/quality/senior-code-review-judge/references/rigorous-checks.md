@@ -41,7 +41,7 @@ Flag and suggest the refactor explicitly. Cite Fowler's catalog where applicable
 |---|---|---|
 | Long Method | > 30 LOC body | Extract Method |
 | Long Parameter List | > 4 positional params | Introduce Parameter Object / Builder |
-| Long Class / God Object | > 500 LOC or > 15 public methods | Extract Class / Module |
+| Long Class / God Object | > 300 LOC or > 15 public methods | Extract Class / Module |
 | Feature Envy | method uses other class's data more than its own | Move Method |
 | Primitive Obsession | bare `string`/`number` for domain concepts (e.g., `tenantId: string`) | Branded types / Value Object |
 | Switch Statement | switch on type/enum that drives behavior | Replace Conditional with Polymorphism / Strategy |

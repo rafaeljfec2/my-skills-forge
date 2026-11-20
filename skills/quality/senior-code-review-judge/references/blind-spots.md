@@ -11,4 +11,4 @@ The patterns reviewers miss most often. Check each one explicitly during STEP 5 
 7. **Duplicated logic across service and tool handler** — flag for extraction if types allow it
 8. **`as Type` assertions bypass type checking** — use explicit variable typing (`const x: Type = ...`) instead of `expr as Type`. The compiler won't warn when the source type diverges from the target.
 9. **`||` surviving in extracted/moved code** — when refactoring (extract function/file), convention violations in the ORIGINAL code get copied to the new location. Scan the FULL file, not just the diff additions.
-10. **File size after extracting helpers or adding tests** — re-check the touched production file against the language target band in `scans.md` (not only a generic ceiling). Test-only growth is exempt; helper extraction should shrink the source file.
+10. **File size after extracting helpers or adding tests** — re-check touched production files against the **300-line gate** in `scans.md`. Test-only growth is exempt; helper extraction should shrink the source file below the gate.

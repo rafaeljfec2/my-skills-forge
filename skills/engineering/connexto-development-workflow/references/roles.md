@@ -1,6 +1,6 @@
 # Roles
 
-One runtime may play every role. The engine still refuses a role that does not own the artifact or the edge. Actor ids are strings. They are not operating-system identities. A review is independent only when the reviewer id differs from the developer id and, for an SDD delivery, when `senior-code-review-judge` runs in a fresh readonly subagent.
+One runtime may play every role. The engine still refuses a role that does not own the artifact or the edge. Actor ids are strings. They are not operating-system identities. A review is independent only when the orchestrator spawned `senior-code-review-judge` in a **readonly** subagent with a fresh context, the reviewer actor id differs from the developer id, and `review.json` matches that subagent verdict (not author self-inspection).
 
 | Role | Owns | Must not |
 |---|---|---|

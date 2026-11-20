@@ -197,7 +197,7 @@ Verify `git diff --name-only` contains ONLY task-related files. No out-of-scope 
 
 ### Step 3 — Independent Reviewer Subagent
 
-Invoke **`senior-code-review-judge`** (baseline default) via [reviewer-protocol.md](reviewer-protocol.md): spawn parameters, claim/evidence handoff, verdict mapping, conversational rounds, and resume templates. Hand off Claim + Evidence path + actual evidence result + diff + HR-13 per [evidence-and-loop.md](evidence-and-loop.md) §5.
+Invoke **`senior-code-review-judge`** (required) via [reviewer-protocol.md](reviewer-protocol.md): spawn parameters, claim/evidence handoff, verdict mapping, conversational rounds, and resume templates. Hand off Claim + Evidence path + actual evidence result + diff + HR-13 per [evidence-and-loop.md](evidence-and-loop.md) §5.
 
 Tag this turn `[Phase 7 — PR / Step 3 Review]` (HR-20).
 

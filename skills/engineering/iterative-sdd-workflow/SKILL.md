@@ -37,10 +37,13 @@ system unless the approved correction requires it.
 5. Run the claim-scoped checks and relevant project quality checks. Inspect the
    complete diff for correctness, scope, and consistency with the approved
    correction. Never weaken or remove a test to make the change pass.
-6. Present the changed files, diff summary, verification evidence, and remaining
-   risks. Wait for the user's acceptance before treating the correction as
-   complete or moving to another correction.
-7. After acceptance, prepare a concise release handoff. Commit, push, merge, or
+6. Spawn a **readonly** subagent (Task) running **`senior-code-review-judge`** on
+   the correction diff. Author self-inspection does not satisfy this step. Wait for
+   `APPROVED` (or user-directed acceptance after a human read of the judge report).
+7. Present the changed files, diff summary, verification evidence, judge verdict,
+   and remaining risks. Wait for the user's acceptance before treating the correction
+   as complete or moving to another correction.
+8. After acceptance, prepare a concise release handoff. Commit, push, merge, or
    deploy only when separately requested and authorized. Propose a regression
    test or project instruction for a durable lesson; change persistent project
    instructions only with approval.

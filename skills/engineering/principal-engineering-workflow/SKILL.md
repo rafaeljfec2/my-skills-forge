@@ -19,11 +19,10 @@ Mandatory closure after any implementation. Default bar for finished work.
 
 - Persisted multi-step delivery state → `connexto-development-workflow`. Keep this skill as author hygiene during IMPLEMENT.
 - Independent evidence-first PR review (no authoring) → `senior-code-review-judge`
-- Active delivery under **`sdd-workflow`**: Phase 7 Step 3 MUST be a separate
-  readonly subagent running `senior-code-review-judge` (or the project-mandated
-  protocol skill). This skill does **not** satisfy AX-05 / Step 3.
+- Active delivery under **`sdd-workflow`**, **Connexto**, or **`iterative-sdd-workflow`**:
+  independent review MUST be a readonly subagent running **`senior-code-review-judge`**.
+  This skill does **not** satisfy AX-05 or equivalent review gates.
 - Business-rule gate in a fresh readonly subagent → `business-rule-guardian`
-- STFlow mechanical tech-lead checklist → `senior-code-reviewer-protocol`
 
 ## When to apply
 
@@ -48,7 +47,7 @@ Mandatory closure after any implementation. Default bar for finished work.
    the user or a judge round explicitly asked; offer “detalhes técnicos” only when
    useful.
 
-For deeper review, also follow `senior-code-review-judge` and/or `senior-code-reviewer-protocol`. For auth/sensitive data, follow `application-security-expert`.
+This skill is author hygiene only. It never replaces spawning `senior-code-review-judge` for delivery review. For auth/sensitive data, follow `application-security-expert`.
 
 ## What to avoid
 

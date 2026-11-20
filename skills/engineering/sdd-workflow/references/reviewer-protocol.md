@@ -4,15 +4,13 @@
 implementing agent CANNOT review its own code. **Zero-bias** — the reviewer has
 not authored the change.
 
-## Default skill
+## Required skill
 
-Baseline default: **`senior-code-review-judge`**.
+Phase 7 Step 3 MUST spawn **`senior-code-review-judge`** only.
 
 The subagent follows that skill's workflow and report template. This document is
 only the SDD **adapter**: spawn, handoff package, verdict mapping, and rounds.
-
-Local override: a project rule may require `senior-code-reviewer-protocol`
-(e.g. STFlow). If unset, use `senior-code-review-judge`.
+Do not substitute `senior-code-reviewer-protocol` or an inline judge read for delivery review.
 
 ### Remediation loop vs readonly Task
 

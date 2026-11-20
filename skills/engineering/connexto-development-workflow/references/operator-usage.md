@@ -53,7 +53,7 @@ The agent must call `cdw.py status --repo <root> --run FEAT-001` and follow `nex
 
 - Run all `cdw.py` commands; never treat chat history as state.
 - On IMPLEMENT with `commands.implement: null`, materialize `developer/task.json`, implement in the repo, submit `developer/report.json` (or `run-developer` when configured).
-- On REVIEW, use a different actor and session than the developer; prefer `run-judge` when `workflow.judge_command` is set, otherwise `senior-code-review-judge` readonly + `review` JSON.
+- On REVIEW, spawn a readonly subagent running `senior-code-review-judge` (different actor/session from the developer). Use `run-judge` only to record that verdict when `workflow.judge_command` is set; otherwise submit `review.json` from the subagent. Do not skip the Task spawn.
 - On MEMORY, use `memory-sync` when remote commands are configured; otherwise write AI Memory and `memory-ack` only after a real page write.
 
 ## When to stop

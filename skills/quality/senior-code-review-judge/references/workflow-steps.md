@@ -141,7 +141,7 @@ Security findings should be high-confidence and tied to a plausible threat path.
 - Are comments useful, accurate, and non-obvious?
 - Is the change consistent with the established architecture and design system?
 
-Use file-size and complexity thresholds as signals, not universal proof of a defect. For TypeScript, check `any`, unsafe casts, missing public API return types, `||` versus `??`, and conditional rendering only when they create a demonstrated risk or violate a documented project rule.
+Run the structural file-size scan from [scans.md](scans.md) on every touched production file. Each `OVER_LIMIT` hit (> 300 lines, non-exempt) is an **IMPORTANT** finding that blocks `APPROVED`. Other complexity thresholds remain signals unless project rules say otherwise. For TypeScript, check `any`, unsafe casts, missing public API return types, `||` versus `??`, and conditional rendering only when they create a demonstrated risk or violate a documented project rule.
 
 ### Pass F — Bypasses, duplication, and workaround patterns
 

@@ -48,7 +48,7 @@ existing skills. This skill owns state, gates, evidence, and the project adapter
 4. PLAN: [references/planning.md](references/planning.md) (`sdd-workflow` obligations, required headings, template pointers). Before `plan_accepted`, spawn the independent SPEC review. Continue on `APPROVED`.
 5. IMPLEMENT: materialize `developer/task.json`, implement in the repo, submit `developer/report.json` when `commands.implement` is null (optional `run-developer` backend). Prefer TDD when the project has a test command. Scope change → PLAN. Author hygiene: `principal-engineering-workflow`.
 6. VALIDATE: run only configured commands. Record argv, exit code, and redacted output. Failures return to IMPLEMENT until `quality.max_validate_attempts`.
-7. REVIEW: different actor and session from the developer. Prefer `run-judge` when configured; otherwise readonly `senior-code-review-judge` and structured review JSON. See [references/policies.md](references/policies.md).
+7. REVIEW: spawn a **readonly** subagent (Task) running **`senior-code-review-judge`** with a different actor/session from IMPLEMENT; then submit `review.json` via `run-judge` when configured or `cdw.py review`. Actor id alone is not independent review. See [references/policies.md](references/policies.md).
 8. DELIVERY and MEMORY: [references/artifacts.md](references/artifacts.md) and [references/memory.md](references/memory.md). Use `memory-sync` when remote commands are set. Do not claim merge, publish, or deploy.
 
 ## Token economy

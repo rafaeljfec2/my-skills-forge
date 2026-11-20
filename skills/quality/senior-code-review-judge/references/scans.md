@@ -27,21 +27,11 @@ eval "$ADDED" | grep -nE '\bconsole\.(log|debug)\b'                             
 eval "$ADDED" | grep -nE '@ts-(ignore|expect-error|nocheck)'                           # TS escape hatches
 ```
 
-## Structural file size (target band and hard limit)
+## Structural file size (hard gate)
 
-Target band by language (maintainability signal, not a sole reject reason):
+**Gate:** any touched, non-exempt file with **more than 300 lines** is an **IMPORTANT** finding. Split by responsibility until each file is ≤ 300 lines. **`APPROVED` is forbidden** while an open `OVER_LIMIT` finding remains.
 
-| Language family | Target LOC |
-|---|---|
-| TypeScript / Node | 100–250 |
-| Java / C# | 150–350 |
-| Python and others | 100–300 |
-
-Rough token budget: ~800–2 500 tokens per file at the target ceiling.
-
-**`ABOVE_TARGET`** — touched file exceeds the language band but is ≤ 500 lines: note under maintainability; does not block verdict alone.
-
-**`OVER_LIMIT`** — touched file **> 500** lines: maintainability finding; ask for split by responsibility unless exempt.
+Rough token budget at the target ceiling: ~800–2 500 tokens.
 
 **Why:** search chunks fit whole files; large files lose mid-context on edit round-trips. Prefer one file per use case, semantic names, DTOs/interfaces in their own files, barrel `index.ts` only re-exporting a cohesive module.
 
@@ -54,13 +44,7 @@ for f in $(git diff --name-only --diff-filter=ACMR origin/${BASE}...HEAD); do
     *.spec.*|*.test.*|*.config.*|*schema.prisma|*/drizzle/*.sql|*/migrations/*.sql) continue ;;
   esac
   lines=$(wc -l < "$f")
-  max=300
-  case "$f" in
-    *.ts|*.tsx|*.mts|*.cts) max=250 ;;
-    *.java|*.cs) max=350 ;;
-  esac
-  [ "$lines" -gt 500 ] && echo "OVER_LIMIT: $f ($lines lines)"
-  [ "$lines" -gt "$max" ] && [ "$lines" -le 500 ] && echo "ABOVE_TARGET: $f ($lines lines; band ≤${max})"
+  [ "$lines" -gt 300 ] && echo "OVER_LIMIT: $f ($lines lines; max 300)"
 done
 ```
 
