@@ -78,7 +78,7 @@ class GitOpsMixin:
         if not (self.repo / ".git").exists():
             self._event("git_skipped", detail="not a git repository")
             return
-        branch = f"connexto/{state.demand_id}"
+        branch = state.git_branch or f"connexto/{state.demand_id}"
         if branch == config.git.base_branch:
             raise PolicyError("work branch equals the base branch")
         current = self._current_branch()
@@ -92,6 +92,23 @@ class GitOpsMixin:
             detail = redact(checkout.stderr.strip()) or "git checkout failed"
             raise WorkflowError(detail)
         state.git_branch = branch
+
+    def bind_work_branch(self: Engine, role: str, actor_id: str, branch: str) -> RunState:
+        self._check_actor(role, actor_id)
+        if role != "orchestrator":
+            raise PolicyError("only the orchestrator can bind a work branch")
+        state = self.ensure()
+        if state.status not in {"PLAN", "IMPLEMENT"}:
+            raise InvalidTransition("work branch is bound from PLAN or IMPLEMENT")
+        require_text(branch, "branch")
+        if branch == self._config().git.base_branch:
+            raise PolicyError("work branch equals the base branch")
+        if branch.startswith("-") or ".." in Path(branch).parts or "/" not in branch:
+            raise PolicyError(f"refusing branch name: {branch}")
+        state.git_branch = branch
+        self._save()
+        self._event("bind_branch", branch=branch, actor_id=actor_id)
+        return state
 
     def commit_work(
         self: Engine,
