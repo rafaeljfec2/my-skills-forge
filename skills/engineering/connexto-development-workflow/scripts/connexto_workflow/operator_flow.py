@@ -55,8 +55,12 @@ class OperatorFlowMixin:
     def run_validation(self: Engine, role: str, actor_id: str) -> RunState:
         self._check_actor(role, actor_id)
         state = self.ensure()
-        if role not in {"developer", "orchestrator"}:
-            raise PolicyError("only the developer or orchestrator can run validation")
+        if role not in {"developer", "orchestrator", "validator"}:
+            raise PolicyError("only the developer, orchestrator, or validator can run validation")
+        if role == "validator" and (
+            state.developer_id is None or actor_id.casefold() == state.developer_id.casefold()
+        ):
+            raise PolicyError("validator must differ from the developer")
         if state.status == "IMPLEMENT":
             apply_transition(self, "VALIDATE", role, actor_id, "implementation_ready", internal=True)
             state = self.ensure()

@@ -13,7 +13,7 @@ from connexto_workflow.model import DEFAULT_RISK, DEMAND_TYPES, RISK_RANK
 DEMAND_ID = re.compile(r"^[A-Z][A-Z0-9]*-\d{3,}$")
 ACTOR_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,40}$")
 PAGE = re.compile(r"^[A-Za-z0-9_./-]{3,200}$")
-ROLES = frozenset({"orchestrator", "researcher", "planner", "developer", "reviewer"})
+ROLES = frozenset({"orchestrator", "researcher", "planner", "developer", "reviewer", "validator"})
 RESET_REASONS = frozenset(
     {
         "validation_failed",
@@ -64,9 +64,12 @@ def require_demand_id(demand_id: str, demand_type: str | None) -> str:
     if not DEMAND_ID.match(demand_id):
         raise ConfigError("demand id must look like FEAT-001")
     if demand_type is not None:
-        prefix = DEMAND_TYPES[demand_type]
-        if not demand_id.startswith(prefix + "-"):
-            raise ConfigError(f"{demand_type} ids must start with {prefix}-")
+        allowed = {DEMAND_TYPES[demand_type]}
+        if demand_type == "FEATURE":
+            allowed.add("CAD")
+        if not any(demand_id.startswith(prefix + "-") for prefix in allowed):
+            expected = " or ".join(sorted(prefix + "-" for prefix in allowed))
+            raise ConfigError(f"{demand_type} ids must start with {expected}")
     return demand_id
 
 
@@ -90,3 +93,24 @@ def is_inside(path: Path, parent: Path) -> bool:
     except ValueError:
         return False
     return True
+
+
+def refuse_commit_path(repo: Path, rel: str) -> Path:
+    """Reject secret-shaped or escaping paths before git add."""
+    if rel.startswith("/") or "\\" in rel or rel.startswith("-"):
+        raise PolicyError(f"refusing path: {rel}")
+    parts = Path(rel).parts
+    if ".." in parts or any(part in SECRET_PATH_PARTS or part.startswith(".env") for part in parts):
+        raise PolicyError(f"refusing path: {rel}")
+    path = (repo / rel).resolve()
+    if not is_inside(path, repo.resolve()) or not path.is_file():
+        raise PolicyError(f"refusing path: {rel}")
+    if path.suffix.lower() in {".pem", ".key"} or path.name.lower() in {
+        "credentials.json",
+        "id_rsa",
+        "id_rsa.pub",
+    }:
+        raise PolicyError(f"refusing secret-shaped path: {rel}")
+    if "secret" in path.name.lower():
+        raise PolicyError(f"refusing secret-shaped path: {rel}")
+    return path

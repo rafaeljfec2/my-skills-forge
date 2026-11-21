@@ -22,10 +22,10 @@ Public transitions use `transition`. Gated transitions below are refused on `tra
 | PLAN → IMPLEMENT | `plan_accepted` | planner, orchestrator | `transition` | `spec.md` has `## Behavior`, `plan.md` has `## Acceptance criteria`, `tasks.md` has an open task, and a separate readonly agent has returned `APPROVED` for the spec | stay PLAN; an isolated git branch is created when the repo is a git checkout |
 | PLAN → PLAN | `inconsistent_plan` or `scope_change` | planner, orchestrator | `transition` | the plan is still the current artifact | stay PLAN |
 | IMPLEMENT → PLAN | `scope_change` | developer, planner, orchestrator | `transition` | validation flags are cleared | stay IMPLEMENT |
-| IMPLEMENT → VALIDATE | `implementation_ready` | developer, orchestrator | `validate` | developer id and `developer/report.json` or successful implement hook | stay IMPLEMENT |
-| VALIDATE → REVIEW | `validation_passed` | developer, orchestrator | `validate` | every required command exited 0 and was appended to `evidence/commands.jsonl` | record the failure |
-| VALIDATE → IMPLEMENT | `validation_failed` | developer, orchestrator | `validate` | failure count is below `quality.max_validate_attempts` | stay VALIDATE only if the process died mid-command; call `validate` again |
-| VALIDATE → FAILED | `attempts_exhausted` | developer, orchestrator | `validate` | the attempt counter reached the configured limit | terminal FAILED |
+| IMPLEMENT → VALIDATE | `implementation_ready` | developer, orchestrator, validator | `validate` | developer id and `developer/report.json` or successful implement hook; validator actor differs from the developer | stay IMPLEMENT |
+| VALIDATE → REVIEW | `validation_passed` | developer, orchestrator, validator | `validate` | every required command exited 0 and was appended to `evidence/commands.jsonl` with argv, cwd, exit code, and redacted output | record the failure |
+| VALIDATE → IMPLEMENT | `validation_failed` | developer, orchestrator, validator | `validate` | failure count is below `quality.max_validate_attempts` | stay VALIDATE only if the process died mid-command; call `validate` again |
+| VALIDATE → FAILED | `attempts_exhausted` | developer, orchestrator, validator | `validate` | the attempt counter reached the configured limit | terminal FAILED |
 | REVIEW → DELIVERY | `review_clear` | reviewer | `review` or `run-judge` | reviewer id and session differ from developer; no blocking findings | stay REVIEW |
 | REVIEW → IMPLEMENT | `review_defect` | reviewer | `review` | a blocking finding asks for another implementation pass | validation flags are cleared |
 | REVIEW → PLAN | `review_solution_failure` | reviewer | `review` | a blocking finding sets `return_to` to PLAN | validation flags are cleared |
