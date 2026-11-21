@@ -93,3 +93,24 @@ def is_inside(path: Path, parent: Path) -> bool:
     except ValueError:
         return False
     return True
+
+
+def refuse_commit_path(repo: Path, rel: str) -> Path:
+    """Reject secret-shaped or escaping paths before git add."""
+    if rel.startswith("/") or "\\" in rel or rel.startswith("-"):
+        raise PolicyError(f"refusing path: {rel}")
+    parts = Path(rel).parts
+    if ".." in parts or any(part in SECRET_PATH_PARTS or part.startswith(".env") for part in parts):
+        raise PolicyError(f"refusing path: {rel}")
+    path = (repo / rel).resolve()
+    if not is_inside(path, repo.resolve()) or not path.is_file():
+        raise PolicyError(f"refusing path: {rel}")
+    if path.suffix.lower() in {".pem", ".key"} or path.name.lower() in {
+        "credentials.json",
+        "id_rsa",
+        "id_rsa.pub",
+    }:
+        raise PolicyError(f"refusing secret-shaped path: {rel}")
+    if "secret" in path.name.lower():
+        raise PolicyError(f"refusing secret-shaped path: {rel}")
+    return path

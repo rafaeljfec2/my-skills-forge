@@ -6,7 +6,7 @@ import subprocess
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from connexto_workflow.engine_support import SECRET_PATH_PARTS, is_inside, require_text
+from connexto_workflow.engine_support import refuse_commit_path, require_text
 from connexto_workflow.errors import InvalidTransition, PolicyError, PreconditionError, WorkflowError
 from connexto_workflow.redact import contains_secret, redact
 from connexto_workflow.state import RunState
@@ -52,23 +52,7 @@ class GitOpsMixin:
         ]
 
     def _safe_repo_file(self: Engine, rel: str) -> Path:
-        if rel.startswith("/") or "\\" in rel:
-            raise PolicyError(f"refusing path: {rel}")
-        parts = Path(rel).parts
-        if ".." in parts or any(part in SECRET_PATH_PARTS or part.startswith(".env") for part in parts):
-            raise PolicyError(f"refusing path: {rel}")
-        path = (self.repo / rel).resolve()
-        if not is_inside(path, self.repo) or not path.is_file():
-            raise PolicyError(f"refusing path: {rel}")
-        if path.suffix.lower() in {".pem", ".key"} or path.name.lower() in {
-            "credentials.json",
-            "id_rsa",
-            "id_rsa.pub",
-        }:
-            raise PolicyError(f"refusing secret-shaped path: {rel}")
-        if "secret" in path.name.lower():
-            raise PolicyError(f"refusing secret-shaped path: {rel}")
-        return path
+        return refuse_commit_path(self.repo, rel)
 
     def _prepare_branch(self: Engine) -> None:
         config = self._config()
