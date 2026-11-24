@@ -23,6 +23,7 @@ class CommandRecord:
     timed_out: bool
     stdout_excerpt: str
     stderr_excerpt: str
+    cwd: str
     started_at: str
     finished_at: str
 
@@ -70,6 +71,7 @@ def run_command(repo: Path, name: str, command: str, timeout: int, log_path: Pat
         timed_out=timed_out,
         stdout_excerpt=redact(stdout)[:_EXCERPT_LIMIT],
         stderr_excerpt=redact(stderr)[:_EXCERPT_LIMIT],
+        cwd=str(repo.resolve()),
         started_at=started,
         finished_at=finished,
     )

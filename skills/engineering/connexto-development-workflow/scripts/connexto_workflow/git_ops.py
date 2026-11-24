@@ -6,7 +6,12 @@ import subprocess
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from connexto_workflow.engine_support import SECRET_PATH_PARTS, is_inside, require_text
+from connexto_workflow.engine_support import (
+    default_work_branch,
+    refuse_commit_path,
+    require_text,
+    work_branch_error,
+)
 from connexto_workflow.errors import InvalidTransition, PolicyError, PreconditionError, WorkflowError
 from connexto_workflow.redact import contains_secret, redact
 from connexto_workflow.state import RunState
@@ -52,23 +57,7 @@ class GitOpsMixin:
         ]
 
     def _safe_repo_file(self: Engine, rel: str) -> Path:
-        if rel.startswith("/") or "\\" in rel:
-            raise PolicyError(f"refusing path: {rel}")
-        parts = Path(rel).parts
-        if ".." in parts or any(part in SECRET_PATH_PARTS or part.startswith(".env") for part in parts):
-            raise PolicyError(f"refusing path: {rel}")
-        path = (self.repo / rel).resolve()
-        if not is_inside(path, self.repo) or not path.is_file():
-            raise PolicyError(f"refusing path: {rel}")
-        if path.suffix.lower() in {".pem", ".key"} or path.name.lower() in {
-            "credentials.json",
-            "id_rsa",
-            "id_rsa.pub",
-        }:
-            raise PolicyError(f"refusing secret-shaped path: {rel}")
-        if "secret" in path.name.lower():
-            raise PolicyError(f"refusing secret-shaped path: {rel}")
-        return path
+        return refuse_commit_path(self.repo, rel)
 
     def _prepare_branch(self: Engine) -> None:
         config = self._config()
@@ -78,7 +67,7 @@ class GitOpsMixin:
         if not (self.repo / ".git").exists():
             self._event("git_skipped", detail="not a git repository")
             return
-        branch = f"connexto/{state.demand_id}"
+        branch = state.git_branch or default_work_branch(state.demand_type, state.demand_id)
         if branch == config.git.base_branch:
             raise PolicyError("work branch equals the base branch")
         current = self._current_branch()
@@ -92,6 +81,24 @@ class GitOpsMixin:
             detail = redact(checkout.stderr.strip()) or "git checkout failed"
             raise WorkflowError(detail)
         state.git_branch = branch
+
+    def bind_work_branch(self: Engine, role: str, actor_id: str, branch: str) -> RunState:
+        self._check_actor(role, actor_id)
+        if role != "orchestrator":
+            raise PolicyError("only the orchestrator can bind a work branch")
+        state = self.ensure()
+        if state.status not in {"PLAN", "IMPLEMENT"}:
+            raise InvalidTransition("work branch is bound from PLAN or IMPLEMENT")
+        require_text(branch, "branch")
+        if branch == self._config().git.base_branch:
+            raise PolicyError("work branch equals the base branch")
+        branch_error = work_branch_error(branch)
+        if branch_error is not None:
+            raise PolicyError(branch_error)
+        state.git_branch = branch
+        self._save()
+        self._event("bind_branch", branch=branch, actor_id=actor_id)
+        return state
 
     def commit_work(
         self: Engine,

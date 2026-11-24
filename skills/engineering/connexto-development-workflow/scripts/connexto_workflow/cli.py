@@ -7,6 +7,7 @@ import json
 import sys
 from pathlib import Path
 
+from connexto_workflow.campaign_cli import dispatch_campaign, register_campaign_commands
 from connexto_workflow.config import load_config
 from connexto_workflow.engine import Brief, Engine
 from connexto_workflow.errors import WorkflowError
@@ -125,6 +126,8 @@ def main(argv: list[str] | None = None) -> int:
     proof = sub.add_parser("proof")
     proof.add_argument("--dest", type=Path, required=True)
 
+    register_campaign_commands(sub, _actor)
+
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -144,6 +147,8 @@ def _dispatch(args: argparse.Namespace) -> int:
 
         print(json.dumps(run_proof(args.dest), indent=2))
         return 0
+    if args.command.startswith("campaign-"):
+        return dispatch_campaign(args)
     if args.command == "init":
         engine = Engine(args.repo, args.demand_id)
         engine.init_run(

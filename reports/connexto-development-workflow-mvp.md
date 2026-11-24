@@ -63,7 +63,7 @@ python3 skills/engineering/connexto-development-workflow/scripts/cdw.py proof \
 | Estado após novo `load()` | `DONE` |
 | Teste | exit 1 (`ModuleNotFoundError: calc`), depois exit 0 |
 | Hook `apply_fix.py` | exit 0 |
-| Branch | `connexto/FEAT-001` |
+| Branch | `feat/feat-001` |
 | Commit | `5f0d8bf9fcdda465452ddcef00a5f10d60dcbb6b` |
 | Reviewer | `rev-1`, diferente de `dev-1`, 0 achados |
 | Release | merge, production_publish e deploy = `not performed` |

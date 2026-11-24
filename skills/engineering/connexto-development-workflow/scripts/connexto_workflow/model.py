@@ -10,6 +10,33 @@ DEMAND_TYPES: dict[str, str] = {
     "TECHNICAL_DEBT": "DEBT",
 }
 
+# Git branch prefix for a demand. Names follow conventional commits
+# (feat, fix, docs, and the related types). The product name is not a prefix.
+BRANCH_PREFIX_BY_TYPE: dict[str, str] = {
+    "FEATURE": "feat",
+    "BUGFIX": "fix",
+    "REFACTOR": "refactor",
+    "HOTFIX": "hotfix",
+    "TECHNICAL_DEBT": "chore",
+}
+
+CONVENTIONAL_BRANCH_PREFIXES = frozenset(
+    {
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "build",
+        "ci",
+        "chore",
+        "revert",
+        "hotfix",
+    }
+)
+
 DEFAULT_RISK: dict[str, str] = {
     "FEATURE": "MEDIUM",
     "BUGFIX": "LOW",
@@ -94,10 +121,10 @@ EDGE_ROLES: dict[tuple[str, str], frozenset[str]] = {
     ("PLAN", "IMPLEMENT"): frozenset({"planner", "orchestrator"}),
     ("PLAN", "PLAN"): frozenset({"planner", "orchestrator"}),
     ("IMPLEMENT", "PLAN"): frozenset({"developer", "planner", "orchestrator"}),
-    ("IMPLEMENT", "VALIDATE"): frozenset({"developer", "orchestrator"}),
-    ("VALIDATE", "REVIEW"): frozenset({"developer", "orchestrator"}),
-    ("VALIDATE", "IMPLEMENT"): frozenset({"developer", "orchestrator"}),
-    ("VALIDATE", "FAILED"): frozenset({"developer", "orchestrator"}),
+    ("IMPLEMENT", "VALIDATE"): frozenset({"developer", "orchestrator", "validator"}),
+    ("VALIDATE", "REVIEW"): frozenset({"developer", "orchestrator", "validator"}),
+    ("VALIDATE", "IMPLEMENT"): frozenset({"developer", "orchestrator", "validator"}),
+    ("VALIDATE", "FAILED"): frozenset({"developer", "orchestrator", "validator"}),
     ("REVIEW", "DELIVERY"): frozenset({"reviewer"}),
     ("REVIEW", "IMPLEMENT"): frozenset({"reviewer"}),
     ("REVIEW", "PLAN"): frozenset({"reviewer"}),
