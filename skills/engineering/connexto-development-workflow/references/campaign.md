@@ -4,6 +4,8 @@ One campaign runs one sprint at a time. The queue is parsed from the campaign pl
 
 `CAD-NNN` is a `FEATURE` id. Omitted risk stays the FEATURE floor, `MEDIUM`. Do not pass a lower risk.
 
+Sprint **Branch** values use a conventional prefix and a lowercase slug, for example `feat/cad-000-foundation`, `fix/bug-012-null-check`, or `docs/readme-index`. Allowed prefixes: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`, `hotfix`.
+
 ## Commands
 
 - `campaign-init` reads the plan and records the operator attestation. It does not approve a language SPEC.

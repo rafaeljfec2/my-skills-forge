@@ -8,7 +8,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from connexto_workflow.errors import ConfigError, PolicyError
-from connexto_workflow.model import DEFAULT_RISK, DEMAND_TYPES, RISK_RANK
+from connexto_workflow.model import (
+    BRANCH_PREFIX_BY_TYPE,
+    CONVENTIONAL_BRANCH_PREFIXES,
+    DEFAULT_RISK,
+    DEMAND_TYPES,
+    RISK_RANK,
+)
+
+WORK_BRANCH = re.compile(r"^(?P<prefix>[a-z]+)/(?P<slug>[a-z0-9]+(?:[._-][a-z0-9]+)*)$")
 
 DEMAND_ID = re.compile(r"^[A-Z][A-Z0-9]*-\d{3,}$")
 ACTOR_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,40}$")
@@ -71,6 +79,24 @@ def require_demand_id(demand_id: str, demand_type: str | None) -> str:
             expected = " or ".join(sorted(prefix + "-" for prefix in allowed))
             raise ConfigError(f"{demand_type} ids must start with {expected}")
     return demand_id
+
+
+def default_work_branch(demand_type: str, demand_id: str) -> str:
+    """Return `<conventional-type>/<demand-id>` for an isolated work branch."""
+    try:
+        prefix = BRANCH_PREFIX_BY_TYPE[demand_type]
+    except KeyError as exc:
+        raise ConfigError(f"unknown demand type: {demand_type}") from exc
+    return f"{prefix}/{demand_id.lower()}"
+
+
+def work_branch_error(branch: str) -> str | None:
+    """Return why `branch` is not a conventional work branch, or None."""
+    match = WORK_BRANCH.fullmatch(branch)
+    if match is not None and match.group("prefix") in CONVENTIONAL_BRANCH_PREFIXES:
+        return None
+    allowed = ", ".join(sorted(CONVENTIONAL_BRANCH_PREFIXES))
+    return f"work branch must be <type>/<slug> using one of: {allowed}"
 
 
 def require_text(value: str, label: str) -> None:

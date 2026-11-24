@@ -18,6 +18,7 @@ from campaign_fixture import PLAN, SHORT_PLAN, _commit_all, _git, _init_remote_r
 from connexto_workflow.campaign import campaign_commit, init_campaign, open_sprint, parse_sprints
 from connexto_workflow.commands import run_command
 from connexto_workflow.engine import Engine
+from connexto_workflow.engine_support import default_work_branch
 from connexto_workflow.errors import ConfigError, PolicyError
 
 class ParseTests(unittest.TestCase):
@@ -31,6 +32,11 @@ class ParseTests(unittest.TestCase):
         self.assertEqual(sprints[0].tasks, ["T1", "T2", "T3", "T4"])
         self.assertEqual(sprints[0].demand_id, "CAD-000")
         self.assertEqual(sprints[0].branch, "feat/cad-000-foundation")
+
+    def test_rejects_a_connexto_branch_prefix(self) -> None:
+        plan = PLAN.replace("feat/cad-000-foundation", "connexto/CAD-000", 1)
+        with self.assertRaises(ConfigError):
+            parse_sprints(plan)
 
 
 class FeatureRiskTests(unittest.TestCase):
@@ -69,6 +75,17 @@ class FeatureRiskTests(unittest.TestCase):
                 engine = Engine(repo, demand_id)
                 engine.init_run(support.brief_for(demand_id, demand_type))
                 self.assertEqual(engine.ensure().demand_id, demand_id)
+                self.assertEqual(
+                    default_work_branch(demand_type, demand_id),
+                    {
+                        "FEATURE": "feat/feat-001",
+                        "BUGFIX": "fix/bug-001",
+                        "REFACTOR": "refactor/refactor-001",
+                        "HOTFIX": "hotfix/hotfix-001",
+                        "TECHNICAL_DEBT": "chore/debt-001",
+                    }[demand_type],
+                )
+            self.assertEqual(default_work_branch("FEATURE", "CAD-000"), "feat/cad-000")
 
 
 
@@ -119,6 +136,10 @@ class BranchBindTests(unittest.TestCase):
             engine.put_artifact("planner", "plan-1", "tasks.md", tasks)
             with self.assertRaises(PolicyError):
                 engine.bind_work_branch("orchestrator", "orch-1", "main")
+            with self.assertRaises(PolicyError):
+                engine.bind_work_branch("orchestrator", "orch-1", "connexto/CAD-000")
+            engine.bind_work_branch("orchestrator", "orch-1", "docs/cad-000-notes")
+            self.assertEqual(engine.ensure().git_branch, "docs/cad-000-notes")
             engine.bind_work_branch("orchestrator", "orch-1", "feat/cad-000-foundation")
             engine.request_transition("IMPLEMENT", "planner", "plan-1", "plan_accepted")
             self.assertEqual(_git(repo, "branch", "--show-current"), "feat/cad-000-foundation")

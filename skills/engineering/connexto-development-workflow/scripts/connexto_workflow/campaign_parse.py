@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from connexto_workflow.engine_support import work_branch_error
 from connexto_workflow.errors import ConfigError
 
 P4_SPEC_STATUS = "PROPOSED FOR IMPLEMENTATION — not yet approved"
@@ -42,6 +43,9 @@ def parse_sprints(plan_text: str) -> list[SprintSpec]:
         feature = _FEATURE_LINE.search(body)
         if feature is None:
             raise ConfigError(f"sprint {match.group(1)} is missing its feature id and branch")
+        branch_error = work_branch_error(feature.group(2))
+        if branch_error is not None:
+            raise ConfigError(f"sprint {match.group(1)}: {branch_error}")
         tasks = [f"T{number}" for number in _TASK_LINE.findall(body)]
         if tasks != ["T1", "T2", "T3", "T4"]:
             raise ConfigError(f"sprint {match.group(1)} must contain exactly T1, T2, T3, and T4")

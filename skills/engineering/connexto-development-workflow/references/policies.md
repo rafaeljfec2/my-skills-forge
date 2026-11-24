@@ -18,7 +18,7 @@ HIGH demands park on `start_high_risk` before RESEARCH. The actor who requested 
 
 ## Git
 
-- `git.isolated_branch`: entering IMPLEMENT checks out `connexto/<demand-id>` when the target is a git repository. A non-git target is recorded and does not fail the transition.
+- `git.isolated_branch`: entering IMPLEMENT checks out a conventional work branch when the target is a git repository. The default is `<type>/<demand-id>` in lowercase: `feat` for FEATURE (including `CAD-`), `fix` for BUGFIX, `refactor` for REFACTOR, `hotfix` for HOTFIX, and `chore` for TECHNICAL_DEBT. A bound branch may also use `docs`, `style`, `perf`, `test`, `build`, `ci`, or `revert`. The `connexto/` prefix is refused. A non-git target is recorded and does not fail the transition.
 - `git.allow_commit`: `commit` is refused when this is false, when the current branch is `git.base_branch`, or when a path or its text looks credential-shaped.
 - Commit paths are explicit. `.connexto/`, `.env`, `.git`, `credentials.json`, and `*.pem` / `*.key` are refused.
 - The engine reads `user.email`. It does not write git config. When no email is set, the commit command passes a temporary identity only for that process.

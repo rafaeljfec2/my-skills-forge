@@ -6,7 +6,12 @@ import subprocess
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from connexto_workflow.engine_support import refuse_commit_path, require_text
+from connexto_workflow.engine_support import (
+    default_work_branch,
+    refuse_commit_path,
+    require_text,
+    work_branch_error,
+)
 from connexto_workflow.errors import InvalidTransition, PolicyError, PreconditionError, WorkflowError
 from connexto_workflow.redact import contains_secret, redact
 from connexto_workflow.state import RunState
@@ -62,7 +67,7 @@ class GitOpsMixin:
         if not (self.repo / ".git").exists():
             self._event("git_skipped", detail="not a git repository")
             return
-        branch = state.git_branch or f"connexto/{state.demand_id}"
+        branch = state.git_branch or default_work_branch(state.demand_type, state.demand_id)
         if branch == config.git.base_branch:
             raise PolicyError("work branch equals the base branch")
         current = self._current_branch()
@@ -87,8 +92,9 @@ class GitOpsMixin:
         require_text(branch, "branch")
         if branch == self._config().git.base_branch:
             raise PolicyError("work branch equals the base branch")
-        if branch.startswith("-") or ".." in Path(branch).parts or "/" not in branch:
-            raise PolicyError(f"refusing branch name: {branch}")
+        branch_error = work_branch_error(branch)
+        if branch_error is not None:
+            raise PolicyError(branch_error)
         state.git_branch = branch
         self._save()
         self._event("bind_branch", branch=branch, actor_id=actor_id)

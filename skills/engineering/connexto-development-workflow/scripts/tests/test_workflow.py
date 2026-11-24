@@ -317,7 +317,7 @@ class ProofTests(unittest.TestCase):
             summary = run_proof(Path(raw) / "demo")
         self.assertEqual(summary["final_status"], "DONE")
         self.assertEqual(summary["resumed_status"], "DONE")
-        self.assertEqual(summary["git_branch"], "connexto/FEAT-001")
+        self.assertEqual(summary["git_branch"], "feat/feat-001")
         exits = summary["validate_exits"]
         self.assertIsInstance(exits, list)
         self.assertGreaterEqual(len(exits), 2)

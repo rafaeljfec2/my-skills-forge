@@ -10,6 +10,33 @@ DEMAND_TYPES: dict[str, str] = {
     "TECHNICAL_DEBT": "DEBT",
 }
 
+# Git branch prefix for a demand. Names follow conventional commits
+# (feat, fix, docs, and the related types). The product name is not a prefix.
+BRANCH_PREFIX_BY_TYPE: dict[str, str] = {
+    "FEATURE": "feat",
+    "BUGFIX": "fix",
+    "REFACTOR": "refactor",
+    "HOTFIX": "hotfix",
+    "TECHNICAL_DEBT": "chore",
+}
+
+CONVENTIONAL_BRANCH_PREFIXES = frozenset(
+    {
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "build",
+        "ci",
+        "chore",
+        "revert",
+        "hotfix",
+    }
+)
+
 DEFAULT_RISK: dict[str, str] = {
     "FEATURE": "MEDIUM",
     "BUGFIX": "LOW",
