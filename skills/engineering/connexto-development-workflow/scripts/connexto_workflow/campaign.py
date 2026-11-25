@@ -7,6 +7,7 @@ from connexto_workflow.campaign_flow import (
     reconcile,
 )
 from connexto_workflow.campaign_parse import SprintSpec, parse_sprints
+from connexto_workflow.campaign_plan_reconcile import reconcile_plan
 from connexto_workflow.campaign_store import init_campaign, load_campaign, open_sprint, record_review
 
 __all__ = [
@@ -19,5 +20,6 @@ __all__ = [
     "open_sprint",
     "parse_sprints",
     "reconcile",
+    "reconcile_plan",
     "record_review",
 ]

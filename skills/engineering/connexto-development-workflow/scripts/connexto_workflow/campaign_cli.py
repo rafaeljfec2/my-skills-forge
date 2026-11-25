@@ -16,6 +16,7 @@ from connexto_workflow.campaign import (
     open_pull_request,
     open_sprint,
     reconcile,
+    reconcile_plan,
     record_review,
 )
 from connexto_workflow.engine import Engine
@@ -79,6 +80,12 @@ def register_campaign_commands(
     campaign_reconcile.add_argument("--campaign-id", required=True)
     campaign_reconcile.add_argument("--gh-bin")
 
+    campaign_plan = sub.add_parser("campaign-reconcile-plan")
+    campaign_plan.add_argument("--repo", type=Path, required=True)
+    campaign_plan.add_argument("--campaign-id", required=True)
+    campaign_plan.add_argument("--plan", type=Path, required=True)
+    campaign_plan.add_argument("--dry-run", action="store_true")
+
 
 def dispatch_campaign(args: argparse.Namespace) -> int:
     repo = args.repo
@@ -135,6 +142,13 @@ def dispatch_campaign(args: argparse.Namespace) -> int:
         state = merge_pull_request(repo, args.campaign_id, gh_bin=args.gh_bin)
     elif args.command == "campaign-reconcile":
         state = reconcile(repo, args.campaign_id, gh_bin=args.gh_bin)
+    elif args.command == "campaign-reconcile-plan":
+        state = reconcile_plan(
+            repo,
+            args.campaign_id,
+            args.plan.read_text(encoding="utf-8"),
+            dry_run=bool(args.dry_run),
+        )
     else:
         raise WorkflowError(f"unknown command: {args.command}")
     print(json.dumps(state, indent=2))
