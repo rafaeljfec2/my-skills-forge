@@ -1,6 +1,8 @@
 # PLAN phase obligations
 
-Read this reference only while the run is in **PLAN**. Canonical SDD phase law lives in `sdd-workflow`; this file binds Connexto artifacts to those obligations.
+Read this reference only while the run is in **PLAN**. Canonical SDD phase law lives in `sdd-workflow`; this file binds Connexto demand artifacts to those obligations.
+
+A demand-level SDD plan and a campaign sprint execution plan are different artifacts. Do not use one as a substitute for the other.
 
 ## SDD obligations in PLAN
 
@@ -28,10 +30,16 @@ Before `plan_accepted`, spawn a **separate readonly subagent** with a fresh cont
 
 The planner does not approve its own spec. A self-`APPROVED` spec does not satisfy this gate.
 
-## Templates
+## Template authority
 
-Start from [templates/spec.md](../templates/spec.md), [templates/plan.md](../templates/plan.md), and [templates/tasks.md](../templates/tasks.md). Keep identifiers and code in English; operator-facing summaries may follow conversation language.
+- [`templates/plan.md`](../templates/plan.md) is the generic **demand-level SDD artifact** required by the Connexto run state machine. It is not the parser-visible campaign queue, not a campaign sprint execution plan, and not a substitute for a target project's sprint-plan template.
+- When the demand is a campaign sprint or campaign-gate plan, read the target repository's `AGENTS.md` and always-applied project rules. Use the exact canonical sprint-plan template designated by that target repository.
+- The canonical target-repository template and policy take precedence over generic templates shipped with this skill. Do not emit the legacy `references/sprint-execution-plan.md` format.
+- If the target repository does not identify a canonical sprint-plan template, stop the dependent planning output as `BLOCKED` and identify the missing authority. Do not invent a template or silently fall back to `templates/plan.md`.
+- The language of every artifact written inside the target repository follows that repository's artifact-language policy. The forge's PT-BR default is only a fallback when the target repository has no specific policy.
+
+Start demand-level artifacts from [`templates/spec.md`](../templates/spec.md), [`templates/plan.md`](../templates/plan.md), and [`templates/tasks.md`](../templates/tasks.md). Keep identifiers and code in English.
 
 ## Authoring hygiene
 
-During IMPLEMENT (not PLAN), apply `principal-engineering-workflow` including [refactoring.md](../../principal-engineering-workflow/references/refactoring.md) when reshaping code.
+During IMPLEMENT (not PLAN), apply `principal-engineering-workflow` including [`refactoring.md`](../../principal-engineering-workflow/references/refactoring.md) when reshaping code.
