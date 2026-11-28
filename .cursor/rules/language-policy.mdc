@@ -1,11 +1,25 @@
 ---
-description: Language policy for forge artifacts (skills/docs EN; reports/plans PT-BR)
+description: Language defaults for my-skills-forge and fallback for target repositories without their own artifact-language policy
 alwaysApply: true
 ---
 
 # Language policy
 
-- **Skills** (`skills/**`) and **repository documentation** (README, CATALOG, PROVENANCE, LICENSING, forge `references/*.md`, etc.): write in **English**.
-- **Generated reports** (`reports/**`) and **delivery / Cursor plans**: write in **Brazilian Portuguese (PT-BR)**.
+## Scope and precedence
+
+This file defines the defaults for artifacts created in **my-skills-forge**. When a skill in this forge is executed against a separate target repository, the target repository's own `AGENTS.md` and always-applied project rules govern artifacts written inside that target repository.
+
+Precedence for target-repository artifacts:
+
+1. Explicit artifact-language rules in the target repository's `AGENTS.md` and always-applied project rules.
+2. Other explicit target-repository policy.
+3. The defaults in this file, only when the target repository has no more specific artifact-language policy.
+
+Do not apply the forge's PT-BR plan/report default over a target repository that explicitly requires English (or another language). Do not treat this file as permission to override a target repository's policy.
+
+## Defaults for this forge
+
+- **Skills** (`skills/**`) and **forge documentation** (README, CATALOG, PROVENANCE, LICENSING, forge `references/*.md`, etc.): write in **English**.
+- **Generated reports** (`reports/**`) and **delivery / Cursor plans** created in this forge: write in **Brazilian Portuguese (PT-BR)**.
 - **Chat with the user**: Brazilian Portuguese (PT-BR) unless they ask otherwise.
 - Skill content, identifiers, and code remain English even when the chat is PT-BR.
