@@ -32,6 +32,8 @@ The planner does not approve its own spec. A self-`APPROVED` spec does not satis
 
 Start from [templates/spec.md](../templates/spec.md), [templates/plan.md](../templates/plan.md), and [templates/tasks.md](../templates/tasks.md). Keep identifiers and code in English; operator-facing summaries may follow conversation language.
 
+When the demand is a campaign sprint or a governance unblock, fill [sprint-execution-plan.md](sprint-execution-plan.md) before writing those three artifacts. The Cursor plan and the Connexto artifacts are the same content. The sprint still has exactly T1–T4, as in [campaign.md](campaign.md).
+
 ## Authoring hygiene
 
 During IMPLEMENT (not PLAN), apply `principal-engineering-workflow` including [refactoring.md](../../principal-engineering-workflow/references/refactoring.md) when reshaping code.
