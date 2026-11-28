@@ -38,7 +38,7 @@ The planner does not approve its own spec. A self-`APPROVED` spec does not satis
 - If the target repository does not identify a canonical sprint-plan template, stop the dependent planning output as `BLOCKED` and identify the missing authority. Do not invent a template or silently fall back to `templates/plan.md`.
 - The language of every artifact written inside the target repository follows that repository's artifact-language policy. The forge's PT-BR default is only a fallback when the target repository has no specific policy.
 
-Start demand-level artifacts from [`templates/spec.md`](../templates/spec.md), [`templates/plan.md`](../templates/plan.md), and [`templates/tasks.md`](../templates/tasks.md). Keep identifiers and code in English.
+Start demand-level artifacts from [`templates/spec.md`](../templates/spec.md), [`templates/plan.md`](../templates/plan.md), and [`templates/tasks.md`](../templates/tasks.md). Keep identifiers and code in English. Campaign sprint plans still require exactly T1–T4, as in [campaign.md](campaign.md).
 
 ## Authoring hygiene
 

@@ -15,8 +15,11 @@ from connexto_workflow.campaign import (
     merge_pull_request,
     open_pull_request,
     open_sprint,
+    reassociate_merged_head,
     reconcile,
+    reconcile_plan,
     record_review,
+    register_existing_pull_request,
 )
 from connexto_workflow.engine import Engine
 from connexto_workflow.errors import WorkflowError
@@ -74,10 +77,32 @@ def register_campaign_commands(
     campaign_merge.add_argument("--campaign-id", required=True)
     campaign_merge.add_argument("--gh-bin", default="gh")
 
+    campaign_register = sub.add_parser("campaign-register-pr")
+    campaign_register.add_argument("--repo", type=Path, required=True)
+    campaign_register.add_argument("--campaign-id", required=True)
+    campaign_register.add_argument("--sprint", required=True)
+    campaign_register.add_argument("--pr", type=int, required=True)
+    campaign_register.add_argument("--gh-bin", required=True)
+
+    campaign_reassociate = sub.add_parser("campaign-reassociate-head")
+    campaign_reassociate.add_argument("--repo", type=Path, required=True)
+    campaign_reassociate.add_argument("--campaign-id", required=True)
+    campaign_reassociate.add_argument("--sprint", required=True)
+    campaign_reassociate.add_argument("--pr", type=int, required=True)
+    campaign_reassociate.add_argument("--head", required=True)
+    campaign_reassociate.add_argument("--merge", required=True)
+    campaign_reassociate.add_argument("--gh-bin", required=True)
+
     campaign_reconcile = sub.add_parser("campaign-reconcile")
     campaign_reconcile.add_argument("--repo", type=Path, required=True)
     campaign_reconcile.add_argument("--campaign-id", required=True)
     campaign_reconcile.add_argument("--gh-bin")
+
+    campaign_plan = sub.add_parser("campaign-reconcile-plan")
+    campaign_plan.add_argument("--repo", type=Path, required=True)
+    campaign_plan.add_argument("--campaign-id", required=True)
+    campaign_plan.add_argument("--plan", type=Path, required=True)
+    campaign_plan.add_argument("--dry-run", action="store_true")
 
 
 def dispatch_campaign(args: argparse.Namespace) -> int:
@@ -133,8 +158,33 @@ def dispatch_campaign(args: argparse.Namespace) -> int:
         )
     elif args.command == "campaign-merge":
         state = merge_pull_request(repo, args.campaign_id, gh_bin=args.gh_bin)
+    elif args.command == "campaign-register-pr":
+        state = register_existing_pull_request(
+            repo,
+            args.campaign_id,
+            sprint=args.sprint,
+            pull_request=args.pr,
+            gh_bin=args.gh_bin,
+        )
+    elif args.command == "campaign-reassociate-head":
+        state = reassociate_merged_head(
+            repo,
+            args.campaign_id,
+            sprint=args.sprint,
+            pull_request=args.pr,
+            head_sha=args.head,
+            merge_sha=args.merge,
+            gh_bin=args.gh_bin,
+        )
     elif args.command == "campaign-reconcile":
         state = reconcile(repo, args.campaign_id, gh_bin=args.gh_bin)
+    elif args.command == "campaign-reconcile-plan":
+        state = reconcile_plan(
+            repo,
+            args.campaign_id,
+            args.plan.read_text(encoding="utf-8"),
+            dry_run=bool(args.dry_run),
+        )
     else:
         raise WorkflowError(f"unknown command: {args.command}")
     print(json.dumps(state, indent=2))
